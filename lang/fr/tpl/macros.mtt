@@ -1,0 +1,89 @@
+<macros>
+
+	<macro name="jsConfirm(?text)">confirm(::if text==null::'Confirmer cette action ?'::else::'::escapeJS(text)::'::end::)</macro>
+	
+	<macro name="confirm(?text)" onclick="return $$jsConfirm(::text::)"/>
+	
+	<macro name="file(id,?def)">
+		::if id == null && def != null::
+			::def::
+		::else::
+			/file/::makeFileSign(id)::.jpg
+		::end::
+	</macro>
+	
+	<macro name="img(id,?def)"><img src="$$file(::id::,::def::)"/></macro>
+	
+
+	<macro name="browse(b,url)">$$browseCustom(::b::,::url::,Page ::b.page:: ::if b.pages::/::b.pages:: ::end::)</macro>
+
+	<macro name="browseCustom(b,url,custom)">
+		&lt; 
+		::if b.prev::<a href="::url::/?page=::b.prev::">Précédent</a>::else::Précédent::end::
+		| ::custom:: |
+		::if b.next::<a href="::url::/?page=::b.next::">Suivant</a>::else::Suivant::end:: &gt;
+	</macro>
+	
+	<macro name="swf(file,id,width,height,vars,?wmode)">
+		<div id="swf_::id::" class="swf::if wmode:: ::wmode::::end::" style="width : ::width::px; height : ::height::px"></div>
+		<script type="text/javascript">
+		var so = new js.SWFObject("http://data.::HOST::/swf/::file::?v=::variable(file)::","::id::",::width::,::height::,9,"#E4E2E0");
+		so.addParam("AllowScriptAccess","always");
+		so.addParam("FlashVars","::vars::");
+		so.addParam("menu","false");
+		so.addParam("scale","noScale");
+		::if wmode::so.addParam("wmode","::wmode::");::end::
+		so.write("swf_::id::");
+		</script>
+	</macro>
+	
+	<macro name="nullSafe(text)">::if text==null::::else::::text::::end::</macro>
+	
+	<macro name="edit(text,url)">
+		
+		<a href="::url::" class="btn btn-default btn-sm">
+			<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+			&nbsp;::text::
+		</a>	
+	</macro>
+	
+	<macro name="insert(text,url)">
+		<!--<img src="/img/icons/add.png" style="vertical-align:middle;" />&nbsp;<a href="::url::">::text::</a>-->
+		<a href="::url::" class="btn btn-default btn-sm">
+			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+			&nbsp;::text::
+		</a>	
+	</macro>
+	
+	<macro name="delete(text,url)">
+		<a href="::url::" $$confirm(Supprimer ?) class="btn btn-default btn-sm" >
+			<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+		::if text!=null && text!=""::	
+			&nbsp;::text::
+		::end::
+		</a>
+	</macro>
+	
+	<macro name="export(url)">
+		<a href="::url::" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-list-alt"></span> Export Excel/CSV</a>	
+	</macro>
+	
+	<macro name="bool(v)">
+		::if v==true::
+		<img src="/img/icons/accept.png" />
+		::else::
+		<img src="/img/icons/stop.png" />
+		::end::
+	</macro>
+	
+	<macro name="check(v)">
+		::if(v==true || v==1)::
+		<span class="glyphicon glyphicon-ok" style="color:#060"></span>
+		::else::
+		<span class="glyphicon glyphicon-exclamation-sign" style="color:#a94442"></span>
+		::end::
+	</macro>
+	
+	
+	
+</macros>

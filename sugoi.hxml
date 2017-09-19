@@ -1,0 +1,8 @@
+-lib dbadmin
+-lib templo
+-lib sugoi
+-lib record-macros
+
+-cp src
+-neko html/index.n
+-main App

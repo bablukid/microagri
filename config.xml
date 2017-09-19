@@ -1,0 +1,18 @@
+<config
+	lang="fr"
+	langs="fr"
+
+	host="localhost"
+	name = "Base de données MicroAgri"
+	default_email = ""
+	webmaster_email = ""
+	
+	database="mysql://docker:docker@mysql/db"
+	sqllog="0"
+	
+	debug="1"
+	cache="0"
+	maintain="0"
+	cachetpl="0"
+	key="xoxsvxisdfsftuwhateverxxbyvhz"
+/>
