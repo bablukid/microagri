@@ -15,9 +15,7 @@ class Question{
     public var qid : String;
     public var data : {label:String,q:String,desc:String,type:QType};
 
-    public function new(){
-
-    }
+    public function new(){ }
 
     /**
     Structure générale des chapitres
@@ -110,8 +108,8 @@ class Question{
 
 
         switch(this.data.type){
-            case QText : form.addElement(new sugoi.form.elements.TextArea("text",null,null,true) );
-            default : form.addElement(new sugoi.form.elements.TextArea("text","unknown",null,true) );
+            case QText : form.addElement(new sugoi.form.elements.TextArea("q",null,null,true) );
+            default : form.addElement(new sugoi.form.elements.TextArea("q","unknown",null,true) );
 
         }
 
@@ -129,7 +127,15 @@ class Question{
             }
         }
         return null;
+    }
 
+    public function save(f:sugoi.form.Form){
+
+        var r = db.Result.getOrCreate(App.current.user);
+
+        Reflect.setField(r,this.data.label,f.getValueOf("q"));
+
+        r.update();
 
     }
 

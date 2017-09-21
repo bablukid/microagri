@@ -1,0 +1,18 @@
+div.panel > div.panel-heading {
+
+    text-align: center;
+    font-weight: bolder;
+    color: #235812;
+    font-size:22px;
+    /*text-shadow: black 2px 2px 2px;*/
+
+
+} 
+
+div.panel > div.panel-img {
+    background: url("/img/bg.jpg") no-repeat center /*fixed*/;
+    -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+    background-size: cover; /* version standardisée */
+    height: 120px;
+
+}    

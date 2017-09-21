@@ -11,40 +11,32 @@
 </div>
 
 <div class="row">
+
+    ::foreach c chapitres::
     <div class="col-md-4">
         <div class="panel panel-success">
+            <div class="panel-img"></div>
             <div class="panel-heading">
-                <h3 class="panel-title">GÉNÉRALITÉS SUR LA FERME</h3>
+                ::c.nom::                
             </div>
             <div class="panel-body">
-                Panel content
+                <p>
+                    <b>::c.ordre.length::</b> questions.
+                </p>
+                <p class="text-center">
+                    <a href="/q/::c.ordre[0]::" class="btn btn-default">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        Commencer
+                    </a>
+
+                </p>
+                
             </div>
         </div>
     </div>
+    ::end::
 
-    <div class="col-md-4">
-        <div class="panel panel-success">
-            <div class="panel-heading">
-                <h3 class="panel-title">Chapitre</h3>
-            </div>
-            <div class="panel-body">
-                Panel content
-            </div>
-        </div>
-    </div>
-    
-    <div class="col-md-4">
-        <div class="panel panel-success">
-            <div class="panel-heading">
-                <h3 class="panel-title">Chapitre</h3>
-            </div>
-            <div class="panel-body">
-                Panel content
-            </div>
-        </div>
-    </div>
-
-
+   
 </div>
 
 ::end::

@@ -1,2 +1,2 @@
-# microagri
-Base de donnée sur les microfermes - cf microagri.org
+# MicroAgri
+Base de données sur les microfermes - http://microagri.org
