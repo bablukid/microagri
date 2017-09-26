@@ -6,6 +6,7 @@ class Main extends sugoi.BaseController {
 	function doDefault() {
 		view.category = 'home';
 		view.chapitres = Question.chapitres;
+		view.getChapitre = function(k:String) return Question.chapitres.get(k);
 	}
 	
 	@admin
@@ -18,26 +19,41 @@ class Main extends sugoi.BaseController {
 	Display a question
 	**/
 	@tpl("q.mtt")
-	function doQ(qid:String){
-		var q = Question.get(qid);		
-		var f = q.getForm();
+	function doQ(chapitre:String,index:Int){
+
+		//get the questions ids
+		var group  = Question.chapitres[chapitre].ordre[index];
+		var qids = group.qs;
+		view.titre = group.titre;
+		view.desc = group.desc;
+ 		/*switch( Type.getClassName(Type.getClass(q)) ){
+			 case "String" : qids = [q];
+			 case "Array" : qids = q;
+		}*/
+		
+		//questions list
+		var qs = new Array<Question>();
+		for( qid in qids) qs.push(Question.get(qid) );
+
+		//build form
+		var f = Question.getForm(qs);
 		view.form = f;
-		view.q = q;
+		//view.q = q;
 
 		if( f.isValid() ){
 			
 			//trace(f.getData() );
 
 			//save data
-			q.save(f);
+			Question.save(f);
+
+			var next = Question.next(chapitre,index);
 
 
-			//get next
-			var next = q.getNext();
 			if(next==null){
-				throw Ok("/","Ce chapitre est terminé.");
+				throw Ok( "/" , "Ce chapitre est terminé." );
 			}else{
-				throw Ok("/q/"+next.qid,"Réponse enregistrée.");
+				throw Ok( "/q/"+next.chapitre+"/"+next.index,"Réponse enregistrée." );
 			}
 			
 
@@ -48,16 +64,19 @@ class Main extends sugoi.BaseController {
 	function doShema(){
 		Sys.print("<pre>");
 		for( chap in Question.chapitres){
-			for(qid in chap.ordre){
-				var q = Question.get(qid);
-				Sys.print("var "+q.data.label);
-				switch(q.data.type){
-					case QText : Sys.println(":SNull<SString<512>>;");
-					case QInt : Sys.println(":SNull<SInt>;");
-					case QAddress : Sys.println(":SNull<SString<512>>;");
-					case QCheckbox(_) : Sys.println(":SNull<SString<512>>;");
-					case QRadio(_) : Sys.println(":SNull<SString<32>>;");
+			for(o in chap.ordre){
+				for(qid in o.qs){
+					var q = Question.get(qid);
+					Sys.print("var "+q.data.label);
+					switch(q.data.type){
+						case QText : Sys.println(":SNull<SString<512>>;");
+						case QInt : Sys.println(":SNull<SInt>;");
+						case QAddress : Sys.println(":SNull<SString<512>>;");
+						case QCheckbox(_) : Sys.println(":SNull<SString<512>>;");
+						case QRadio(_) : Sys.println(":SNull<SString<32>>;");
+					}
 				}
+				
 			}
 		}		
 		Sys.print("</pre>");

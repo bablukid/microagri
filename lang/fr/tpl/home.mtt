@@ -1,6 +1,17 @@
 ::use 'design.mtt'::
 
 <div class="row">
+    <div class="col-md-6">
+        <p><b>Le public concerné :</b><br/>
+        Sont appelées à répondre toutes les petites structures qui mettent sur le marché des produits agricoles, même à titre gratuit, sous un statut agricole ou non, et qui se sentent comme faisant partie d’une forme d’agriculture que l’on pourrait qualifier de très petite ferme ou micro-ferme. Vous êtes aussi invités à diffuser cette enquête autour de vous, aux acteurs qui vous semblent adéquats.            
+        </p>            
+    </div>
+    <div class="col-md-6">
+        <p>  
+                <b>L’objectif :</b><br/>
+                Mieux connaître les micro-fermes dans leur nombre et leur diversité (pas uniquement dans le maraîchage)
+            </p>
+    </div>
     <div class="col-md-12">
         <div class="progress">
             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
@@ -12,7 +23,8 @@
 
 <div class="row">
 
-    ::foreach c chapitres::
+    ::foreach k chapitres.keys()::
+    ::set c = getChapitre(k)::
     <div class="col-md-4">
         <div class="panel panel-success">
             <div class="panel-img"></div>
@@ -24,7 +36,7 @@
                     <b>::c.ordre.length::</b> questions.
                 </p>
                 <p class="text-center">
-                    <a href="/q/::c.ordre[0]::" class="btn btn-default">
+                    <a href="/q/::k::/0" class="btn btn-default">
                         <span class="glyphicon glyphicon-chevron-right"></span>
                         Commencer
                     </a>

@@ -8,11 +8,15 @@ class Result extends Object{
     @:relation(userId) public var user : db.User;
 
     //généré par /shema    
-    var Nom:SNull<SString<512>>;    
+    var Nom:SNull<SString<512>>;
     var Localisation:SNull<SString<512>>;
     var Forme_juridique:SNull<SString<512>>;
     var Annee_prod:SNull<SInt>;
     var Annee_crea:SNull<SInt>;
+    var nbre_responsables:SNull<SInt>;
+    var nbre_responsables_cmt:SNull<SString<512>>;
+    var activites:SNull<SString<512>>;
+    var activites_autres:SNull<SString<512>>;
 
 
     public static function getOrCreate(user:db.User){
