@@ -6,8 +6,8 @@ enum QType{
     QString;    //réponse text 1 ligne
     QInt;       //réponse chiffrée
     QAddress;   //
-    QRadio(list:FormData<String>);   //reponse unique
-    QCheckbox(list:FormData<String>);//reponses multiples
+    QRadio(list:FormData<String>,?other:Bool);   //reponse unique
+    QCheckbox(list:FormData<String>,?other:Bool);//reponses multiples
     QYesNo; //oui ou non
 }
 
@@ -187,7 +187,7 @@ class Question{
                 {label:"Spécialité traditionnelle garantie (STG)",value:"STG"},
                 {label:"Agriculture Biologique (AB)",value:"AB"},
                 {label:"Label Rouge",value:"LR"},
-            ]),
+            ],true),
         },
         "A9-2" =>{
             label:"siqo_autres",
@@ -397,10 +397,15 @@ class Question{
             var e : sugoi.form.FormElement<Dynamic> = null;
             switch(q.data.type){
             case QText : e = new sugoi.form.elements.TextArea(q.data.label,html,v,true);
-            case QCheckbox(data) :
+            case QCheckbox(data,other) :
                 //v = "[bla,blo]"
                 if(v!=null) v = v.substr(1,v.length-2).split(",");
-                e = new sugoi.form.elements.CheckboxGroup(q.data.label,html,data,v,null,null);
+                if(other){
+                    e = new form.Checkboxes(q.data.label,html,data,v,null,null);
+                }else{
+                    e = new sugoi.form.elements.CheckboxGroup(q.data.label,html,data,v,null,null);
+                }
+                
             case QRadio(data) : e = new sugoi.form.elements.RadioGroup(q.data.label,html,data,v,null,null);
             case QInt : e = new sugoi.form.elements.IntInput(q.data.label,html,v,true);
             case QYesNo :
