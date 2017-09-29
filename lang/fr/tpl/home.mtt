@@ -23,8 +23,7 @@
 
 <div class="row">
 
-    ::foreach k chapitres.keys()::
-    ::set c = getChapitre(k)::
+    ::foreach c chapitres::
     <div class="col-md-4">
         <div class="panel panel-success">
             <div class="panel-img"></div>
@@ -36,7 +35,7 @@
                     <b>::c.ordre.length::</b> questions.
                 </p>
                 <p class="text-center">
-                    <a href="/q/::k::/0" class="btn btn-default">
+                    <a href="/q/::repeat.c.index::/0" class="btn btn-default">
                         <span class="glyphicon glyphicon-chevron-right"></span>
                         Commencer
                     </a>

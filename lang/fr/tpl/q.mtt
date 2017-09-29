@@ -1,13 +1,19 @@
 ::use 'design.mtt'::
 <div class="row">
+    <div class="col-md-12 text-center" style="font-weight:bold;color:#999;">
+        ::chapitre:: : ::num::/::total::
+    </div>
+    
+</div>
+<div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
         <div class="text-center">
-                <h3 ::cond titre!=null::>::titre::</h3>
-                <p ::cond desc!=nul::>
-                    ::desc::
-                </p>
-            </div>
+            <h3 ::cond titre!=null::>::titre::</h3>
+            <p ::cond desc!=nul::>
+                ::desc::
+            </p>
+        </div>
         
         <hr/>
         ::raw form::    

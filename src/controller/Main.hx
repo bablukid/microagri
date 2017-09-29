@@ -6,7 +6,7 @@ class Main extends sugoi.BaseController {
 	function doDefault() {
 		view.category = 'home';
 		view.chapitres = Question.chapitres;
-		view.getChapitre = function(k:String) return Question.chapitres.get(k);
+		//view.getChapitre = function(k:String) return Question.chapitres.get(k);
 	}
 	
 	@admin
@@ -15,17 +15,25 @@ class Main extends sugoi.BaseController {
 		sys.db.Admin.handler();
 	}
 
+	function doUser(d:haxe.web.Dispatch){
+		d.dispatch(new controller.User());
+	}
+
 	/**
 	Display a question
 	**/
 	@tpl("q.mtt")
-	function doQ(chapitre:String,index:Int){
+	function doQ(chapitre:Int,index:Int){
 
 		//get the questions ids
 		var group  = Question.chapitres[chapitre].ordre[index];
 		var qids = group.qs;
 		view.titre = group.titre;
 		view.desc = group.desc;
+
+		view.chapitre = Question.chapitres[chapitre].nom;
+		view.num = index+1;
+		view.total = Question.chapitres[chapitre].ordre.length;
  		/*switch( Type.getClassName(Type.getClass(q)) ){
 			 case "String" : qids = [q];
 			 case "Array" : qids = q;
@@ -53,7 +61,7 @@ class Main extends sugoi.BaseController {
 			if(next==null){
 				throw Ok( "/" , "Ce chapitre est terminé." );
 			}else{
-				throw Ok( "/q/"+next.chapitre+"/"+next.index,"Réponse enregistrée." );
+				throw Redirect( "/q/"+next.chapitre+"/"+next.index );
 			}
 			
 
@@ -69,11 +77,12 @@ class Main extends sugoi.BaseController {
 					var q = Question.get(qid);
 					Sys.print("var "+q.data.label);
 					switch(q.data.type){
-						case QText : Sys.println(":SNull<SString<512>>;");
+						case QText,QString : Sys.println(":SNull<SString<512>>;");
 						case QInt : Sys.println(":SNull<SInt>;");
 						case QAddress : Sys.println(":SNull<SString<512>>;");
 						case QCheckbox(_) : Sys.println(":SNull<SString<512>>;");
 						case QRadio(_) : Sys.println(":SNull<SString<32>>;");
+						case QYesNo : Sys.println(":SNull<SString<3>>;");
 					}
 				}
 				
@@ -82,6 +91,22 @@ class Main extends sugoi.BaseController {
 		Sys.print("</pre>");
 	}
 
+	@admin @tpl('reponses.mtt')
+	function doReponses(){
+		view.reponses = db.Result.manager.all();
+
+		var k = [];
+
+		for ( c in Question.chapitres){
+			for( qs in c.ordre){
+				for( q in qs.qs ) k.push( Question.get(q).data.label );
+			}
+		}
+		
+		view.keys = k;
+		view.Reflect = Reflect;
+
+	}
 
 	function doInstall() {
 		

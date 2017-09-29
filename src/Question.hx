@@ -2,11 +2,13 @@ import sugoi.form.elements.*;
 import sugoi.form.ListData;
 
 enum QType{
-    QText;      //réponse texte
+    QText;      //réponse texte bloc
+    QString;    //réponse text 1 ligne
     QInt;       //réponse chiffrée
     QAddress;   //
     QRadio(list:FormData<String>);   //reponse unique
     QCheckbox(list:FormData<String>);//reponses multiples
+    QYesNo; //oui ou non
 }
 
 
@@ -20,8 +22,9 @@ class Question{
     /**
     Structure générale des chapitres
     **/
-    public static var chapitres : Map<String, { nom:String,ordre:Array<{qs:Array<String>,?titre:String,?desc:String}> }>= [
-        "A"=>{
+    public static var chapitres : Array<{ id:String,nom:String,ordre:Array<{qs:Array<String>,?titre:String,?desc:String}> }>= [
+        {
+            id:"A",
             nom : "Généralités sur la ferme",
             ordre : [
                 {qs:["A1"],titre:"Nom",desc:"Nom de la ferme. Si pas de nom, écrire le statut juridique ainsi que le nom de famille"},
@@ -35,6 +38,15 @@ class Question{
                 {qs:["A9-1","A9-2","A9-3"],titre:"SIQO(s), label(s), marque(s)",desc:"Garantie permettant de reconnaître les produits qui bénéficient d’un signe officiel d'identification de la qualité et de l’origine."},
                 {qs:["A10-1","A10-2","A10-3","A10-4","A10-5"],titre:"Mode de faire-valoir des terres et des bâtiments",desc:"Direct (propriétaire), indirect (location) ou mixte (parcelles en location et en propriété). Exemples pour la catégorie « Autres » : terres utilisées à titre gratuit, illégalement, etc."},
             ],
+        },
+        {
+            id:"B",
+            nom:"Généralités sur le(s) reponsable(s) de la ferme",
+            ordre:[
+                {qs:["B1","B2","B3","B4"],titre:"",desc:""},
+                {qs:["B5-1","B5-2"],titre:"Formation et Expérience",desc:""},
+                {qs:["B6-1","B6-2","B6-3","B6-4","B6-5"],titre:"Parcours",desc:""},
+            ]
         }
     ];
 
@@ -51,7 +63,7 @@ class Question{
             label:"Nom",
             q:"Quel est le nom de votre ferme ?",
             desc:"",                    
-            type:QText,
+            type:QString,
         },
         "A2" =>{
             label:"Localisation",
@@ -154,7 +166,7 @@ class Question{
         },
         "A8-3" =>{
             label:"benevoles_num",
-            q:"Par an, combien accueillez-vous de bénévole(s) (amapiens, wwofeurs, etc.) ? ",
+            q:"Par an, combien accueillez-vous de bénévole(s) (amapiens, woofeurs, etc.) ? ",
             desc:"Donner un nombre approximatif et une fréquence (ex. 4 stagiaires d’1 mois de mars à septembre)",                   
             type:QText,
         },
@@ -162,7 +174,7 @@ class Question{
             label:"benevoles_temps",
             q:"Au total, combien de temps de travail cela représente-t-il ?",
             desc:"En ETP ou en heures",                   
-            type:QText,
+            type:QString,
         },
         "A9-1" =>{
             label:"siqo",
@@ -228,6 +240,118 @@ class Question{
             desc:"",                   
             type:QText,
         },
+        "B1"=>{
+            label:"nom_responsable",
+            q:"Nom",
+            desc:"",
+            type:QString,
+        },
+        "B2"=>{
+            label:"prenom_responsable",
+            q:"Prénom",
+            desc:"",
+            type:QString,
+        },
+        "B3"=>{
+            label:"sexe_responsable",
+            q:"Sexe",
+            desc:"",
+            type:QRadio([{label:"Homme",value:"M"},{label:"Femme",value:"F"}]),
+        },
+        "B4"=>{
+            label:"age_responsable",
+            q:"Age",
+            desc:"",
+            type:QInt,
+        },
+        "B5-1"=>{
+            label:"formation",
+            q:"Quelle est la formation agricole que vous avez reçue ?",
+            desc:"",
+            type:QCheckbox([
+                {label:"Aucune",value:"Aucune"},
+                {label:"Ingénieur(e) agri/agro",value:"Inge"},
+                {label:"BPH",value:"BPH"},
+                {label:"BTSA",value:"BTSA"},
+                {label:"BPREA",value:"BPREA"}, 
+                {label:"BTA",value:"BTA"}, 
+                {label:"Bac professionnel Agroéquipements",value:"BP A"},
+                {label:"Bac professionnel Conduite et gestion de l’exploitation agricole",value:"BP CGEA"},
+                {label:"Bac professionnel Productions horticoles",value:"BP PH"},
+                {label:"Bac technologique S.T.A.V.",value:"BT STAV"}, 
+            ])
+        },
+        "B5-2"=>{
+            label:"experiences",
+            q:"Citez les expériences agricoles acquises avant la création de votre ferme ?",
+            desc:"",
+            type:QText
+        },
+        "B6-1"=>{
+            label:"parcours",
+            q:"Etes-vous issus d’une famille d’agriculteur ?",
+            desc:"",
+            type:QRadio([
+                {label:"Oui, de la première génération",value:"OUI1"},
+                {label:"Oui, de la deuxième génération",value:"OUI2"},
+                {label:"Non",value:"NON"},
+            ])
+        },
+        "B6-2"=>{
+            label:"conjointe",
+            q:"Si oui, votre conjoint(e) est-il/elle sur la ferme familiale ?",
+            desc:"",
+            type:QYesNo
+        },
+        "B6-3"=>{
+            label:"heritage",
+            q:"Avez-vous hérité ?",
+            desc:"",
+            type:QYesNo
+        },
+        "B6-4"=>{
+            label:"reconversion",
+            q:"Est-ce une reconversion professionnelle ?",
+            desc:"",
+            type:QYesNo
+        },
+        "B6-5"=>{
+            label:"ancien_metier",
+            q:"Quel(s) métier(s) et quelle(s) fonction(s) occupiez-vous ?",
+            desc:"",
+            type:QString
+        },
+        "B7"=>{
+            label:"responsabilites",
+            q:"Quel est votre rôle sur la ferme ?",
+            desc:"",
+            type:QCheckbox([
+                {label:"Administratif",value:"Administratif"},
+                {label:"Communication",value:"Communication"},
+                {label:"Production",value:"Production"},
+                {label:"Transformation",value:"Transformation"},
+                {label:"Commercialisation",value:"Commercialisation"},
+                {label:"Apport de capital",value:"Apport de capital"},
+            ])
+        },
+        "B8-1"=>{
+            label:"temps_plein",
+            q:"Etes-vous à temps plein ?",
+            desc:"",
+            type:QYesNo,
+        },
+        "B8-2"=>{
+            label:"temps",
+            q:"Combien de temps en heures par semaine prend votre travail de responsable de la ferme ? (approximativement) ",
+            desc:"",
+            type:QInt,
+        },
+        "B8-3"=>{
+            label:"temps_cmt",
+            q:"Commentaire",
+            desc:"",
+            type:QText,
+        },
         
     ];
 
@@ -242,6 +366,7 @@ class Question{
     public static function getForm(qs:Array<Question>){
 
         var form = new sugoi.form.Form("q");
+        var r = db.Result.getOrCreate(App.current.user);
 
         //define a form render method
         form.toString = function(){
@@ -268,13 +393,27 @@ class Question{
         for ( i in 0...qs.length){
             var q = qs[i];
             var html = "<h4>"+q.data.q+"</h4><p>"+q.data.desc+"</p>";
+            var v : Dynamic = Reflect.field(r,q.data.label);
+            var e : sugoi.form.FormElement<Dynamic> = null;
             switch(q.data.type){
-            case QText : form.addElement(new sugoi.form.elements.TextArea(q.data.label,html,null,true) );
-            case QCheckbox(d) : form.addElement(new sugoi.form.elements.CheckboxGroup(q.data.label,html,d,null,null,null) );
-            case QRadio(d) : form.addElement(new sugoi.form.elements.RadioGroup(q.data.label,html,d,null,null,null) );
-            case QInt : form.addElement(new sugoi.form.elements.IntInput(q.data.label,html,null,true) );
-            default : form.addElement(new sugoi.form.elements.TextArea(q.data.label,html,null,true) );
+            case QText : e = new sugoi.form.elements.TextArea(q.data.label,html,v,true);
+            case QCheckbox(data) :
+                //v = "[bla,blo]"
+                if(v!=null) v = v.substr(1,v.length-2).split(",");
+                e = new sugoi.form.elements.CheckboxGroup(q.data.label,html,data,v,null,null);
+            case QRadio(data) : e = new sugoi.form.elements.RadioGroup(q.data.label,html,data,v,null,null);
+            case QInt : e = new sugoi.form.elements.IntInput(q.data.label,html,v,true);
+            case QYesNo :
+                var data = [{"label":"Oui",value:"OUI"},{label:"Non",value:"NON"}];
+                e = new sugoi.form.elements.RadioGroup(q.data.label,html,data,v,null,null);
+                untyped e.vertical = false; 
+            default : e = new sugoi.form.elements.StringInput(q.data.label,html,v,true);
             }
+
+            if(q.data.label.indexOf("cmt")>-1 || q.data.label.indexOf("autre")>-1) e.required = false;
+
+            form.addElement(e);
+            
         }      
 
         return form;
@@ -292,7 +431,7 @@ class Question{
         return null;
     }*/
 
-    public static function  next(c:String,i:Int){
+    public static function  next(c:Int,i:Int){
 
         if(Question.chapitres[c]==null) return null;
         if(Question.chapitres[c].ordre[i+1]==null) return null;

@@ -15,5 +15,10 @@
 	maintain="0"
 	cachetpl="0"
 
-	key="whateveryouwantsdfsjlfirvn"
+	key="whateveryouwant"
+
+	smtp_host="ssl0.ovh.net"
+	smtp_user="email@host.tld"
+	smtp_port="465"
+	smtp_pass="password"
 />
