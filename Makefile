@@ -1,4 +1,4 @@
-ROPTS=-zav --no-p --chmod=u=rwX,g=rX,o= --delete --exclude=html/.htaccess --exclude=.svn --exclude=.git --exclude=*.mtt --exclude=html/css --exclude=html/file --exclude=*node_modules* --exclude=*.php
+ROPTS=-zav --no-p --chmod=u=rwX,g=rX,o= --delete --exclude=html/.htaccess --exclude=.svn --exclude=.git --exclude=*.mtt --exclude=html/file --exclude=*node_modules* --exclude=*.php
 LANG=fr
 
 compile:

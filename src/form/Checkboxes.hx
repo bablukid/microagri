@@ -14,9 +14,12 @@ class Checkboxes extends sugoi.form.elements.CheckboxGroup{
         
         //find value for "others"
         var x = [];
-        for( s in selected){
-            if(!Lambda.exists(data,function(x) return x.value==s)) x.push(s);
+        if(selected!=null){
+            for( s in selected){
+                if(!Lambda.exists(data,function(x) return x.value==s)) x.push(s);
+            }
         }
+        
         var x = x.join(",");
 
         other = new sugoi.form.elements.StringInput("other","other",x);

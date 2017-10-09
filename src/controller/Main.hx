@@ -75,12 +75,18 @@ class Main extends sugoi.BaseController {
 			for(o in chap.ordre){
 				for(qid in o.qs){
 					var q = Question.get(qid);
+					if(q==null || q.data==null) continue;
 					Sys.print("var "+q.data.label);
 					switch(q.data.type){
-						case QText,QString : Sys.println(":SNull<SString<512>>;");
+						case QText,QString : 
+						if(q.data.label.indexOf("_cmt")>-1){
+							Sys.println(":SNull<SText>;");
+						}else{
+							Sys.println(":SNull<SString<128>>;");
+						}						
 						case QInt : Sys.println(":SNull<SInt>;");
-						case QAddress : Sys.println(":SNull<SString<512>>;");
-						case QCheckbox(_) : Sys.println(":SNull<SString<512>>;");
+						case QAddress : Sys.println(":SNull<SString<256>>;");
+						case QCheckbox(_) : Sys.println(":SNull<SString<128>>;");
 						case QRadio(_) : Sys.println(":SNull<SString<32>>;");
 						case QYesNo : Sys.println(":SNull<SString<3>>;");
 					}
