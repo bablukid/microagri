@@ -12,9 +12,7 @@
 		
 		<!-- BOOTSTRAP -->		
 		<!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
-		<!-- Optional theme -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+		<link rel="stylesheet" href="/css/bootstrap.css"/>
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		
@@ -23,13 +21,17 @@
 
 	<body class="container">
 		
-		<h1>::NAME::</h1>
+		<div class="text-center">
+			<h1>::NAME::</h1>
+		</div>
+		
 			
 		<!-- navbar -->
 		<div class="collapse navbar-collapse" id="cagette-navbar">
 				
-			<ul class="nav nav-tabs navbar-left">
-				<li ::attr class if(section=="home" )  'active' ::><a href="/">Home</a></li>
+			<ul class="nav navbar-nav navbar-left">
+				<li ::attr class if(section=="home" )  'active' ::><a href="/">Accueil</a></li>
+
 				::if user!=null && user.isAdmin()::
 				<li><a href="/reponses">Réponses</a></li>
 				<li><a href="/db">Database</a></li>
@@ -38,7 +40,7 @@
 				
 			<ul class="nav navbar-nav navbar-right">
 				::if user!=null::
-				<li>::user.name::</li>		
+				<li>Connecté en tant que <b>::user.name::</b><!--<a href="/user/logout" >Déconnexion</a>--></li>		
 				::else::
 				<li><a href="/user/login">Connexion</a></li>		
 				::end::

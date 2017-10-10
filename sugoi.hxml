@@ -3,6 +3,7 @@
 -lib sugoi
 -lib record-macros
 -lib smtpmailer
+-lib thx.csv
 -cp src
 -neko html/index.n
 -main App

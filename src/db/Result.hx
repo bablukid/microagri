@@ -8,7 +8,7 @@ class Result extends Object{
     @:relation(userId) public var user : db.User;
 
     //généré par /shema    
-var Nom:SNull<SString<128>>;
+public var Nom:SNull<SString<128>>;
 var Localisation:SNull<SString<256>>;
 var Forme_juridique:SNull<SString<128>>;
 var Annee_prod:SNull<SInt>;

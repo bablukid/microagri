@@ -10,7 +10,7 @@ div.panel > div.panel-heading {
 } 
 
 div.panel > div.panel-img {
-    background: url("/img/bg.jpg") no-repeat center /*fixed*/;
+    background: url("/img/bg0.jpg") no-repeat center /*fixed*/;
     -webkit-background-size: cover; /* pour anciens Chrome et Safari */
     background-size: cover; /* version standardisée */
     height: 120px;

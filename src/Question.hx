@@ -11,6 +11,8 @@ enum QType{
     QYesNo; //oui ou non
 }
 
+typedef Chapitre = { id:String,nom:String,ordre:Array<{qs:Array<String>,?titre:String,?desc:String}> };
+
 
 class Question{
 
@@ -21,7 +23,7 @@ class Question{
     /**
     Structure générale des chapitres
     **/
-    public static var chapitres : Array<{ id:String,nom:String,ordre:Array<{qs:Array<String>,?titre:String,?desc:String}> }>= [
+    public static var chapitres : Array<Chapitre>= [
         {
             id:"A",
             nom : "Généralités sur la ferme",
@@ -40,7 +42,7 @@ class Question{
         },
         {
             id:"B",
-            nom:"Généralités sur le(s) reponsable(s) de la ferme",
+            nom:"Généralités sur le(s) responsable(s) de la ferme",
             ordre:[
                 {qs:["B1","B2","B3","B4"],titre:"",desc:""},
                 {qs:["B5-1","B5-2"],titre:"Formation et Expérience",desc:""},
@@ -1017,10 +1019,28 @@ class Question{
        var r = db.Result.getOrCreate(App.current.user);
 
         f.toSpod(r);
-
-        //Reflect.setField(r,this.data.label,f.getValueOf("q"));
-
         r.update();
+
+    }
+
+
+    public static function getAnswers(chap:Chapitre):{num:Int,total:Int,percent:Int}{
+        
+        var out = {num:0,total:0,percent:0};
+        if(App.current.user==null) return out;
+        var r = db.Result.getOrCreate(App.current.user);
+        
+        //var chap = Question.chapitres[chapIndex];
+        for( o in chap.ordre){
+            for( qid in o.qs){
+                var q = Question.get(qid);
+                if(q.data.label.indexOf("_cmt")>-1) continue;
+                out.total ++;
+                if( Reflect.getProperty(r,q.data.label)!=null) out.num++;
+            }
+        }
+        out.percent = Math.round(out.num/out.total*100);
+        return out;
 
     }
 
