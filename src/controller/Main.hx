@@ -35,6 +35,8 @@ class Main extends sugoi.BaseController {
 	@tpl("q.mtt")
 	function doQ(chapitre:Int,index:Int){
 
+		if(app.user==null) throw Redirect("/init");
+
 		//get the questions ids
 		var group  = Question.chapitres[chapitre].ordre[index];
 		var qids = group.qs;
@@ -76,6 +78,31 @@ class Main extends sugoi.BaseController {
 			
 
 		}
+	}
+
+	/**
+	create a user
+	**/
+	@tpl("form.mtt")
+	function doInit(){
+
+		var f = new sugoi.form.Form("user");
+		f.addElement(new sugoi.form.elements.Html("Avant de remplir le questionnaire, merci de saisir vos coordonnées :"));
+		f.addElement(new sugoi.form.elements.StringInput("name","Nom",null,true));
+		f.addElement(new sugoi.form.elements.StringInput("email","Email",null,true));
+		//f.addElement(new sugoi.form.elements.StringInput("phone","Téléphone",null,true));
+		if(f.isValid()){
+			var u = new db.User();
+			u.name = f.getValueOf("name");
+			u.email = f.getValueOf("email");
+			u.insert();
+			App.current.session.setUser(u);
+			throw Redirect("/");
+		}
+
+		view.form = f;
+
+
 	}
 
 	@admin

@@ -23,18 +23,19 @@ class App extends sugoi.BaseApp {
 	
 	public static function getMailer():sugoi.mail.IMailer {
 		
-		if (App.config.DEBUG){	
+		/*if (App.config.DEBUG){	
 			return new sugoi.mail.DebugMailer();
-		}
+		}*/
 			
 		var conf = {
 			smtp_host:App.config.get("smtp_host"),
-			smtp_port:App.config.get("smtp_port"),
+			smtp_port:Std.parseInt(App.config.get("smtp_port")),
 			smtp_user:App.config.get("smtp_user"),
 			smtp_pass:App.config.get("smtp_pass")			
 		};
 		
-		return new sugoi.mail.SmtpMailer().init(conf);
+		//return new sugoi.mail.SmtpMailer().init(conf);
+		return new sugoi.mail.MandrillMailer().init(conf);
 	}
 	
 	

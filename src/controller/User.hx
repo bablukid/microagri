@@ -35,6 +35,7 @@ class User extends sugoi.BaseController
 		}
 
         view.title = "Connexion";
+		view.text = "<a href='/user/forgottenPassword'>Mot de passe oublié ?</a>";
         view.form = f;
 	}
 	
@@ -83,7 +84,11 @@ class User extends sugoi.BaseController
 			m.addRecipient(user.email, user.name);
 			m.title = App.config.NAME+" : Changement de mot de passe";
 			m.setHtmlBodyWithTemplate('mail/forgottenPassword.mtt', { user:user, link:'http://' + App.config.HOST + '/user/forgottenPassword/'+key+"/"+user.id } );
-			mailer.send(m);
+			mailer.send(m,function(mailerRes){
+				App.current.logError("MailerResult : "+mailerRes.toString());
+			});
+			Sys.sleep(10);
+			throw Ok("/user/login","Un lien pour changer votre mot de passe vous a été envoyé sur <b>"+user.email+"</b>");
 		}
 		
 		if (key != null && u!=null) {
