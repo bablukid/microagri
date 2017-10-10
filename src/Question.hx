@@ -1,4 +1,3 @@
-import sugoi.form.elements.*;
 import sugoi.form.ListData;
 
 enum QType{
@@ -948,7 +947,7 @@ class Question{
             }                                 
 
             //submit button
-            form.submitButton = new Submit('submit',  'Valider');
+            form.submitButton = new sugoi.form.elements.Submit('submit',  'Valider');
             form.submitButton.parentForm = form;            
             s.add( "<div style='margin-top:8px;' class='text-center'>"+ form.submitButton.render() + "</div>");            
             s.add( form.getCloseTag() );
