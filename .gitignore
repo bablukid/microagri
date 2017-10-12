@@ -1,4 +1,4 @@
-/lang/fr/tmp/*
-/lang/master/tmp/*
+/lang/fr/tmp/*.n
+/lang/master/tmp/*.n
 html/index.n
 config.xml
