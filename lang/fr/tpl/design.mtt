@@ -5,10 +5,10 @@
 		<title>::NAME::</title>
 			
 		<link rel="stylesheet" type="text/css" href="/css/::getVariable('css')::/style.css"/>
-		<script type="text/javascript" src="/js/::getVariable('js')::/app.js"></script>
+		<!--<script type="text/javascript" src="/js/::getVariable('js')::/app.js"></script>-->
 		
-		<!-- JQUERY -->
-		<script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+		<!-- JQUERY 
+		<script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>-->
 		
 		<!-- BOOTSTRAP -->		
 		<!-- Latest compiled and minified CSS -->
@@ -19,14 +19,12 @@
 		
 	</head>
 
-	<body class="container">
+	<body class="container-fluid">
 		
-		<div class="text-center">
+		<!--<div class="text-center">
 			<h1>::NAME::</h1>
-			<span style="font-size:0.9em;">
-				L'ensemble des données de recensement sont confidentielles
-			</span>
-		</div>
+			<p><b>Sur le territoire girondin</b></p>
+		</div>-->
 		
 			
 		<!-- navbar -->
@@ -73,7 +71,7 @@
 		<!-- main content -->
 		::raw __content__::		
 		
-		<div class="row">
+		<div class="row" style="margin-top:64px;">
 			<div class="col-md-12 text-center">
 				<hr/>
 				<a href="http://microagri.org" target="_blank">Projet MicroAgri</a>				

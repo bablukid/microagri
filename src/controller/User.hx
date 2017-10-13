@@ -23,6 +23,7 @@ class User extends sugoi.BaseController
         e.inputType = ITPassword;
         f.addElement(e);
 		
+		
 		if (f.isValid()) {
             var p = haxe.crypto.Md5.encode(App.config.KEY + Std.string(f.getValueOf("pass")) );
 			var user = db.User.manager.select($email == Std.string(f.getValueOf("email")) && $pass == p, true);

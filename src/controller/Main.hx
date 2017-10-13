@@ -2,8 +2,8 @@ package controller;
 
 class Main extends sugoi.BaseController {
 
-	@tpl("home.mtt")
-	function doDefault() {
+	@tpl("qhome.mtt")
+	function doQhome() {
 		view.category = 'home';
 		view.chapitres = Question.chapitres;
 		view.getAnswers = Question.getAnswers;
@@ -12,13 +12,81 @@ class Main extends sugoi.BaseController {
 			var r = db.Result.getOrCreate(App.current.user);
 			view.ferme = r.Nom;
 		}
-		
 
 		var percent = 0;
 		for( c in Question.chapitres ) percent += Question.getAnswers(c).percent;
 		view.percent = Math.round(percent/Question.chapitres.length);
 	}
 	
+	@tpl("home.mtt")
+	function doDefault(){
+
+	}
+
+	@tpl("form.mtt")
+	function doIdentifier(){
+		var f = new sugoi.form.Form("identif");
+		view.title ="Identifier une ou plusieurs micro-fermes";
+		//f.addElement(new sugoi.form.elements.Html("Avant de remplir le formulaire, merci de saisir vos coordonnées :"));
+		f.addElement(new sugoi.form.elements.StringInput("nom","Nom de la ferme",null,true));
+		f.addElement(new sugoi.form.elements.StringInput("responsables","Nom du ou des responsable(s)",null,false));
+		f.addElement(new sugoi.form.elements.StringInput("email","Email du responsable",null,true));
+		f.addElement(new sugoi.form.elements.StringInput("phone","Téléphone du responsable",null,false));
+		f.addElement(new sugoi.form.elements.StringInput("localisation","Adresse postale",null,true));
+		
+		var data = [
+			{label:"Production",value:"production"},
+			{label:"Transformation",value:"transformation"},
+			{label:"Commercialisation",value:"commercialisation"},
+			{label:"Accueil du public",value:"accueil"},                
+		];
+		f.addElement(new sugoi.form.elements.CheckboxGroup("activite","Quelles sont les activités de la ferme ?",data,null,true) );
+		
+		var data = [
+			{label:"Viticulture",value:"viticulture"},
+			{label:"Maraîchage",value:"maraichage"},
+			{label:"Arboriculture",value:"arboriculture"},
+			{label:"Céréaliculture",value:"cerealiculture"},
+			{label:"Plantes à Parfum, Aromatiques et Médicinales",value:"aromatiques"},
+			{label:"Bovins",value:"bovins"},
+			{label:"Caprins",value:"caprins"},
+			{label:"Ovins",value:"ovins"},
+			{label:"Équidés",value:"equides"},
+			{label:"Porcins",value:"porcins"},
+			{label:"Elevages mixtes",value:"elevage_mixte"},
+			{label:"Elevages spécialisés (apiculture, animaux domestiques ou exotiques…)",value:"elevage_spec"},
+			{label:"Petit élevage",value:"elevage_petit"},
+			{label:"Pisciculture",value:"pisciculture"},
+			{label:"Conchyliculture",value:"conchyliculture"},
+			{label:"Activités de pêche maritime à pied",value:"peche_a_pied"},
+		];
+		f.addElement(new sugoi.form.elements.CheckboxGroup("activite_agricole","Quelles sont les activités agricoles de la ferme ?",data,null,true) );
+		
+		f.addElement(new sugoi.form.elements.Html("Donner ici les caractéristiques (surface, taille du cheptel, mode(s) de commercialisation, certification(s), etc.) de la ferme que vous souhaitez identifier comme étant susceptible d’être une micro-ferme."));
+		f.addElement(new sugoi.form.elements.TextArea("elements","Caractéristiques",null,true));
+
+		if(f.isValid()){
+			var u = new db.Identifier();
+			u.nom = f.getValueOf("nom");
+			u.localisation = f.getValueOf("localisation");
+			u.responsables = f.getValueOf("responsables");
+			u.email = f.getValueOf("email");
+			u.phone = f.getValueOf("phone");
+			u.elements = f.getValueOf("elements");
+			u.activite = f.getValueOf("activite").join(",");
+			u.activite_agricole = f.getValueOf("activite_agricole").join(",");
+			u.user = app.user;
+			u.insert();
+			
+			throw Ok("/","Merci de nous avoir aidé à identifier des micro-fermes !");
+		}
+
+		view.form = f;
+
+	}
+
+
+
 	@admin
 	function doDb(d:haxe.web.Dispatch) {
 		d.parts = []; //disable haxe.web.Dispatch
@@ -71,7 +139,7 @@ class Main extends sugoi.BaseController {
 
 
 			if(next==null){
-				throw Ok( "/" , "Ce chapitre est terminé." );
+				throw Ok( "/qhome" , "Ce chapitre est terminé." );
 			}else{
 				throw Redirect( "/q/"+next.chapitre+"/"+next.index );
 			}
@@ -87,14 +155,15 @@ class Main extends sugoi.BaseController {
 	function doInit(){
 
 		var f = new sugoi.form.Form("user");
-		f.addElement(new sugoi.form.elements.Html("Avant de remplir le questionnaire, merci de saisir vos coordonnées :"));
+		f.addElement(new sugoi.form.elements.Html("Avant de remplir le formulaire, merci de saisir vos coordonnées :"));
 		f.addElement(new sugoi.form.elements.StringInput("name","Nom",null,true));
 		f.addElement(new sugoi.form.elements.StringInput("email","Email",null,true));
-		//f.addElement(new sugoi.form.elements.StringInput("phone","Téléphone",null,true));
+		f.addElement(new sugoi.form.elements.StringInput("phone","Téléphone",null,true));
 		if(f.isValid()){
 			var u = new db.User();
 			u.name = f.getValueOf("name");
 			u.email = f.getValueOf("email");
+			u.phone = f.getValueOf("phone");
 			u.insert();
 			App.current.session.setUser(u);
 			throw Redirect("/");

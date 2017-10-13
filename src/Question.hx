@@ -81,13 +81,13 @@ class Question{
             id:"E",
             nom:"Exercer une activité agricole professionnelle, diversifiée et de petite dimension",
             ordre:[
-                {qs:["E1-1","E1-2","E1-3","E1-4"],titre:"Taille",desc:""},
+                {qs:["E1-1","E1-3","E1-4"],titre:"Taille",desc:""},
                 {qs:["E2-1","E2-2","E2-3"],titre:"Volume d'activité",desc:""},
             ]
         },
         {
             id:"F",
-            nom:"tendre vers l'autonomie",
+            nom:"Tendre vers l'autonomie",
             ordre:[
                 {qs:["F1-1","F1-2","F1-3"],titre:"Maîtrise des moyens de production",desc:"D’après la FAO, il s’agit de la main-d’œuvre, des bâtiments agricoles, des machines ou animaux de trait utilisés pour rendre sa ferme autonome. Par extension, nous prenons en compte le foncier, l’approvisionnement en énergie, en semence et en alimentation du bétail. Ex : la fabrication par soi-même des aliments des animaux de la ferme, installation de panneaux solaire, etc. Le terme « maitriser » peut renvoyer à la notion d’autoproduction, d’auto-construction (semences, plants, engrais, foin, matériel, bâtiments, etc.)."},
                 {qs:["F2-1","F2-2","F2-3"],titre:"Stratégie de développement OU plutôt « Rythme d’évolution »",desc:"Renseigne sur la vitesse de réalisation des actions en faveur des objectifs de la ferme. Par ex., dans le cas d’une expérimentation à la ferme de techniques, le choix peut être fait : - de mettre en œuvre la technique sans tester mais sur la confiance de lectures et/ou conseils - de tester une ou plusieurs pratiques, d’attendre plus ou moins longtemps pour l’adopter voire d’attendre que des références techniques soient publiées.Ces choix traduisent un rythme d’évolution plus ou moins progressif."},
@@ -705,12 +705,12 @@ class Question{
             desc:"en mètres-carré",
             type:QInt
         },
-        "E1-2"=>{
+        /*"E1-2"=>{
             label:"surface_utile",
             q:"Surface Agricole Utile",
             desc:"en mètres-carré",
             type:QInt
-        },
+        },*/
         "E1-3"=>{
             label:"surface_par_type",
             q:"Surface par type d’activité agricole (cf. liste MSA) Si élevage, nombre de tête",
