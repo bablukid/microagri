@@ -56,7 +56,6 @@ class User extends sugoi.BaseController
 	@tpl("form.mtt")
 	function doForgottenPassword(?key:String,?u:db.User){
 		var step = 1;
-		var error : String = null;
 		var url = "/user/forgottenPassword";
 		
 		//ask for mail
@@ -67,7 +66,7 @@ class User extends sugoi.BaseController
 		var chpassform = new Form("chpass");
 		chpassform.addElement(new StringInput("pass1","Votre nouveau mot de passe"));
 		chpassform.addElement(new StringInput("pass2", "Retapez votre mot de passe pour vérification"));
-		var inp = new Input("uid", u == null?'':Std.string(u.id));
+		var inp = new IntInput("uid","uid", u == null?null:u.id);
 		inp.inputType = ITHidden;
 		chpassform.addElement(inp);
 		
@@ -78,30 +77,32 @@ class User extends sugoi.BaseController
 			var email : String = askmailform.getValueOf("email");
 			var user = db.User.manager.select(email == $email, false);			
 			if (user == null) throw Error(url, "Cet email n'est lié à aucun compte connu");
+
+			var token :String  = haxe.crypto.Md5.encode(Std.string(Std.random(999999)));
+			sugoi.db.Cache.set(token,email,60*60*24*3);
 			
             var mailer = App.getMailer();
 			var m = new sugoi.mail.Mail();
 			m.setSender(App.config.get("webmaster_email"), App.config.get("webmaster_name"));
 			m.addRecipient(user.email, user.name);
 			m.title = App.config.NAME+" : Changement de mot de passe";
-			m.setHtmlBodyWithTemplate('mail/forgottenPassword.mtt', { user:user, link:'http://' + App.config.HOST + '/user/forgottenPassword/'+key+"/"+user.id } );
+			m.setHtmlBodyWithTemplate('mail/forgottenPassword.mtt', { user:user, link:'http://' + App.config.HOST + '/user/forgottenPassword/'+token+"/"+user.id } );
 			mailer.send(m,function(mailerRes){
 				App.current.logError("MailerResult : "+mailerRes.toString());
 			});
-			Sys.sleep(10);
+			//Sys.sleep(10);
 			throw Ok("/user/login","Un lien pour changer votre mot de passe vous a été envoyé sur <b>"+user.email+"</b>");
 		}
 		
 		if (key != null && u!=null) {
 			//check key and propose to change pass
 			step = 3;
-
-			var m = new sugoi.mail.Mail();
-			m.setRecipient(u.email, u.name, u.id);
-			if (m.getKey() == key) {
+			
+			var email = sugoi.db.Cache.get(key);
+			if (email == u.email) {
 				view.form = chpassform;
 			}else {
-				error = "bad request";
+				throw Error("/user/login","Requête invalide");
 			}
 		}
 		
@@ -110,15 +111,17 @@ class User extends sugoi.BaseController
 			//change pass
 			step = 4;
 			
-			if ( askmailform.getValueOf("pass1") == askmailform.getValueOf("pass2")) {
+			if ( chpassform.getValueOf("pass1") == chpassform.getValueOf("pass2")) {
 				
-				var uid = Std.parseInt( askmailform.getValueOf("uid") );
+				var uid = Std.parseInt( chpassform.getValueOf("uid") );
 				var user = db.User.manager.get(uid, true);
-				user.pass = StringTools.trim(askmailform.getValueOf("pass1"));
+				var pass = haxe.crypto.Md5.encode(App.config.KEY + Std.string(chpassform.getValueOf("pass1"))); 
+				user.pass = pass;
 				user.update();
+				throw Ok("/user/login","Votre mot de passe a été modifié, vous pouvez maintenant vous connecter avec.");
 				
 			}else {
-				error = "Vous devez saisir deux fois le même mot-de-passe";
+				throw Error("/user/login","Vous devez saisir deux fois le même mot-de-passe");
 			}
 		}
 			
@@ -127,7 +130,6 @@ class User extends sugoi.BaseController
 		}
 		
 		view.step = step;
-		view.error = error;
 		
 	}
 	

@@ -219,25 +219,45 @@ class Main extends sugoi.BaseController {
 		view.keys = k;
 		view.Reflect = Reflect;
 
-
 		if(App.current.params.get("csv")=="1"){
-
-			//var data = [];
-
-			/*for( r in reponses ){
-				var row = [];
-				for( x in k ) row.push(Reflect.getProperty(r,x));
-				data.push(row);
-			}*/
-			
 			printCsvData(Lambda.array(reponses),k,"Reponses.csv");
-
 		}
+	}
 
+	@admin @tpl('signalements.mtt')
+	function doSignalements(){
+		var reponses = db.Identifier.manager.all();
+		view.reponses = reponses;
+
+		var h = ["nom","localisation","responsables","email","phone","elements","activite","activite_agricole"];
+		view.keys = h;
+		view.Reflect = Reflect;
+		if(App.current.params.get("csv")=="1"){
+			printCsvDataFromObjects(Lambda.array(reponses),h,"Signalements.csv");
+		}
 	}
 
 
-	public function printCsvData(data:Array<Dynamic>,headers:Array<String>,fileName:String) {
+	private function printCsvDataFromObjects(data:Array<Dynamic>,headers:Array<String>,fileName:String) {
+		
+		App.current.setTemplate(null);
+		sugoi.Web.setHeader("Content-type", "text/csv");
+		sugoi.Web.setHeader('Content-disposition', 'attachment;filename="$fileName.csv"');
+		
+		Sys.println(headers.join(","));
+		
+		for (d in data) {
+			var row = [];
+			for ( f in headers){
+				var v = Reflect.getProperty(d, f);
+				row.push( "\""+(v==null?"":v)+"\"");	
+			}
+			Sys.println(row.join(","));
+		}
+		return true;		
+	}
+
+	private function printCsvData(data:Array<Dynamic>,headers:Array<String>,fileName:String) {
 		
 		App.current.setTemplate(null);
 		sugoi.Web.setHeader("Content-type", "text/csv");
