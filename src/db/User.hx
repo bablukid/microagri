@@ -24,12 +24,14 @@ class User extends Object {
 	public var cdate : SDate; 				//creation
 	public var ldate : SNull<SDateTime>;	//derniere connexion
 	public var rights : SFlags<UserFlags>;
+	public var newsletter : SBool;
 	
 	override public function new(){
 		super();
 		this.cdate = Date.now();
 		this.rights = cast 0;	
 		lang = "fr";
+		newsletter = false;
 	}
 
 

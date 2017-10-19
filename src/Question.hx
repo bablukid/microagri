@@ -4,6 +4,7 @@ enum QType{
     QText;      //réponse texte bloc
     QString;    //réponse text 1 ligne
     QInt;       //réponse chiffrée
+    QFloat;
     QAddress;   //
     QRadio(list:FormData<String>,?other:Bool);   //reponse unique
     QCheckbox(list:FormData<String>,?other:Bool);//reponses multiples
@@ -19,13 +20,32 @@ class Question{
     public var data : {label:String,q:String,desc:String,type:QType};
     public function new(){ }
 
+    public static function getCompletion(r:db.Result){
+        var out = {num:0,total:0,percent:0};
+        if(r==null) return out;
+        
+        for( chap in Question.chapitres){
+            for( o in chap.ordre){
+                for( qid in o.qs){
+                    var q = Question.get(qid);
+                    if(q.data.label.indexOf("_cmt")>-1) continue;
+                    out.total ++;
+                    if( Reflect.getProperty(r,q.data.label)!=null) out.num++;
+                }
+            }
+        }
+        out.percent = Math.round(out.num/out.total*100);
+        return out;
+        
+    } 
+
     /**
     Structure générale des chapitres
     **/
     public static var chapitres : Array<Chapitre>= [
         {
             id:"A",
-            nom : "Généralités sur la ferme",
+            nom : "La ferme",
             ordre : [
                 {qs:["A1"],titre:"Nom",desc:"Nom de la ferme. Si pas de nom, écrire le statut juridique ainsi que le nom de famille"},
                 {qs:["A2"],titre:"Localisation",desc:"Adresse du siège de la ferme (rue, lieu-dit, code postal, commune)"},
@@ -41,7 +61,7 @@ class Question{
         },
         {
             id:"B",
-            nom:"Généralités sur le(s) responsable(s) de la ferme",
+            nom:"Le(s) responsable(s)",
             ordre:[
                 {qs:["B1","B2","B3","B4"],titre:"",desc:""},
                 {qs:["B5-1","B5-2"],titre:"Formation et Expérience",desc:""},
@@ -56,7 +76,7 @@ class Question{
         },
         {
             id:"C",
-            nom:"Œuvrer pour l'agro-écosystème",
+            nom:"Environnement",
             ordre:[
                 {qs:["C1-1","C1-2"],titre:"Eau",desc:""},
                 {qs:["C2-1","C2-2"],titre:"Ressources énergétiques",desc:"(bois, travail manuel, panneaux solaires, éoliennes, etc.)"},
@@ -70,7 +90,7 @@ class Question{
         },
         {
             id:"D",
-            nom:"S'inscrire dans le territoire",
+            nom:"Territoire",
             ordre:[
                 {qs:["D1-1","D1-2","D1-3","D1-4","D1-5","D1-6","D1-7","D1-8"],titre:"Échelle d'activité",desc:""},
                 {qs:["D2"],titre:"Ouverture",desc:"Relation plus ou moins étroite entretenue par la ferme avec le territoire."},
@@ -79,7 +99,7 @@ class Question{
         },
         {
             id:"E",
-            nom:"Exercer une activité agricole professionnelle, diversifiée et de petite dimension",
+            nom:"Activité",
             ordre:[
                 {qs:["E1-1","E1-3","E1-4"],titre:"Taille",desc:""},
                 {qs:["E2-1","E2-2","E2-3"],titre:"Volume d'activité",desc:""},
@@ -87,19 +107,19 @@ class Question{
         },
         {
             id:"F",
-            nom:"Tendre vers l'autonomie",
+            nom:"Autonomie",
             ordre:[
-                {qs:["F1-1","F1-2","F1-3"],titre:"Maîtrise des moyens de production",desc:"D’après la FAO, il s’agit de la main-d’œuvre, des bâtiments agricoles, des machines ou animaux de trait utilisés pour rendre sa ferme autonome. Par extension, nous prenons en compte le foncier, l’approvisionnement en énergie, en semence et en alimentation du bétail. Ex : la fabrication par soi-même des aliments des animaux de la ferme, installation de panneaux solaire, etc. Le terme « maitriser » peut renvoyer à la notion d’autoproduction, d’auto-construction (semences, plants, engrais, foin, matériel, bâtiments, etc.)."},
-                {qs:["F2-1","F2-2","F2-3"],titre:"Stratégie de développement OU plutôt « Rythme d’évolution »",desc:"Renseigne sur la vitesse de réalisation des actions en faveur des objectifs de la ferme. Par ex., dans le cas d’une expérimentation à la ferme de techniques, le choix peut être fait : - de mettre en œuvre la technique sans tester mais sur la confiance de lectures et/ou conseils - de tester une ou plusieurs pratiques, d’attendre plus ou moins longtemps pour l’adopter voire d’attendre que des références techniques soient publiées.Ces choix traduisent un rythme d’évolution plus ou moins progressif."},
-                {qs:["F3-1","F3-2"],titre:"Recherche de la robustesse",desc:"La robustesse d'une exploitation agricole correspond à sa capacité à s’adapter à différents types de fluctuations (environnementales, sociales, économiques), à des conditions nouvelles et à supporter des perturbations/chocs externes (Zahm F. et al, 2015)"},
-                {qs:["F4-1","F4-2"],titre:"Liberté dans la prise de décision",desc:"Donne une idée du degré d’indépendance des choix pris par l’agriculteur sur la ferme. Ex : un paysan endetté peut se faire dicter des décisions par les créanciers (les organismes agricoles, organismes financiers…)."},
+                {qs:["F1-1","F1-2","F1-3"],titre:"Maîtrise des moyens de production",desc:"Il s’agit de la main-d’œuvre, des bâtiments agricoles, des machines ou animaux de trait utilisés pour rendre sa ferme autonome. Par extension, nous prenons en compte le foncier, l’approvisionnement en énergie, en semence et en alimentation du bétail. Ex : la fabrication par soi-même des aliments des animaux de la ferme, installation de panneaux solaire, etc. Le terme « maitriser » peut renvoyer à la notion d’autoproduction, d’auto-construction (semences, plants, engrais, foin, matériel, bâtiments, etc.)."},
+                {qs:["F2-1","F2-2","F2-3"],titre:"Stratégie de développement",desc:"Renseigne sur la vitesse de réalisation des actions en faveur des objectifs de la ferme.<br/>Vos choix traduisent un rythme d’évolution plus ou moins progressif."},
+                {qs:["F3-1","F3-2"],titre:"Recherche de la robustesse",desc:"Renseigne sur la capacité d'une ferme à s’adapter à différents types de fluctuations (environnementales, sociales, économiques), à des conditions nouvelles et à supporter des perturbations/chocs externes"},
+                {qs:["F4-1","F4-2","F4-3"],titre:"Liberté dans la prise de décision",desc:"Donne une idée du degré d’indépendance des choix pris par l’agriculteur sur la ferme.<br/>Ex : un agriculteur endetté peut se faire dicter des décisions par les créanciers (les organismes agricoles, organismes financiers…)."},
             ]
         },
         {
             id:"G",
-            nom:"Réaliser un projet de vie",
+            nom:"Projet de vie",
             ordre:[
-                {qs:["G1-1","G1-2"],titre:"Qualité de vie",desc:"La qualité de vie implique le bien-être ressenti (INSEE, 2013) de l’agriculteur vis-à-vis  son activité mais également vis-à-vis de son environnement. Dans quelle condition (morale, physique et environnementale) travaille-t-il ? Est-il constamment stressé par son travail ? A-t-il  des contraintes financières ? Équivalent à la notion de « Degré d’épanouissement personnel »."},
+                {qs:["G1-1","G1-2"],titre:"Qualité de vie",desc:"La qualité de vie implique le bien-être ressenti de l’agriculteur vis-à-vis  son activité mais également vis-à-vis de son environnement.<br/>Etes-vous constamment stressé par votre travail ?<br/>Avez-vous des contraintes financières ?<br/>Dans quelle condition (morale, physique et environnementale) travaillez-vous ?"},
                 {qs:["G2-1","G2-2"],titre:"Adéquation avec les attentes",desc:"Renseigne sur le ressenti de l’agriculteur vis-à-vis du décalage possible entre ses aspirations avant installation et l’évolution réel de sa ferme."},
                 {qs:["G3-1","G3-2","G3-3"],titre:"Vie sociale et culturelle",desc:"Renseigne sur l’importance des liens entre l’agriculteur et le monde extérieur."},
                 {qs:["G4"],titre:"Implication de  l’entourage",desc:"Renseigne sur le recours à son entourage proche (famille, amis, voisins) pour aider sur la ferme."},
@@ -112,7 +132,7 @@ class Question{
             ordre:[
                 {qs:["H1"],titre:"",desc:""},
                 {qs:["H2-1","H2-2","H2-3"],titre:"",desc:""},
-                {qs:["H3"],titre:"",desc:""},
+                {qs:["H3-1","H3-2"],titre:"",desc:""},
             ]
         }
     ];
@@ -268,10 +288,11 @@ class Question{
             label:"faire_valoir",
             q:"Quel est le mode de faire-valoir de vos terres ?",
             desc:"",                   
-            type:QRadio([
-                {label:"Direct (propriétaire)",value:"direct"},
-                {label:"Indirect (location)",value:"indirect"},
-                {label:"Mixte (parcelles en location et en propriété)",value:"mixte"},
+            type:QRadio([                
+                {label:"Propriétaire",value:"proprietaire"},
+                {label:"Locataire",value:"locataire"},
+                {label:"Mixte",value:"mixte"},
+                {label:"Sans terre",value:"aucun"},
             ],true),
         },
         "A10-3" =>{
@@ -279,10 +300,10 @@ class Question{
             q:"Si vous avez des bâtiments (hors serres), quel est leur mode de faire-valoir ?",
             desc:"",                   
             type:QRadio([
+                {label:"Propriétaire",value:"proprietaire"},
+                {label:"Locataire",value:"locataire"},
+                {label:"Mixte",value:"mixte"},
                 {label:"Aucun bâtiment",value:"aucun"},
-                {label:"Direct (propriétaire)",value:"direct"},
-                {label:"Indirect (location)",value:"indirect"},
-                {label:"Mixte (parcelles en location et en propriété)",value:"mixte"},
             ],true),
         },
         "A10-5" =>{
@@ -434,7 +455,7 @@ class Question{
         },
         "B9-3"=>{
             label:"couverture_soc_precis",
-            q:"Préciser",
+            q:"Précisez",
             desc:"",
             type:QRadio([
                 {label:"A titre principal",value:"principal"},
@@ -696,7 +717,7 @@ class Question{
         "D3-6"=>{
             label:"reseaux_autres",
             q:"Participez-vous à d’autres formes de réseaux ? ",
-            desc:"(débats, manifestations, réseau sociaux, etc.)",
+            desc:"(débats, manifestations, etc.)",
             type:QText
         },
         "E1-1"=>{
@@ -761,15 +782,9 @@ class Question{
         },
         "F1-2"=>{
             label:"maitrise_niveau",
-            q:"Quel niveau de maitrise des moyens de production visez-vous ?",
+            q:"Quel niveau de maitrise des moyens de production visez-vous ? (de 1 à 5)",
             desc:"",
-           type:QRadio([
-                {label:"1",value:"1"},
-                {label:"2",value:"2"},
-                {label:"3",value:"3"},
-                {label:"4",value:"4"},
-                {label:"5",value:"5"}
-            ])
+           type:QFloat
         },
         "F1-3"=>{
             label:"maitrise_cmt",
@@ -781,13 +796,13 @@ class Question{
             label:"calendrier_dev",
             q:"Avez-vous un calendrier de développement ?",
             desc:"",
-            type:QText
+            type:QYesNo
         },
         "F2-2"=>{
             label:"stade_auto",
-            q:"A quel stade de l’autonomie en sont vos activités ?",
+            q:"A quel stade de l’autonomie en sont vos activités ?  (de 1 à 5)",
             desc:"",
-            type:QRadio([{label:"1",value:"1"},{label:"2",value:"2"},{label:"3",value:"3"},{label:"4",value:"4"},{label:"5",value:"5"} ])
+            type:QFloat
         },
         "F2-3"=>{
             label:"autonomie_cmt",
@@ -797,13 +812,13 @@ class Question{
         },
         "F3-1"=>{
             label:"robustesse",
-            q:"Pensez-vous que votre exploitation peut s’adapter à différents types de perturbations ?",
+            q:"Pensez-vous que votre exploitation peut s’adapter à différents types de perturbations ?  (de 1 à 5)",
             desc:"",
-            type:QRadio([{label:"1",value:"1"},{label:"2",value:"2"},{label:"3",value:"3"},{label:"4",value:"4"},{label:"5",value:"5"} ])
+            type:QFloat
         },
         "F3-2"=>{
             label:"robustesse_cmt",
-            q:"Préciser",
+            q:"Précisez",
             desc:"",
             type:QText
         },
@@ -817,6 +832,12 @@ class Question{
             label:"liberte_commerc",
             q:"Avez-vous l’impression que votre structure économique est maîtrisée ?",
             desc:"",
+            type:QYesNo
+        },
+        "F4-3"=>{
+            label:"liberte_commerc_cmt",
+            q:"Commentaire",
+            desc:"",
             type:QText
         },
         "G1-1"=>{
@@ -827,7 +848,7 @@ class Question{
         },
         "G1-2"=>{
             label:"qualite_cmt",
-            q:"Préciser",
+            q:"Précisez",
             desc:"",
             type:QText
         },
@@ -839,7 +860,7 @@ class Question{
         },
         "G2-2"=>{
             label:"aspirations_cmt",
-            q:"Préciser",
+            q:"Précisez",
             desc:"",
             type:QText
         },
@@ -884,7 +905,7 @@ class Question{
         },
         "H1"=>{
             label:"objectifs",
-            q:"Quels sont pour vous les objectifs principaux de votre ferme ?",
+            q:"Quels sont les objectifs principaux de votre ferme ?",
             desc:"",
             type:QText
         },
@@ -906,15 +927,21 @@ class Question{
         },
         "H2-3"=>{
             label:"definition_cmt",
-            q:"Préciser",
+            q:"Précisez",
             desc:"",
             type:QText
         },
-        "H3"=>{
+        "H3-1"=>{
             label:"remarques",
             q:"Avez-vous des remarques à ajouter ?",
             desc:"",
             type:QText
+        },
+        "H3-2"=>{
+            label:"recontacter",
+            q:"J'accepte d'être éventuellement recontacté par des porteurs de projet ou des agriculteurs",
+            desc:"",
+            type:QYesNo
         },
 
     ];
@@ -975,7 +1002,9 @@ class Question{
             case QRadio(data) : e = new sugoi.form.elements.RadioGroup(q.data.label,html,data,v,null,null);
             case QInt : 
                 e = new sugoi.form.elements.IntInput(q.data.label,html,v,true);
-                //e.inputType = 
+            case QFloat : 
+                e = new sugoi.form.elements.FloatInput(q.data.label,html,v,true);
+            
             case QYesNo :
                 var data = [{"label":"Oui",value:"OUI"},{label:"Non",value:"NON"}];
                 e = new sugoi.form.elements.RadioGroup(q.data.label,html,data,v,null,null);

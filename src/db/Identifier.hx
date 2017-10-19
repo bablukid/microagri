@@ -6,6 +6,7 @@ class Identifier extends Object{
 
     public var id : SId;
     @:relation(userId) public var user : db.User;
+    @:relation(resultId) public var result : SNull<db.Result>;
 
     public var nom : SString<64>;
     public var localisation : SNull<SString<64>>;

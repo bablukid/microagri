@@ -13,19 +13,22 @@
             <div class="text-center">
                 <h3 ::cond titre!=null::>::titre::</h3>
                 <p ::cond desc!=nul::>
-                    ::desc::
+                    ::raw desc::
                 </p>
             </div>
             
             <hr/>
             ::raw form::    
-            
+            <div class="text-center" ::cond num!=1:: style="margin-top:48px;">
+                <a href="/q/::chindex::/::(num-2)::" class="btn-default btn btn-xs">
+                <span class="glyphicon glyphicon-chevron-left"></span> Question précédente</a>
+
+                <a href="/qhome" class="btn-default btn btn-xs">
+                    <span class="glyphicon glyphicon-home"></span> Revenir à l'accueil</a>
+            </div>
         </div>  
     </div>
 </div>
-<div class="row ">
-        <div class="col-md-12 text-center"><a href="/qhome" class="btn-default btn btn-xs">
-            <span class="glyphicon glyphicon-chevron-left"></span> Revenir à l'accueil</a></div>
-</div>
+
 
 ::end::

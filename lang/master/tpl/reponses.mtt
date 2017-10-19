@@ -9,12 +9,16 @@
         
         <table class="table table-bordered table-condensed table-striped">
             <tr>
+                <th>#</th>
+                <th>complétion</th>
                 ::foreach k keys::
                 <th>::k::</th>
                 ::end::
             </tr>
         ::foreach r reponses::
             <tr>
+                <td>::r.id::</td>
+                <td>::r.completion::%</td>
                 ::foreach k keys::
                 <td>::Reflect.field(r,k)::</td>
                 ::end::

@@ -10,7 +10,7 @@
     <div class="col-md-6">
         
         <div class="progress">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="::percent::" aria-valuemin="0" aria-valuemax="100" style="width: ::percent::% ;">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="::percent::" aria-valuemin="0" aria-valuemax="100" style="width: ::percent::%">
                 ::percent::%
             </div>
         </div>
@@ -21,7 +21,7 @@
 
     ::foreach c chapitres::
     <div class="col-md-4">
-        <div class="panel panel-default" style="height:300px;">
+        <div class="panel panel-default" style="height:240px;">
             <div class="panel-img" style="background:url('/img/bg::c.id::.jpg') no-repeat center;background-size: cover;"></div>
             <div class="panel-heading">
                 ::c.nom::                
@@ -48,7 +48,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="::x.percent::" aria-valuemin="0" aria-valuemax="100" style="width: ::x.percent::%;">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="::x.percent::" aria-valuemin="0" aria-valuemax="100" style="width: ::x.percent::%">
                                         ::x.percent::%
                                     </div>
                                 </div>

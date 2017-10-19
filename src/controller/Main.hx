@@ -25,8 +25,10 @@ class Main extends sugoi.BaseController {
 
 	@tpl("form.mtt")
 	function doIdentifier(){
+		if(app.user==null) throw Redirect("/init");
+		
 		var f = new sugoi.form.Form("identif");
-		view.title ="Identifier une ou plusieurs micro-fermes";
+		view.title ="Identifier une micro-ferme";
 		//f.addElement(new sugoi.form.elements.Html("Avant de remplir le formulaire, merci de saisir vos coordonnées :"));
 		f.addElement(new sugoi.form.elements.StringInput("nom","Nom de la ferme",null,true));
 		f.addElement(new sugoi.form.elements.StringInput("responsables","Nom du ou des responsable(s)",null,false));
@@ -40,7 +42,7 @@ class Main extends sugoi.BaseController {
 			{label:"Commercialisation",value:"commercialisation"},
 			{label:"Accueil du public",value:"accueil"},                
 		];
-		f.addElement(new sugoi.form.elements.CheckboxGroup("activite","Quelles sont les activités de la ferme ?",data,null,true) );
+		f.addElement(new form.Checkboxes("activite","Activités de la ferme",data,null,true) );
 		
 		var data = [
 			{label:"Viticulture",value:"viticulture"},
@@ -60,7 +62,7 @@ class Main extends sugoi.BaseController {
 			{label:"Conchyliculture",value:"conchyliculture"},
 			{label:"Activités de pêche maritime à pied",value:"peche_a_pied"},
 		];
-		f.addElement(new sugoi.form.elements.CheckboxGroup("activite_agricole","Quelles sont les activités agricoles de la ferme ?",data,null,true) );
+		f.addElement(new form.Checkboxes("activite_agricole","Activités agricoles",data,null,true) );
 		
 		f.addElement(new sugoi.form.elements.Html("Donner ici les caractéristiques (surface, taille du cheptel, mode(s) de commercialisation, certification(s), etc.) de la ferme que vous souhaitez identifier comme étant susceptible d’être une micro-ferme."));
 		f.addElement(new sugoi.form.elements.TextArea("elements","Caractéristiques",null,true));
@@ -110,7 +112,7 @@ class Main extends sugoi.BaseController {
 		var qids = group.qs;
 		view.titre = group.titre;
 		view.desc = group.desc;
-
+		view.chindex = chapitre;
 		view.chapitre = Question.chapitres[chapitre].nom;
 		view.num = index+1;
 		view.total = Question.chapitres[chapitre].ordre.length;
@@ -126,25 +128,34 @@ class Main extends sugoi.BaseController {
 		//build form
 		var f = Question.getForm(qs);
 		view.form = f;
-		//view.q = q;
 
 		if( f.isValid() ){
-			
-			//trace(f.getData() );
+
+			//hook on questions
+			for( q in qs){
+				switch(q.qid){
+					case "A2" : 
+					//check 33
+					/*var regex = ~/([0-9])+/;
+					regex.match(f.getValueOf(q.data.label));
+					
+					trace( regex.matched(0) ); */
+					var str :String = f.getValueOf(q.data.label);
+					if ( str.indexOf("33") == -1 ) 
+						throw Error("/q/"+chapitre+"/"+index,"Ce recensement concerne uniquement les fermes de Gironde, le code postal doit commencer par 33.") ;
+					default:
+				}
+			}
 
 			//save data
 			Question.save(f);
-
 			var next = Question.next(chapitre,index);
-
 
 			if(next==null){
 				throw Ok( "/qhome" , "Ce chapitre est terminé." );
 			}else{
 				throw Redirect( "/q/"+next.chapitre+"/"+next.index );
 			}
-			
-
 		}
 	}
 
@@ -158,12 +169,14 @@ class Main extends sugoi.BaseController {
 		f.addElement(new sugoi.form.elements.Html("Avant de remplir le formulaire, merci de saisir vos coordonnées :"));
 		f.addElement(new sugoi.form.elements.StringInput("name","Nom",null,true));
 		f.addElement(new sugoi.form.elements.StringInput("email","Email",null,true));
-		f.addElement(new sugoi.form.elements.StringInput("phone","Téléphone",null,true));
+		f.addElement(new sugoi.form.elements.StringInput("phone","Téléphone",null,false));
+		f.addElement(new sugoi.form.elements.Checkbox("newsletter","Tenez-moi au courant des avancées du projet",null,false));
 		if(f.isValid()){
 			var u = new db.User();
 			u.name = f.getValueOf("name");
 			u.email = f.getValueOf("email");
 			u.phone = f.getValueOf("phone");
+			u.newsletter = f.getValueOf("newsletter");
 			u.insert();
 			App.current.session.setUser(u);
 			throw Redirect("/");
@@ -191,6 +204,7 @@ class Main extends sugoi.BaseController {
 							Sys.println(":SNull<SString<128>>;");
 						}						
 						case QInt : Sys.println(":SNull<SInt>;");
+						case QFloat : Sys.println(":SNull<SFloat>;");
 						case QAddress : Sys.println(":SNull<SString<256>>;");
 						case QCheckbox(_) : Sys.println(":SNull<SString<128>>;");
 						case QRadio(_) : Sys.println(":SNull<SString<32>>;");
@@ -209,11 +223,15 @@ class Main extends sugoi.BaseController {
 		view.reponses = reponses;
 
 		var k = [];
-
 		for ( c in Question.chapitres){
 			for( qs in c.ordre){
 				for( q in qs.qs ) k.push( Question.get(q).data.label );
 			}
+		}
+
+		//completion des questions
+		for( r in reponses){
+			Reflect.setProperty(r,"completion",Question.getCompletion(r).percent );
 		}
 		
 		view.keys = k;
@@ -235,6 +253,35 @@ class Main extends sugoi.BaseController {
 		if(App.current.params.get("csv")=="1"){
 			printCsvDataFromObjects(Lambda.array(reponses),h,"Signalements.csv");
 		}
+	}
+
+	@admin @tpl('form.mtt')
+	function doLink(i:db.Identifier){
+
+		var f = new sugoi.form.Form("link");
+		var data = [];
+		for( r in db.Result.manager.all(false)){
+
+			if(db.Identifier.manager.select($result==r,false)==null){
+				data.push({label:"#"+r.id+"-"+r.Nom,value:r.id});
+			}
+		}
+
+		f.addElement(new sugoi.form.elements.IntSelect("r","Recensement",data,null,true));
+
+		if(f.isValid()){
+			var rid = f.getValueOf("r");
+			var r = db.Result.manager.get(rid,false);
+			i.lock();
+			i.result = r;
+			i.update();
+
+			throw Ok("/signalements","Le signalement a été relié à un recensement");
+		}
+		view.title = i.nom;
+		view.text = "Relier le signalement <b>#"+i.id+"-"+i.nom+"</b> à un recensement";
+		view.form = f;
+
 	}
 
 

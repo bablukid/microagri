@@ -9,12 +9,24 @@
         
         <table class="table table-bordered table-condensed table-striped">
             <tr>
+                <th>#</th>
+                <th>Auteur</th>
+                <th>Lié au r    ecensement</th>
                 ::foreach k keys::
                 <th>::k::</th>
                 ::end::
             </tr>
         ::foreach r reponses::
             <tr>
+                <td>::r.id::</td>
+                <td>::r._user.name::</td>
+                
+                    ::if r._result==null::
+                    <td class="danger"><a href="/link/::r.id::" class="btn btn-default btn-xs">Lier</a></td>
+                    ::else::
+                    <td class="success">::r._result.Nom::</td>
+                    ::end::
+          
                 ::foreach k keys::
                 <td>::Reflect.field(r,k)::</td>
                 ::end::
