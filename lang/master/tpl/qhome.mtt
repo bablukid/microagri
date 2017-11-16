@@ -5,6 +5,9 @@
 <div class="row">
     <div class="col-md-3">
         <b ::cond ferme!=null::>::ferme::</b>
+
+        ::set chap1 =  getAnswers(chapitres[0])::
+        
     </div>
     <div class="col-md-3 text-right">Complétion du recensement :</div>
     <div class="col-md-6">
@@ -26,43 +29,47 @@
             <div class="panel-heading">
                 ::c.nom::                
             </div>
-            <div class="panel-body">
-                
-                    
-                    ::set x = getAnswers(c)::
-              
 
-                        ::if (x.num==x.total && x.num>0)::
-                        <div class="alert alert-success text-center" ><span class="glyphicon glyphicon-ok"></span> Terminé 
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/q/::repeat.c.index::/0" >Modifier mes réponses</a></div>
-                        <p class="text-center">
-                            
-                        </p>
-                        ::elseif(x.num>0)::
-                        <div class="row">
-                            <div class="col-md-6">
-                                    <a href="/q/::repeat.c.index::/0" class="btn btn-default btn-xs">
-                                        <span class="glyphicon glyphicon-chevron-right"></span>
-                                        Reprendre
-                                    </a>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="::x.percent::" aria-valuemin="0" aria-valuemax="100" style="width: ::x.percent::%">
-                                        ::x.percent::%
-                                    </div>
-                                </div>
+            ::if (chap1.num<chap1.total && repeat.c.index!=0) ::
+            <div class="panel-body text-center" style="color:grey">
+                Remplissez le chapitre "Le Ferme" pour pouvoir commencer ce chapitre
+            </div>
+            ::else::
+
+            <div class="panel-body">
+                ::set x = getAnswers(c)::
+
+                ::if (x.num==x.total && x.num>0)::
+                <div class="alert alert-success text-center" ><span class="glyphicon glyphicon-ok"></span> Terminé 
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/q/::repeat.c.index::/0" >Modifier mes réponses</a></div>
+                <p class="text-center"></p>
+                ::elseif(x.num>0)::
+                <div class="row">
+                    <div class="col-md-6">
+                            <a href="/q/::repeat.c.index::/0" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                                Reprendre
+                            </a>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="::x.percent::" aria-valuemin="0" aria-valuemax="100" style="width: ::x.percent::%">
+                                ::x.percent::%
                             </div>
                         </div>
-                        ::else::
-                        <p class="text-center">
-                            <a href="/q/::repeat.c.index::/0" class="btn btn-default">
-                                <span class="glyphicon glyphicon-chevron-right"></span>
-                                Commencer
-                            </a>
-                        </p>
-                        ::end::
+                    </div>
+                </div>
+                ::else::
+                <p class="text-center">
+                    <a href="/q/::repeat.c.index::/0" class="btn btn-default">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        Commencer
+                    </a>
+                </p>
+                ::end::
             </div>
+
+            ::end::
         </div>
     </div>
     ::end::

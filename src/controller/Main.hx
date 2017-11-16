@@ -148,10 +148,14 @@ class Main extends sugoi.BaseController {
 			for( q in qs){
 				switch(q.qid){
 					case "A2" : 
-					//check 33
-					var str :String = f.getValueOf(q.data.label);
-					if ( str.indexOf("33") == -1 ) 
-						throw Error("/q/"+chapitre+"/"+index,"Ce recensement concerne uniquement les fermes de Gironde, le code postal doit commencer par 33.") ;
+						//check 33
+						var str :String = f.getValueOf(q.data.label);
+						if ( str.indexOf("33") == -1 ) 
+							throw Error("/q/"+chapitre+"/"+index,"Ce recensement concerne uniquement les fermes de Gironde, le code postal doit commencer par 33.") ;
+					case "A5-1"	:
+						//nbre de responsables
+						var num :Int = f.getValueOf(q.data.label);				
+						if(num>6) throw Error("/qhome","Vous ne pouvez pas définir plus de 6 responsables");
 					default:
 				}
 			}
