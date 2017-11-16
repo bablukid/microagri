@@ -107,6 +107,8 @@ class Main extends sugoi.BaseController {
 
 		if(app.user==null) throw Redirect("/init");
 
+		var res = db.Result.getOrCreate(app.user);
+
 		//get the questions ids
 		var group  = Question.chapitres[chapitre].ordre[index];
 		var qids = group.qs;
@@ -116,17 +118,28 @@ class Main extends sugoi.BaseController {
 		view.chapitre = Question.chapitres[chapitre].nom;
 		view.num = index+1;
 		view.total = Question.chapitres[chapitre].ordre.length;
- 		/*switch( Type.getClassName(Type.getClass(q)) ){
-			 case "String" : qids = [q];
-			 case "Array" : qids = q;
-		}*/
 		
+		var subAnswerIndex = null;
+		if(chapitre==1){
+			//nbre de responsables		
+			var numResponsables = 1;
+			if(res!=null && res.nbre_responsables!=null ) numResponsables = res.nbre_responsables;
+			if(app.session.data.respIndex==null) app.session.data.respIndex = 0;
+
+			if(res.nom_responsable!=null && res.prenom_responsable!=null){
+				view.resp = "Responsable n°"+(app.session.data.respIndex+1)+" : "+res.prenom_responsable.split("|")[app.session.data.respIndex]+" "+res.nom_responsable.split("|")[app.session.data.respIndex];
+			}else{
+				view.resp = "Responsable n°"+(app.session.data.respIndex+1);
+			}	
+			subAnswerIndex = app.session.data.respIndex;
+		}		
+
 		//questions list
 		var qs = new Array<Question>();
 		for( qid in qids) qs.push(Question.get(qid) );
 
 		//build form
-		var f = Question.getForm(qs);
+		var f = Question.getForm(qs,subAnswerIndex);
 		view.form = f;
 
 		if( f.isValid() ){
@@ -136,20 +149,46 @@ class Main extends sugoi.BaseController {
 				switch(q.qid){
 					case "A2" : 
 					//check 33
-					/*var regex = ~/([0-9])+/;
-					regex.match(f.getValueOf(q.data.label));
-					
-					trace( regex.matched(0) ); */
 					var str :String = f.getValueOf(q.data.label);
 					if ( str.indexOf("33") == -1 ) 
 						throw Error("/q/"+chapitre+"/"+index,"Ce recensement concerne uniquement les fermes de Gironde, le code postal doit commencer par 33.") ;
 					default:
 				}
 			}
+			//nbre de responsables	
+			if(chapitre==1){
+				var numResponsables = 1;				
+				if(res!=null && res.nbre_responsables!=null ) numResponsables = res.nbre_responsables;
+				if(app.session.data.respIndex==null) app.session.data.respIndex = 0;
+				for( q in qs){
+					var value : String = Std.string( f.getValueOf(q.data.label) );
+					var original = Std.string(Reflect.getProperty(res,q.data.label));
+					var arr = original==null ? [] : original.split("|");
+					arr[app.session.data.respIndex] = value;
+					Reflect.setProperty(res,q.data.label,arr.join("|"));
+					//trace(q.data.label+" = "+arr.join("|")+"<br>");
+				}
+				res.update();
+			}else{
+				//save data
+	        	f.toSpod(res);
+    	    	res.update();
+			}	
 
-			//save data
-			Question.save(f);
 			var next = Question.next(chapitre,index);
+			
+			if(chapitre==1 && next==null){
+				var numResponsables = 1;				
+				if(res!=null && res.nbre_responsables!=null ) numResponsables = res.nbre_responsables;
+				if(app.session.data.respIndex==null) app.session.data.respIndex = 0;
+				if(app.session.data.respIndex+1 < numResponsables){
+					next = Question.next(chapitre,-1);
+					app.session.data.respIndex++;
+				}else{
+					app.session.data.respIndex = 0;
+				}
+				
+			}
 
 			if(next==null){
 				throw Ok( "/qhome" , "Ce chapitre est terminé." );

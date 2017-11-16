@@ -15,6 +15,9 @@
                 <p ::cond desc!=nul::>
                     ::raw desc::
                 </p>
+                ::if resp != null::
+                    <p style="font-weight:bold;color:green;font-size:110%;">::resp::</p>
+                ::end::
             </div>
             
             <hr/>

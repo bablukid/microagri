@@ -13,7 +13,6 @@ enum QType{
 
 typedef Chapitre = { id:String,nom:String,ordre:Array<{qs:Array<String>,?titre:String,?desc:String}> };
 
-
 class Question{
 
     public var qid : String;
@@ -200,10 +199,10 @@ class Question{
             q:"Quelles sont les activités de la ferme ?",
             desc:"",                   
             type:QCheckbox([
-                {label:"Production",value:"production"},
-                {label:"Transformation",value:"transformation"},
-                {label:"Commercialisation",value:"commercialisation"},
-                {label:"Accueil du public",value:"accueil"},                
+                {label:"Production",        value:"production"},
+                {label:"Transformation",    value:"transformation"},
+                {label:"Commercialisation", value:"commercialisation"},
+                {label:"Accueil du public", value:"accueil"},                
             ],true),
         },
         "A6-2" =>{
@@ -955,7 +954,7 @@ class Question{
         return q;
     }
 
-    public static function getForm(qs:Array<Question>){
+    public static function getForm(qs:Array<Question>,?subAnswerIndex:Int=null){
 
         var form = new sugoi.form.Form("q");
         var r = db.Result.getOrCreate(App.current.user);
@@ -987,6 +986,9 @@ class Question{
             if(q==null || q.data==null) continue;
             var html = "<h4>"+q.data.q+"</h4><p>"+q.data.desc+"</p>";
             var v : Dynamic = Reflect.field(r,q.data.label);
+            
+            if(subAnswerIndex!=null) v = Std.string(v).split("|")[subAnswerIndex];
+
             var e : sugoi.form.FormElement<Dynamic> = null;
             switch(q.data.type){
             case QText : e = new sugoi.form.elements.TextArea(q.data.label,html,v,true);
@@ -1041,16 +1043,6 @@ class Question{
         
         return {chapitre:c,index:i+1};
     }
-
-    public static function save(f:sugoi.form.Form){
-
-       var r = db.Result.getOrCreate(App.current.user);
-
-        f.toSpod(r);
-        r.update();
-
-    }
-
 
     public static function getAnswers(chap:Chapitre):{num:Int,total:Int,percent:Int}{
         
