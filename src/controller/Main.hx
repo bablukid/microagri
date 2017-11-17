@@ -11,11 +11,16 @@ class Main extends sugoi.BaseController {
 		if(app.user!=null){
 			var r = db.Result.getOrCreate(App.current.user);
 			view.ferme = r.Nom;
+
+			/*var percent = 0;
+			for( c in Question.chapitres ) percent += Question.getAnswers(c).percent;
+			view.percent = Math.round(percent/Question.chapitres.length);  */
+			var compl = Question.getCompletion(r);
+			trace(compl);
+			view.percent = compl.percent;
 		}
 
-		var percent = 0;
-		for( c in Question.chapitres ) percent += Question.getAnswers(c).percent;
-		view.percent = Math.round(percent/Question.chapitres.length);
+		
 	}
 	
 	@tpl("home.mtt")
@@ -126,7 +131,7 @@ class Main extends sugoi.BaseController {
 			if(res!=null && res.nbre_responsables!=null ) numResponsables = res.nbre_responsables;
 			if(app.session.data.respIndex==null) app.session.data.respIndex = 0;
 
-			if(res.nom_responsable!=null && res.prenom_responsable!=null){
+			if(res.nom_responsable!=null && res.prenom_responsable!=null && res.prenom_responsable.split("|")[app.session.data.respIndex]!=null ){
 				view.resp = "Responsable n°"+(app.session.data.respIndex+1)+" : "+res.prenom_responsable.split("|")[app.session.data.respIndex]+" "+res.nom_responsable.split("|")[app.session.data.respIndex];
 			}else{
 				view.resp = "Responsable n°"+(app.session.data.respIndex+1);

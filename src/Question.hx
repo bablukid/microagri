@@ -987,7 +987,13 @@ class Question{
             var html = "<h4>"+q.data.q+"</h4><p>"+q.data.desc+"</p>";
             var v : Dynamic = Reflect.field(r,q.data.label);
             
-            if(subAnswerIndex!=null) v = Std.string(v).split("|")[subAnswerIndex];
+            if(subAnswerIndex!=null) {
+                var x : String = Std.string(v).split("|")[subAnswerIndex];
+                if(x == null || x == "null"){
+                    x = "";
+                } 
+                v = x;
+            }    
 
             var e : sugoi.form.FormElement<Dynamic> = null;
             switch(q.data.type){

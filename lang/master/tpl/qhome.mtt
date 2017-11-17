@@ -30,9 +30,9 @@
                 ::c.nom::                
             </div>
 
-            ::if (chap1.num<chap1.total && repeat.c.index!=0) ::
+            ::if (chap1.num<chap1.total*0.8 && repeat.c.index!=0) ::
             <div class="panel-body text-center" style="color:grey">
-                Remplissez le chapitre "Le Ferme" pour pouvoir commencer ce chapitre
+                Remplissez le chapitre "La Ferme" pour pouvoir commencer ce chapitre
             </div>
             ::else::
 
