@@ -16,3 +16,17 @@ div.panel > div.panel-img {
     height: 120px;
 
 }    
+
+
+span.qid{
+    margin-right: 8px;
+    color:#FFF;
+    background: #CCC;
+    border-radius: 3px;
+    padding: 2px;
+    /*font-weight: bold;*/
+    font-size: 0.8em;
+    position: absolute;
+    /*top: -15px;*/
+    left: -40px;
+}

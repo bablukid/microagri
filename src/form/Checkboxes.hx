@@ -20,11 +20,9 @@ class Checkboxes extends sugoi.form.elements.CheckboxGroup{
             }
         }
         
-        var x = x.join(",");
-
-        other = new sugoi.form.elements.StringInput("other","other",x);
+        var x = x.join(", ");
+        other = new sugoi.form.elements.StringInput(name+"_other","other",x);
         other.internal = true;
-
         other.attributes = "placeholder='Autres'";
 
     }
@@ -33,7 +31,6 @@ class Checkboxes extends sugoi.form.elements.CheckboxGroup{
     override function render(){
 
         other.parentForm = this.parentForm;
-
         var s = super.render();        
         return s+other.render();
 
@@ -42,8 +39,7 @@ class Checkboxes extends sugoi.form.elements.CheckboxGroup{
     override function populate(){
 
         super.populate();
-
-        var v = App.current.params.get(parentForm.name + "_" + "other");
+        var v = App.current.params.get(parentForm.name + "_" + name + "_other");
         this.value.push(v);
 
     }

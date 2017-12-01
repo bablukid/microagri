@@ -1,11 +1,13 @@
 package controller;
+using Lambda;
+using Std;
 
 class Main extends sugoi.BaseController {
 
 	@tpl("qhome.mtt")
 	function doQhome() {
 		view.category = 'home';
-		view.chapitres = Question.chapitres;
+		view.chapitres = QData.chapitres;
 		view.getAnswers = Question.getAnswers;
 
 		if(app.user!=null){
@@ -16,7 +18,7 @@ class Main extends sugoi.BaseController {
 			for( c in Question.chapitres ) percent += Question.getAnswers(c).percent;
 			view.percent = Math.round(percent/Question.chapitres.length);  */
 			var compl = Question.getCompletion(r);
-			trace(compl);
+			//trace(compl);
 			view.percent = compl.percent;
 		}
 
@@ -115,20 +117,20 @@ class Main extends sugoi.BaseController {
 		var res = db.Result.getOrCreate(app.user);
 
 		//get the questions ids
-		var group  = Question.chapitres[chapitre].ordre[index];
+		var group  = QData.chapitres[chapitre].ordre[index];
 		var qids = group.qs;
 		view.titre = group.titre;
 		view.desc = group.desc;
 		view.chindex = chapitre;
-		view.chapitre = Question.chapitres[chapitre].nom;
+		view.chapitre = QData.chapitres[chapitre].nom;
 		view.num = index+1;
-		view.total = Question.chapitres[chapitre].ordre.length;
+		view.total = QData.chapitres[chapitre].ordre.length;
 		
 		var subAnswerIndex = null;
 		if(chapitre==1){
 			//nbre de responsables		
 			var numResponsables = 1;
-			if(res!=null && res.nbre_responsables!=null ) numResponsables = res.nbre_responsables;
+			if(res!=null && res.nbre_responsables!=null ) numResponsables = res.nbre_responsables.parseInt();
 			if(app.session.data.respIndex==null) app.session.data.respIndex = 0;
 
 			if(res.nom_responsable!=null && res.prenom_responsable!=null && res.prenom_responsable.split("|")[app.session.data.respIndex]!=null ){
@@ -167,28 +169,36 @@ class Main extends sugoi.BaseController {
 			//nbre de responsables	
 			if(chapitre==1){
 				var numResponsables = 1;				
-				if(res!=null && res.nbre_responsables!=null ) numResponsables = res.nbre_responsables;
+				if(res!=null && res.nbre_responsables!=null ) numResponsables = res.nbre_responsables.parseInt();
 				if(app.session.data.respIndex==null) app.session.data.respIndex = 0;
 				for( q in qs){
-					var value : String = Std.string( f.getValueOf(q.data.label) );
+					var value = f.getValueOf(q.data.label);
 					var original = Std.string(Reflect.getProperty(res,q.data.label));
 					var arr = original==null ? [] : original.split("|");
-					arr[app.session.data.respIndex] = value;
+					arr[app.session.data.respIndex] = Question.serialize(value,q.data.type);
 					Reflect.setProperty(res,q.data.label,arr.join("|"));
 					//trace(q.data.label+" = "+arr.join("|")+"<br>");
 				}
-				res.update();
+				
 			}else{
 				//save data
 	        	f.toSpod(res);
-    	    	res.update();
+
+                //serialize depending on field type
+                for(q in qs){
+                    var v = Reflect.getProperty(res,q.data.label);
+                    var v2 = Question.serialize(v,q.data.type);
+                    Reflect.setProperty(res,q.data.label,v2);           
+                }
 			}	
+
+            res.update();
 
 			var next = Question.next(chapitre,index);
 			
 			if(chapitre==1 && next==null){
 				var numResponsables = 1;				
-				if(res!=null && res.nbre_responsables!=null ) numResponsables = res.nbre_responsables;
+				if(res!=null && res.nbre_responsables!=null ) numResponsables = res.nbre_responsables.parseInt();
 				if(app.session.data.respIndex==null) app.session.data.respIndex = 0;
 				if(app.session.data.respIndex+1 < numResponsables){
 					next = Question.next(chapitre,-1);
@@ -223,6 +233,9 @@ class Main extends sugoi.BaseController {
 			var u = new db.User();
 			u.name = f.getValueOf("name");
 			u.email = f.getValueOf("email");
+
+			if(!sugoi.form.validators.EmailValidator.check(u.email)) throw Error("/init","Merci de saisir un email valide.");
+
 			u.phone = f.getValueOf("phone");
 			u.newsletter = f.getValueOf("newsletter");
 			u.insert();
@@ -238,13 +251,13 @@ class Main extends sugoi.BaseController {
 	@admin
 	function doShema(){
 		Sys.print("<pre>");
-		for( chap in Question.chapitres){
+		for( chap in QData.chapitres){
 			for(o in chap.ordre){
 				for(qid in o.qs){
 					var q = Question.get(qid);
 					if(q==null || q.data==null) continue;
 					Sys.print("public var "+q.data.label);
-					switch(q.data.type){
+					/*switch(q.data.type){
 						case QText,QString : 
 						if(q.data.label.indexOf("_cmt")>-1){
 							Sys.println(":SNull<SText>;");
@@ -257,7 +270,8 @@ class Main extends sugoi.BaseController {
 						case QCheckbox(_) : Sys.println(":SNull<SString<128>>;");
 						case QRadio(_) : Sys.println(":SNull<SString<32>>;");
 						case QYesNo : Sys.println(":SNull<SString<3>>;");
-					}
+					}*/
+					Sys.println(":SNull<SText>;");
 				}
 				
 			}
@@ -271,9 +285,14 @@ class Main extends sugoi.BaseController {
 		view.reponses = reponses;
 
 		var k = [];
-		for ( c in Question.chapitres){
+		var k2 = [];
+
+		for ( c in QData.chapitres){
 			for( qs in c.ordre){
-				for( q in qs.qs ) k.push( Question.get(q).data.label );
+				for( q in qs.qs ) {
+					k.push( Question.get(q).data.label );
+					k2.push(q);
+				}
 			}
 		}
 
@@ -283,6 +302,7 @@ class Main extends sugoi.BaseController {
 		}
 		
 		view.keys = k;
+		view.keys2 = k2;
 		view.Reflect = Reflect;
 
 		if(App.current.params.get("csv")=="1"){

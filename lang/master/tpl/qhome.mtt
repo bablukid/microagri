@@ -3,13 +3,20 @@
 
 <hr/>
 <div class="row">
+    <div class="col-md-12 text-center">
+        Le taux de remplissage vous est donné à titre indicatif. A noter qu’il n’est pas obligatoire de compléter à 100% le questionnaire, un recensement réussi peut-être entre 70 et 100%.
+        <br/>
+        Le questionnaire peut durer 1 heure et se faire en plusieurs fois si vous vous reconnectez sur le même appareil (ordinateur, téléphone, tablette, etc.). 
+        <hr/>
+    </div>
+    
     <div class="col-md-3">
         <b ::cond ferme!=null::>::ferme::</b>
 
         ::set chap1 =  getAnswers(chapitres[0])::
         
     </div>
-    <div class="col-md-3 text-right">Complétion du recensement :</div>
+    <div class="col-md-3 text-right">Barre de progression :</div>
     <div class="col-md-6">
         
         <div class="progress">
@@ -30,7 +37,7 @@
                 ::c.nom::                
             </div>
 
-            ::if (chap1.num<chap1.total*0.8 && repeat.c.index!=0) ::
+            ::if (chap1.num<chap1.total*0.7 && repeat.c.index!=0) ::
             <div class="panel-body text-center" style="color:grey">
                 Remplissez le chapitre "La Ferme" pour pouvoir commencer ce chapitre
             </div>

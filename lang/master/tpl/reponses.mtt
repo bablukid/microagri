@@ -8,9 +8,18 @@
     
         
         <table class="table table-bordered table-condensed table-striped">
+
+            <tr>
+                <th></th>
+                <th></th>
+                ::foreach k keys2::
+                <th>::k::</th>
+                ::end::
+            </tr>
+
             <tr>
                 <th>#</th>
-                <th>complétion</th>
+                <th>Complétion</th>
                 ::foreach k keys::
                 <th>::k::</th>
                 ::end::
@@ -20,7 +29,9 @@
                 <td>::r.id::</td>
                 <td>::r.completion::%</td>
                 ::foreach k keys::
-                <td>::Reflect.field(r,k)::</td>
+                
+                ::set v = Reflect.field(r,k)::
+                <td>::if (v!=null):: ::v:: ::end::</td>
                 ::end::
             </tr>
         ::end::

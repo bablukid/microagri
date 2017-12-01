@@ -21,20 +21,19 @@
 
 	<body class="container-fluid">
 		
-		<!--<div class="text-center">
-			<h1>::NAME::</h1>
-			<p><b>Sur le territoire girondin</b></p>
-		</div>-->
+		<div class="text-center">
+            <a href="https://microagri.org" target="_blank"><img src="/img/microagri.png" /></a>
+            <br/>
+			<b>Appel à recensement des micro-fermes en Gironde</b>
+		</div>
 		
 			
 		<!-- navbar -->
 		<div class="collapse navbar-collapse" id="cagette-navbar">
 				
 			<ul class="nav navbar-nav navbar-left">
-				
-
 				::if user!=null && user.isAdmin()::
-				<li ::attr class if(section=="home" )  'active' ::><a href="/">Accueil</a></li>
+				<li ::attr class if(section=="home" )  'active' ::><a href="/qhome">Questionnaire</a></li>
 				<li><a href="/reponses">Réponses</a></li>
 				<li><a href="/signalements">Signalements</a></li>
 				<li><a href="/db">Database</a></li>
