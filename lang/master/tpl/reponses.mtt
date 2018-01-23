@@ -12,6 +12,7 @@
             <tr>
                 <th></th>
                 <th></th>
+                <th></th>
                 ::foreach k keys2::
                 <th>::k::</th>
                 ::end::
@@ -20,6 +21,7 @@
             <tr>
                 <th>#</th>
                 <th>Complétion</th>
+                <th>Compte</th>
                 ::foreach k keys::
                 <th>::k::</th>
                 ::end::
@@ -28,6 +30,7 @@
             <tr>
                 <td>::r.id::</td>
                 <td>::r.completion::%</td>
+                <td>::r._user.name:: ::r._user.email:: </td>
                 ::foreach k keys::
                 
                 ::set v = Reflect.field(r,k)::

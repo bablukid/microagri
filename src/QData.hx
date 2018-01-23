@@ -2,10 +2,14 @@ import Question;
 
 class QData{
 
+
+
+    
+
     /**
-    Structure générale des chapitres
+    Formulaire 3 'complet'
     **/
-    public static var chapitres : Array<Chapitre>= [
+    public static var formulaire3 : Array<Chapitre>= [
         {
             id:"A",
             nom : "La ferme",
@@ -101,6 +105,42 @@ class QData{
         }
     ];
 
+
+
+    /**
+     *  1er formulaire court 
+     */
+    public static var formulaire1 : Array<Chapitre>= [
+        {
+            id:"A",
+            nom : "APPEL A RECENSEMENT DES MICROS-FERMES DE GIRONDE (5 mn)",
+            ordre : [
+                {qs:["A1","A1-1","A1-2","A1-3","A2","A6-1"],titre:"",desc:"Toute personne susceptible d’identifier une ferme comme ayant des caractéristiques de micro-fermes peut répondre à ce questionnaire (5 minutes) :\n citoyens, partenaires du programme MicroAgri et, bien évidemment, les agriculteurs et agricultrices se sentant concernés."},
+                {qs:["A6-2"],titre:"",desc:""},
+                {qs:["A11","A12"],titre:"",desc:""},
+                
+            ],
+        },
+    ];
+
+    /**
+     *  2e formulaire court
+     **/
+     public static var formulaire2 : Array<Chapitre>= [
+        {
+            id:"A",
+            nom : "APPEL A RECENSEMENT DES MICROS-FERMES DE GIRONDE (10 mn)",
+            ordre : [
+                {qs:["A13","B9-2","A3"],titre:"",desc:"Cette deuxième partie de formulaire est uniquement à destination de l’un ou l’une des responsables de la ferme (personne en charge des décisions sur la ferme)."},
+                {qs:["E1-3"],titre:"",desc:""},
+                {qs:["A10-1","A10-3"],titre:"Mode de faire-valoir des terres et des bâtiments",desc:"Exemples pour la catégorie « Autres » : terres utilisées à titre gratuit, illégalement, etc."},
+                {qs:["B8-2"],titre:"Temps de travail agricole",desc:"Temps de travail agricole : production et actes en prolongement de la production (transformation, commercialisation, etc.)"},
+                {qs:["D3-2","D2","D4","D5","D6","D7"],titre:"",desc:""},
+                {qs:["H3-3"],titre:"Merci !",desc:""},
+            ],
+        },
+    ];
+
     /**
     Liste des questions :
         - label : le nom du champs utilisé pour stocker l'info dans la table
@@ -112,8 +152,26 @@ class QData{
     public static var questions = [
         "A1" =>{
             label:"Nom",
-            q:"Quel est le nom de votre ferme ?",
+            q:"Quel est le nom de la ferme ?",
             desc:"",                    
+            type:QString,
+        },
+        "A1-1"=>{
+            label:"nom_responsables",
+            q:"Nom du ou des responsable(s) de la ferme",
+            desc:"",
+            type:QString,
+        },
+        "A1-2"=>{
+            label:"email",
+            q:"Email du responsable de la ferme",
+            desc:"",
+            type:QString,
+        },
+        "A1-3"=>{
+            label:"telephone",
+            q:"Numéro de téléphone du responsable de la ferme",
+            desc:"",
             type:QString,
         },
         "A2" =>{
@@ -181,7 +239,7 @@ class QData{
             q:"Quelles sont les activités agricoles de la ferme ?",
             desc:"",                   
             type:QCheckbox([
-                {label:"Viticulture",value:"viticulture"},
+                /*{label:"Viticulture",value:"viticulture"},
                 {label:"Maraîchage",value:"maraichage"},
                 {label:"Arboriculture",value:"arboriculture"},
                 {label:"Céréaliculture",value:"cerealiculture"},
@@ -196,7 +254,28 @@ class QData{
                 {label:"Petit élevage",value:"elevage_petit"},
                 {label:"Pisciculture",value:"pisciculture"},
                 {label:"Conchyliculture",value:"conchyliculture"},
-                {label:"Activités de pêche maritime à pied",value:"peche_a_pied"},
+                {label:"Activités de pêche maritime à pied",value:"peche_a_pied"},*/
+                {label:"Céréales, légumineuses et oléagineuses",value:"cereales"},
+                {label:"Culture de légumes et maraîchage",value:"maraichage"},
+                {label:"Autres cultures non permanentes",value:"autres_cult_non_perm"},
+                {label:"Viticulture",value:"viticulture"},
+                {label:"Culture de fruitiers",value:"fruitiers"},
+                {label:"Plantes à épices, aromatiques, médicinales et pharmaceutiques",value:"aromatiques"},
+                {label:"Autres cultures permanentes",value:"autres_cult_perm"},
+                {label:"Production de semences et reproduction de plants",value:"semences"},
+                {label:"Aquaponie",value:"aquaponie"},
+                {label:"Polyculture-élevage",value:"polyculture-elevage"},
+                {label:"Elevage de bovins",value:"bovins"},
+                {label:"Elevage d’ovins ou caprins",value:"ovins_caprins"},
+                {label:"Élevage de porcins",value:"porcins"},
+                {label:"Élevage de volailles",value:"volailles"},
+                {label:"Elevages mixtes",value:"elevage_mixte"},
+                {label:"Autres élevages (dont équidés)",value:"autres_elevages"},
+                {label:"Sylviculture et autres activités forestières",value:"sylviculture"},
+                {label:"Aquaculture en mer ou en eau douce",value:"aquaculture"},
+                {label:"Pêche en mer ou en eau douce",value:"peche"},
+                {label:"Ecolieu",value:"ecolieu"},
+                
             ],true),
         },
         "A7-1" =>{
@@ -260,22 +339,26 @@ class QData{
             q:"Quel est le mode de faire-valoir de vos terres ?",
             desc:"",                   
             type:QRadio([                
-                {label:"Propriétaire",value:"proprietaire"},
-                {label:"Locataire",value:"locataire"},
-                {label:"Mixte",value:"mixte"},
+                {label:"Uniquement propriétaire",value:"proprietaire"},
+                {label:"Uniquement locataire",value:"locataire"},
+                {label:"Mixte, propriété majoritaire",value:"mixte_prop"},
+                {label:"Mixte, location majoritaire",value:"mixte_loca"},
                 {label:"Sans terre",value:"aucun"},
-            ],true),
+                {label:"Autre",value:"autre"},
+            ],false),
         },
         "A10-3" =>{
             label:"faire_valoir_bati",
             q:"Si vous avez des bâtiments (hors serres), quel est leur mode de faire-valoir ?",
             desc:"",                   
-            type:QRadio([
-                {label:"Propriétaire",value:"proprietaire"},
-                {label:"Locataire",value:"locataire"},
-                {label:"Mixte",value:"mixte"},
+            type:QRadio([                
+                {label:"Uniquement propriétaire",value:"proprietaire"},
+                {label:"Uniquement locataire",value:"locataire"},
+                {label:"Mixte, propriété majoritaire",value:"mixte_prop"},
+                {label:"Mixte, location majoritaire",value:"mixte_loca"},
                 {label:"Aucun bâtiment",value:"aucun"},
-            ],true),
+                {label:"Autre",value:"autre"},
+            ],false),
         },
         "A10-5" =>{
             label:"faire_valoir_cmt",
@@ -283,6 +366,24 @@ class QData{
             desc:"",                   
             type:QText,
         },
+        "A11" =>{
+            label:"carac_microferme",
+            q:"Caractéristiques",
+            desc:"Donner ici les caractéristiques qui vous permettent d'identifier la ferme comme étant une micro-ferme (surface, taille du cheptel, mode(s) de commercialisation, certification(s), etc.",                   
+            type:QText,
+        },
+        "A12" =>{
+            label:"carte_microferme",
+            q:"Si vous êtes l’un(e) des responsables de la ferme, souhaitez-vous que votre ferme apparaisse sur notre carte des micro-fermes de Gironde ?",
+            desc:"",                   
+            type:QYesNo,
+        },
+        "A13" =>{
+            label:"siret",
+            q:"Si votre activité est enregistrée, donnez le numéro de SIRET de la ferme",
+            desc:"",                   
+            type:QString,
+        },        
         "B1"=>{
             label:"nom_responsable",
             q:"Nom",
@@ -385,7 +486,7 @@ class QData{
         },
         "B8-2"=>{
             label:"temps",
-            q:"Combien de temps en heures par semaine prend votre travail de responsable de la ferme ? (approximativement) ",
+            q:"Combien de temps travaillez-vous par an ? (En heures)",
             desc:"",
             type:QInt,
         },
@@ -577,6 +678,51 @@ class QData{
                 {label:"Autre",value:"autre"},
             ],false,[{label:"Précisez si nécéssaire",value:"detail"}])
         },
+        "D4"=>{
+            label:"appro_env_proch",
+            q:"Vous approvisionnez-vous dans un environnement proche pour :",
+            desc:"",
+            type:QCheckbox([
+                {label:"Vos intrants",value:"intrants"},
+                {label:"Votre matériel (achat,location)",value:"materiel"},
+                {label:"Votre main d'oeuvre",value:"main_doeuvre"},
+                {label:"La transformation",value:"transformation"},
+                {label:"La commercialisation",value:"commercialisation"},                
+            ],false)
+        },
+        "D5"=>{
+            label:"demarche_autonomie",
+            q:"Etes-vous dans une démarche d’autonomie pour :",
+            desc:"",
+            type:QCheckbox([
+                {label:"Vos intrants",value:"intrants"},
+                {label:"Votre matériel (achat,location)",value:"materiel"},
+                {label:"Votre main d'oeuvre",value:"main_doeuvre"},
+                {label:"Vos ressources financières",value:"finance"},
+            ],false)
+        },
+        "D6"=>{
+            label:"importance_agroecologie",
+            q:"Comment estimez-vous l’importance de la dimension agro-écologique  dans vos pratiques ?",
+            desc:"",
+            type:QRadio([
+                {label:"Pas du tout",value:"0"},
+                {label:"Un peu",value:"1"},
+                {label:"Beaucoup",value:"2"},
+                {label:"Très fortement",value:"3"},
+            ],false)
+        },
+        "D7"=>{
+            label:"devel_pratique_agroeco",
+            q:"Avez-vous des projets pour développer des pratiques agro-écologiques ?",
+            desc:"",
+            type:QRadio([
+                {label:"Pas du tout",value:"0"},
+                {label:"Un peu",value:"1"},
+                {label:"Beaucoup",value:"2"},
+                {label:"Très fortement",value:"3"},
+            ],false)
+        },
         "D1-3"=>{
             label:"origine_intrants",
             q:"Quelle est l’origine de vos intrants ?",
@@ -648,13 +794,18 @@ class QData{
             ],false,[{label:"Précisez si nécéssaire",value:"detail"}])
         },
         "D2"=>{
-            label:"particip_vie_collec",
-            q:"Estimez-vous participer à la vie collective ?",
+            label:"particip_vie_sociale",
+            q:"Comment évaluez-vous votre participation à la vie sociale de votre environnement proche ?",
             desc:"",
-            type:QText
+            type:QRadio([
+                {label:"Pas du tout",value:"0"},
+                {label:"Un peu",value:"1"},
+                {label:"Beaucoup",value:"2"},
+                {label:"Très fortement",value:"3"},
+            ])
         },
         "D3-1"=>{
-            label:"reseaux",
+            label:"reseaux_ext",
             q:"A quel(s) type(s) de réseau(x) appartenez-vous ?",
             desc:"",
             type:QCheckbox([
@@ -668,12 +819,21 @@ class QData{
                 {label:"Autre",value:"autre"},
             ],true,[{label:"Nom du réseau",value:"nom"},{label:"Cela vous apporte t'il de l'aide ? (oui/non)",value:"aide"},{label:"Précisez",value:"detail"}])
         },
-        /*"D3-2"=>{
-            label:"reseaux_cmt",
-            q:"Précisez",
+        "D3-2"=>{
+            label:"reseaux",
+            q:"A quel(s) type(s) de réseau(x) appartenez-vous ?",
             desc:"",
-            type:QText
-        },*/
+            type:QCheckbox([
+                {label:"Amicaux / informels",value:"amicaux"},
+                {label:"Réseaux sociaux sur internet",value:"internet"},
+                {label:"Mouvement",value:"mouvement"},
+                {label:"Association",value:"association"},
+                {label:"Syndicat",value:"syndicat"},
+                {label:"Organisme professionnel",value:"organisme"},
+                {label:"Collectivités",value:"collectivite"},
+                {label:"Autre",value:"autre"},
+            ])
+        },
         "D3-3"=>{
             label:"reseaux_activite",
             q:"L’appartenance à ces réseaux apporte-t'elle une aide à votre activité ?",
@@ -716,11 +876,32 @@ class QData{
             desc:"en mètres-carré",
             type:QInt
         },*/
-        "E1-3"=>{
+        /*"E1-3"=>{
             label:"surface_par_type",
             q:"Surface par type d’activité agricole",
             desc:"Surface en mètres-carré. Si élevage, en nombre de têtes",
             type:QMultiInput([{label:"Surface en m² / Nbre de têtes",value:"surface"}])
+        },*/
+        "E1-3"=>{
+            label:"surface_par_type",
+            q:"Dimension de l'activité agricole",
+            desc:"Superficies (utilisation du sol, en hectares)",
+            type:QCheckbox([
+                 {label:"A - Terres arables",value:"arables"},
+                {label:"...dont maraîchage",value:"maraich"},
+                {label:"...dont sous serres",value:"serres"},
+                {label:"B - Cultures permanentes",value:"cult_perm"},
+                {label:"...dont verger",value:"verger"},
+                {label:"C - Surface toujours en Herbe",value:"herbe"},
+                {label:"D - Superficies non agricoles (étang,bois,etc.)",value:"non_agri"},
+                {label:"E - Surfaces non mises en culture (bâtiments,chemins,haies)",value:"non_cult"},
+                {label:"Superficie totale de l'exploitation (A+B+C+D+E)",value:"total"},
+                {label:"Autres superficies utilisées pour la production (communaux,parcours,estives,forêts domaniales,etc.)",value:"autre_sup"},
+                ]
+                ,null,
+                [{label:"Superficie (ha)",value:"ha"}]
+
+            )
         },
         "E1-4"=>{
             label:"surface_bat",
@@ -952,7 +1133,20 @@ class QData{
             desc:"",
             type:QYesNo
         },
+         "H3-3"=>{
+            label:"form_complet",
+            q:"Merci d’avoir répondu à ce questionnaire de pré-recensement. Seriez-vous favorable à ce que le coordinateur du programme MicroAgri vous recontacte pour compléter un questionnaire plus détaillé ?",
+            desc:"(environ 1h-1h30, soit par téléphone, soit en entretien à la ferme).",
+            type:QYesNo
+        },
 
+    ];
+
+
+    public static var formulaires = [
+        1 => {nom:"APPEL A RECENSEMENT DES MICROS-FERMES DE GIRONDE (5 mn)", startScreen:"/answers", endScreen:"/title",chapitres:QData.formulaire1},
+        2 => {nom:"APPEL A RECENSEMENT DES MICROS-FERMES DE GIRONDE (10 mn)", startScreen:"/answers", endScreen:"/answers",chapitres:QData.formulaire2},
+        3 => {nom:"Formulaire complet",startScreen:"/qhome",endScreen:"/qhome",chapitres:QData.formulaire3},
     ];
 
 }

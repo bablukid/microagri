@@ -23,10 +23,10 @@
             <hr/>
             ::raw form::    
             <div class="text-center" ::cond num!=1:: style="margin-top:48px;">
-                <a href="/q/::chindex::/::(num-2)::" class="btn-default btn btn-xs">
+                <a href="/q/::formId::/::chindex::/::(num-2)::" class="btn-default btn btn-xs">
                 <span class="glyphicon glyphicon-chevron-left"></span> Question précédente</a>
 
-                <a href="/qhome" class="btn-default btn btn-xs">
+                <a href="::formulaire.startScreen::" class="btn-default btn btn-xs">
                     <span class="glyphicon glyphicon-home"></span> Revenir à l'accueil</a>
             </div>
         </div>  

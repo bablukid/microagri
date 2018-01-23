@@ -25,17 +25,21 @@
             <a href="https://microagri.org" target="_blank"><img src="/img/microagri.png" /></a>
             <br/>
 			<b>Appel à recensement des micro-fermes en Gironde</b>
-		</div>
-		
+		</div>		
 			
 		<!-- navbar -->
 		<div class="collapse navbar-collapse" id="cagette-navbar">
 				
 			<ul class="nav navbar-nav navbar-left">
-				::if user!=null && user.isAdmin()::
-				<li ::attr class if(section=="home" )  'active' ::><a href="/qhome">Questionnaire</a></li>
+                ::if user!=null && user.isAdmin()::
+                <li><a href="/answers">Mes réponses</a></li>
+                <li ::attr class if(section=="home" )  'active' ::><a href="/qhome">Form. complet</a></li>
+                <li><a href="/q/1/0/0">1er Form. Court</a></li>
+                <li><a href="/q/2/0/0">2e Form. Court</a></li>
+                
+                
 				<li><a href="/reponses">Réponses</a></li>
-				<li><a href="/signalements">Signalements</a></li>
+				<!--<li><a href="/signalements">Signalements</a></li>-->
 				<li><a href="/db">Database</a></li>
 				::end::
 			</ul>
@@ -46,10 +50,8 @@
 				::else::
 				<li><a href="/user/login">Connexion</a></li>		
 				::end::
-			</ul>
-				
-		</div>
-		
+			</ul>				
+		</div>		
 		
 		<!-- application messages -->
 		::foreach msg getMessages()::

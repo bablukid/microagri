@@ -24,7 +24,7 @@ class Question{
         var out = {num:0,total:0,percent:0};
         if(r==null) return out;
         
-        for( chap in QData.chapitres){
+        for( chap in QData.formulaire3){
             for( o in chap.ordre){
                 for( qid in o.qs){
                     var q = Question.get(qid);
@@ -53,7 +53,7 @@ class Question{
     }
 
     /**
-     *  Generate a form for this list of Questions
+     *  Generate a HTML form for this list of Questions
      */
     public static function getForm(qs:Array<Question>,?subAnswerIndex:Int=null){
 
@@ -95,9 +95,10 @@ class Question{
                 }
             }
 
-            //id de question visible si DEBUG
+            //id de question
             var html = "<h4><span class='qid'>"+q.qid+"</span>"+q.data.q+"</h4><p>"+q.data.desc+"</p>";
             var v : Dynamic = Reflect.field(r,q.data.label);
+            if(v==null) v = "";
             
             //réponses multiples ( responsables ) 
             if(subAnswerIndex!=null) {
@@ -143,7 +144,7 @@ class Question{
 
             case QMultiInput(data) : 
                 var lines = [];                
-                if(q.qid=="E1-3" && r.autres_activites!=null){
+                /*if(q.qid=="E1-3" && r.autres_activites!=null){
                     //surface par type, autant de lignes que activités dans A6-2
                     var activites = split(r.autres_activites,"~");                    
                     var activites_names = switch( QData.questions.get("A6-2").type ){
@@ -156,7 +157,7 @@ class Question{
                         if(x!=null) lines.push(x.label);
                     }
                     //trace(lines);
-                }else if(q.qid=="E1-4"){
+                }else*/ if(q.qid=="E1-4"){
                     for( i in 1...11) lines.push('Bâtiment $i');
                 }
 
@@ -178,6 +179,16 @@ class Question{
         return form;
     }
 
+
+    /*public static function getFormulaire(formulaire:Int,?chapitre=0){
+        switch(formulaire){
+            case 1 : return QData.formulaire1[chapitre];
+            case 2 : return QData.formulaire2[chapitre];
+            case 3 : return QData.formulaire3[chapitre];
+            default : return null;
+        }
+    }*/
+
    /* public function getNext():Question{
 
         //trouver le chapitre
@@ -190,12 +201,16 @@ class Question{
         return null;
     }*/
 
-    public static function  next(c:Int,i:Int){
-
-        if(QData.chapitres[c]==null) return null;
-        if(QData.chapitres[c].ordre[i+1]==null) return null;
+    public static function  next(formulaire:Int,c:Int,i:Int){
+        var chapitres = switch(formulaire){
+            case 1 : QData.formulaire1;
+            case 2 : QData.formulaire2;
+            default : QData.formulaire3;
+        }
+        if(chapitres[c]==null) return null;
+        if(chapitres[c].ordre[i+1]==null) return null;
         
-        return {chapitre:c,index:i+1};
+        return {formulaire:formulaire,chapitre:c,index:i+1};
     }
 
     public static function getAnswers(chap:Chapitre):{num:Int,total:Int,percent:Int}{

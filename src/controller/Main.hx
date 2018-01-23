@@ -3,11 +3,13 @@ using Lambda;
 using Std;
 
 class Main extends sugoi.BaseController {
-
+	/**
+	 *  Home questionnaire complet
+	 */
 	@tpl("qhome.mtt")
 	function doQhome() {
 		view.category = 'home';
-		view.chapitres = QData.chapitres;
+		view.chapitres = QData.formulaire3;
 		view.getAnswers = Question.getAnswers;
 
 		if(app.user!=null){
@@ -20,17 +22,16 @@ class Main extends sugoi.BaseController {
 			var compl = Question.getCompletion(r);
 			//trace(compl);
 			view.percent = compl.percent;
-		}
-
-		
+		}	
 	}
 	
 	@tpl("home.mtt")
-	function doDefault(){
+	function doDefault(){}
 
-	}
-
-	@tpl("form.mtt")
+	/**
+	 *  Ancien formulaire de signalement
+	 */
+	/*@tpl("form.mtt")
 	function doIdentifier(){
 		if(app.user==null) throw Redirect("/init");
 		
@@ -91,11 +92,12 @@ class Main extends sugoi.BaseController {
 		}
 
 		view.form = f;
-
-	}
-
+	}*/
 
 
+	/**
+	 *  Admin BDD
+	 */
 	@admin
 	function doDb(d:haxe.web.Dispatch) {
 		d.parts = []; //disable haxe.web.Dispatch
@@ -107,24 +109,27 @@ class Main extends sugoi.BaseController {
 	}
 
 	/**
-	Display a question
+	    Question Formulaire complet
 	**/
 	@tpl("q.mtt")
-	function doQ(chapitre:Int,index:Int){
+	function doQ(formId:Int,chapitre:Int,index:Int){
 
 		if(app.user==null) throw Redirect("/init");
 
 		var res = db.Result.getOrCreate(app.user);
+        var formulaire = QData.formulaires[formId];
 
 		//get the questions ids
-		var group  = QData.chapitres[chapitre].ordre[index];
+		var group  = formulaire.chapitres[chapitre].ordre[index];
 		var qids = group.qs;
 		view.titre = group.titre;
 		view.desc = group.desc;
 		view.chindex = chapitre;
-		view.chapitre = QData.chapitres[chapitre].nom;
+        view.formulaire = formulaire;
+        view.formId = formId;
+		view.chapitre =  formulaire.chapitres[chapitre].nom;
 		view.num = index+1;
-		view.total = QData.chapitres[chapitre].ordre.length;
+		view.total =  formulaire.chapitres[chapitre].ordre.length;
 		
 		var subAnswerIndex = null;
 		if(chapitre==1){
@@ -157,17 +162,25 @@ class Main extends sugoi.BaseController {
 					case "A2" : 
 						//check 33
 						var str :String = f.getValueOf(q.data.label);
-						if ( str.indexOf("33") == -1 ) 
-							throw Error("/q/"+chapitre+"/"+index,"Ce recensement concerne uniquement les fermes de Gironde, le code postal doit commencer par 33.") ;
+						if ( str!=null && str.indexOf("33") == -1 ) 
+							throw Error("/q/"+formId+"/"+chapitre+"/"+index,"Ce recensement concerne uniquement les fermes de Gironde, le code postal doit commencer par 33.") ;
 					case "A5-1"	:
 						//nbre de responsables
 						var num :Int = f.getValueOf(q.data.label);				
-						if(num>6) throw Error("/qhome","Vous ne pouvez pas définir plus de 6 responsables");
+						if(num>6) throw Error(formulaire.startScreen,"Vous ne pouvez pas définir plus de 6 responsables");
 					default:
 				}
 			}
+
+            // téléphone ou email obligatoire
+            if(formId==1 && chapitre==0 && index==0){
+                var email = f.getValueOf("email");
+                var telephone = f.getValueOf("telephone");
+               if(telephone==null && email==null) throw Error("/q/1/0/0","Merci de nous communiquer au moins un email ou un numéro de téléphone.");
+            }
+
 			//nbre de responsables	
-			if(chapitre==1){
+			if(formId==3 && chapitre==1 ){
 				var numResponsables = 1;				
 				if(res!=null && res.nbre_responsables!=null ) numResponsables = res.nbre_responsables.parseInt();
 				if(app.session.data.respIndex==null) app.session.data.respIndex = 0;
@@ -194,25 +207,24 @@ class Main extends sugoi.BaseController {
 
             res.update();
 
-			var next = Question.next(chapitre,index);
+			var next = Question.next(formId,chapitre,index);
 			
 			if(chapitre==1 && next==null){
 				var numResponsables = 1;				
 				if(res!=null && res.nbre_responsables!=null ) numResponsables = res.nbre_responsables.parseInt();
 				if(app.session.data.respIndex==null) app.session.data.respIndex = 0;
 				if(app.session.data.respIndex+1 < numResponsables){
-					next = Question.next(chapitre,-1);
+					next = Question.next(formId,chapitre,-1);
 					app.session.data.respIndex++;
 				}else{
 					app.session.data.respIndex = 0;
-				}
-				
+				}				
 			}
 
 			if(next==null){
-				throw Ok( "/qhome" , "Ce chapitre est terminé." );
+				throw Ok( formulaire.endScreen , "Ce formulaire est terminé." );
 			}else{
-				throw Redirect( "/q/"+next.chapitre+"/"+next.index );
+				throw Redirect( "/q/"+next.formulaire+"/"+next.chapitre+"/"+next.index );
 			}
 		}
 	}
@@ -222,7 +234,6 @@ class Main extends sugoi.BaseController {
 	**/
 	@tpl("form.mtt")
 	function doInit(){
-
 		var f = new sugoi.form.Form("user");
 		f.addElement(new sugoi.form.elements.Html("Avant de remplir le formulaire, merci de saisir vos coordonnées :"));
 		f.addElement(new sugoi.form.elements.StringInput("name","Nom",null,true));
@@ -248,34 +259,68 @@ class Main extends sugoi.BaseController {
 
 	}
 
+    @tpl('title.mtt')
+    function doTitle(){
+
+    }
+
+    /**
+     *  Liste les fermes référencées par le user en cours
+     */
+    @tpl('answers.mtt')
+    function doAnswers(){
+
+        if(app.params.exists("new")){
+            var x = new db.Result();
+            x.user = app.user;
+            x.Nom = "Nouvelle ferme";
+            x.insert();
+            app.session.data.resultId = x.id;
+            var formulaire = Std.parseInt(app.params.get("new"));
+
+            throw Ok("/q/"+formulaire+"/0/0","Vous pouvez maintenant référencer une nouvelle ferme.");
+        }
+
+        if(app.params.exists("choose")){
+            
+            
+            var rid = Std.parseInt(app.params.get("choose"));
+            var r = db.Result.manager.get(rid,false);
+            if(r==null) throw Error("/","db.Result not found");
+            if(app.user.id!=r.user.id && !app.user.isAdmin()) throw "Access forbidden";
+
+            app.session.data.resultId = r.id;
+
+            throw Ok("/q/1/0/0","Vous modifiez maintenant le référencement de la ferme \""+r.Nom+"\".");
+        }
+
+        view.results = db.Result.manager.search($user == app.user,false);
+
+    }
+
 	@admin
 	function doShema(){
-		Sys.print("<pre>");
-		for( chap in QData.chapitres){
-			for(o in chap.ordre){
-				for(qid in o.qs){
-					var q = Question.get(qid);
-					if(q==null || q.data==null) continue;
-					Sys.print("public var "+q.data.label);
-					/*switch(q.data.type){
-						case QText,QString : 
-						if(q.data.label.indexOf("_cmt")>-1){
-							Sys.println(":SNull<SText>;");
-						}else{
-							Sys.println(":SNull<SString<128>>;");
-						}						
-						case QInt : Sys.println(":SNull<SInt>;");
-						case QFloat : Sys.println(":SNull<SFloat>;");
-						case QAddress : Sys.println(":SNull<SString<256>>;");
-						case QCheckbox(_) : Sys.println(":SNull<SString<128>>;");
-						case QRadio(_) : Sys.println(":SNull<SString<32>>;");
-						case QYesNo : Sys.println(":SNull<SString<3>>;");
-					}*/
-					Sys.println(":SNull<SText>;");
-				}
-				
-			}
-		}		
+		Sys.print("<pre>");		
+        for(qid in QData.questions.keys()){
+            var q = Question.get(qid);
+            if(q==null || q.data==null) continue;
+            Sys.print("public var "+q.data.label);
+            /*switch(q.data.type){
+                case QText,QString : 
+                if(q.data.label.indexOf("_cmt")>-1){
+                    Sys.println(":SNull<SText>;");
+                }else{
+                    Sys.println(":SNull<SString<128>>;");
+                }						
+                case QInt : Sys.println(":SNull<SInt>;");
+                case QFloat : Sys.println(":SNull<SFloat>;");
+                case QAddress : Sys.println(":SNull<SString<256>>;");
+                case QCheckbox(_) : Sys.println(":SNull<SString<128>>;");
+                case QRadio(_) : Sys.println(":SNull<SString<32>>;");
+                case QYesNo : Sys.println(":SNull<SString<3>>;");
+            }*/
+            Sys.println(":SNull<SText>;");
+        }
 		Sys.print("</pre>");
 	}
 
@@ -285,15 +330,19 @@ class Main extends sugoi.BaseController {
 		view.reponses = reponses;
 
 		var k = [];
-		var k2 = [];
+        var keys =[];
+        for( k in QData.questions.keys()) keys.push(k);
 
-		for ( c in QData.chapitres){
-			for( qs in c.ordre){
-				for( q in qs.qs ) {
-					k.push( Question.get(q).data.label );
-					k2.push(q);
-				}
-			}
+        keys.sort(function(x,y){
+            if(x==y) return 0;
+            if(x>y){
+                return 1;
+            }else return -1;
+        });
+
+		for ( key in keys ){
+			k.push( Question.get(key).data.label );
+
 		}
 
 		//completion des questions
@@ -302,7 +351,7 @@ class Main extends sugoi.BaseController {
 		}
 		
 		view.keys = k;
-		view.keys2 = k2;
+		view.keys2 = keys;
 		view.Reflect = Reflect;
 
 		if(App.current.params.get("csv")=="1"){

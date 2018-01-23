@@ -8,5 +8,18 @@
     "haxe.displayPort":6000,
     "haxe.buildCompletionCache": true,
     "editor.fontSize": 13.5,
-    "editor.detectIndentation": false
+    "editor.detectIndentation": false,
+    "symbolOutline.doSort": true,
+    "symbolOutline.doSelect": true,
+    "symbolOutline.sortOrder": [
+        "Class",
+        "Constructor",
+        "Function",
+        "Method",
+        "Module",
+        "Constant",
+        "Interface",
+        "*",
+        
+      ],
 }

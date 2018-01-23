@@ -48,12 +48,12 @@
 
                 ::if (x.num==x.total && x.num>0)::
                 <div class="alert alert-success text-center" ><span class="glyphicon glyphicon-ok"></span> Terminé 
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/q/::repeat.c.index::/0" >Modifier mes réponses</a></div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/q/3/::repeat.c.index::/0" >Modifier mes réponses</a></div>
                 <p class="text-center"></p>
                 ::elseif(x.num>0)::
                 <div class="row">
                     <div class="col-md-6">
-                            <a href="/q/::repeat.c.index::/0" class="btn btn-default btn-xs">
+                            <a href="/q/3/::repeat.c.index::/0" class="btn btn-default btn-xs">
                                 <span class="glyphicon glyphicon-chevron-right"></span>
                                 Reprendre
                             </a>
@@ -68,7 +68,7 @@
                 </div>
                 ::else::
                 <p class="text-center">
-                    <a href="/q/::repeat.c.index::/0" class="btn btn-default">
+                    <a href="/q/3/::repeat.c.index::/0" class="btn btn-default">
                         <span class="glyphicon glyphicon-chevron-right"></span>
                         Commencer
                     </a>

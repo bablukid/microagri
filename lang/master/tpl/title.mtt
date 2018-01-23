@@ -1,0 +1,37 @@
+::use 'design.mtt'::
+
+<div style="border:#CCC 2px solid;margin:24px;padding:24px;border-radius:8px;">
+    <div class="row text-center">
+        <h2>
+            Merci de votre contribution !
+        </h2>
+        
+    </div>
+    <div class="row" >
+        <div class="col-md-4"></div>
+        <div class="col-md-4 text-center">
+            <p>
+                Si vous n’êtes pas le ou la responsable de la ferme, 
+                merci de votre contribution au programme MicroAgri.<br/>
+                Nous recontacterons la ferme identifiée. <br/>
+                Il vous est possible renseigner une nouvelle ferme en cliquant ci-dessous :
+            </p>
+            <p>
+                <a href="/answers?new=1" class="btn btn-primary">Entrer une nouvelle ferme</a>
+            </p>            
+           <hr/>
+           <h3>Si vous êtes l’un(e) des responsables de la ferme</h3>
+            <p>
+                Nous vous proposons de répondre à 15 questions supplémentaires (10 minutes) <br/>
+                afin de mieux connaître les micro-fermes existantes en Gironde.
+            </p>
+            <p>
+                <a href="/q/2/0/0" class="btn btn-primary">Accéder à la suite</a>
+            </p>
+            
+        </div>  
+    </div>
+</div>
+
+
+::end::
