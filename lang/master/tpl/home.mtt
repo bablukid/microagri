@@ -1,5 +1,5 @@
 ::use 'design.mtt'::
-
+<!--
 <div class="row" style="margin-top:22px;">
     <div class="col-md-6">
         <p>
@@ -47,5 +47,5 @@
             </div>
     </div>
 </div>
-
+-->
 ::end::

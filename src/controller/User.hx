@@ -10,7 +10,57 @@ class User extends sugoi.BaseController
 		super();
 	}
 
-	function doDefault() {}
+	/**
+	 *  Admin : Edit users
+	 */
+	@admin @tpl('user/default.mtt')
+	public function doDefault() {
+		view.users = db.User.manager.all();
+	}
+
+    @admin @tpl('form.mtt')
+	public function doEdit(user:db.User) {
+		
+		var form = sugoi.form.Form.fromSpod(user);
+		form.getElement('pass').value = "";
+        form.removeElementByName("lang");
+        form.removeElementByName("cdate");
+        form.removeElementByName("ldate");
+        form.removeElementByName("pass");
+		
+		if (form.isValid()) {
+			user.lock();
+			form.toSpod(user);
+			//user.pass = haxe.crypto.Md5.encode(App.config.KEY + user.pass);
+			user.update();
+			throw Ok('/user','Utilisateur mis à jour');
+		}
+		
+		view.form = form;
+		view.title = "Modifier " + user.name;
+	}
+	
+	@admin @tpl('form.mtt')
+	public function doInsert() {
+		var user = new db.User();
+		var form = sugoi.form.Form.fromSpod(user);
+
+        form.removeElementByName("lang");
+        form.removeElementByName("cdate");
+        form.removeElementByName("ldate");        
+		
+		if (form.isValid()) {
+			form.toSpod(user);
+            user.lang = "fr";
+			user.pass = haxe.crypto.Md5.encode(App.config.KEY + user.pass);
+            user.cdate = Date.now();
+			user.insert();
+			throw Ok('/user','Utilisateur créé');
+		}
+		
+		view.form = form;
+		view.title = "Créer un utilisateur";
+	}
 	
     /**
     Login form

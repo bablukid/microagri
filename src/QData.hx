@@ -257,23 +257,24 @@ class QData{
                 {label:"Activités de pêche maritime à pied",value:"peche_a_pied"},*/
                 {label:"Céréales, légumineuses et oléagineuses",value:"cereales"},
                 {label:"Culture de légumes et maraîchage",value:"maraichage"},
-                {label:"Autres cultures non permanentes",value:"autres_cult_non_perm"},
+                {label:"Autres cultures non permanentes (dont champignons, plantes à fibres, plantes fourragères, fleurs)",value:"autres_cult_non_perm"},
                 {label:"Viticulture",value:"viticulture"},
-                {label:"Culture de fruitiers",value:"fruitiers"},
+                {label:"Culture de fruitiers (dont pommes, châtaignes, noix, etc.)",value:"fruitiers"},
                 {label:"Plantes à épices, aromatiques, médicinales et pharmaceutiques",value:"aromatiques"},
-                {label:"Autres cultures permanentes",value:"autres_cult_perm"},
+                {label:"Autres cultures permanentes (dont plantes pour la vannerie, culture pour extraction de sève, etc.)",value:"autres_cult_perm"},
                 {label:"Production de semences et reproduction de plants",value:"semences"},
                 {label:"Aquaponie",value:"aquaponie"},
-                {label:"Polyculture-élevage",value:"polyculture-elevage"},
+                {label:"Activités de soutien à la production animale et végétale (y compris pour une autre ferme)",value:"soutien_prod_animale"},
                 {label:"Elevage de bovins",value:"bovins"},
                 {label:"Elevage d’ovins ou caprins",value:"ovins_caprins"},
                 {label:"Élevage de porcins",value:"porcins"},
-                {label:"Élevage de volailles",value:"volailles"},
-                {label:"Elevages mixtes",value:"elevage_mixte"},
+                {label:"Élevage de volailles",value:"volailles"},                
                 {label:"Autres élevages (dont équidés)",value:"autres_elevages"},
                 {label:"Sylviculture et autres activités forestières",value:"sylviculture"},
                 {label:"Aquaculture en mer ou en eau douce",value:"aquaculture"},
                 {label:"Pêche en mer ou en eau douce",value:"peche"},
+                {label:"Chasse, piégeage",value:"chasse"},
+                {label:"Cueillette et récolte en forêt (dont champignons, baies, marrons, plantes à parfum, aromatiques et médicinales, etc.)",value:"cueillette"},
                 {label:"Ecolieu",value:"ecolieu"},
                 
             ],true),
@@ -486,8 +487,8 @@ class QData{
         },
         "B8-2"=>{
             label:"temps",
-            q:"Combien de temps travaillez-vous par an ? (En heures)",
-            desc:"",
+            q:"Combien de temps travaillez-vous par an ?",
+            desc:"(En heures)",
             type:QInt,
         },
         "B8-3"=>{
@@ -885,11 +886,11 @@ class QData{
         "E1-3"=>{
             label:"surface_par_type",
             q:"Dimension de l'activité agricole",
-            desc:"Superficies (utilisation du sol, en hectares)",
+            desc:"Surfaces (utilisation du sol, en hectares)",
             type:QCheckbox([
                  {label:"A - Terres arables",value:"arables"},
                 {label:"...dont maraîchage",value:"maraich"},
-                {label:"...dont sous serres",value:"serres"},
+                {label:".........dont sous serres",value:"serres"},
                 {label:"B - Cultures permanentes",value:"cult_perm"},
                 {label:"...dont verger",value:"verger"},
                 {label:"C - Surface toujours en Herbe",value:"herbe"},
@@ -899,7 +900,7 @@ class QData{
                 {label:"Autres superficies utilisées pour la production (communaux,parcours,estives,forêts domaniales,etc.)",value:"autre_sup"},
                 ]
                 ,null,
-                [{label:"Superficie (ha)",value:"ha"}]
+                [{label:"Surfaces (ha)",value:"ha"}]
 
             )
         },
@@ -1144,8 +1145,8 @@ class QData{
 
 
     public static var formulaires = [
-        1 => {nom:"APPEL A RECENSEMENT DES MICROS-FERMES DE GIRONDE (5 mn)", startScreen:"/answers", endScreen:"/title",chapitres:QData.formulaire1},
-        2 => {nom:"APPEL A RECENSEMENT DES MICROS-FERMES DE GIRONDE (10 mn)", startScreen:"/answers", endScreen:"/answers",chapitres:QData.formulaire2},
+        1 => {nom:"APPEL A RECENSEMENT DES MICRO-FERMES DE GIRONDE (5 mn)", startScreen:"/answers", endScreen:"/title",chapitres:QData.formulaire1},
+        2 => {nom:"APPEL A RECENSEMENT DES MICRO-FERMES DE GIRONDE (10 mn)", startScreen:"/answers", endScreen:"/answers",chapitres:QData.formulaire2},
         3 => {nom:"Formulaire complet",startScreen:"/qhome",endScreen:"/qhome",chapitres:QData.formulaire3},
     ];
 

@@ -29,7 +29,11 @@
         ::foreach r reponses::
             <tr>
                 <td>::r.id::</td>
-                <td>::r.completion::%</td>
+                <td>
+                    ::r.completion::%
+                    <br/>
+                    <a href="/answers?choose=::r.id::" class="btn btn-default btn-xs">Prendre la main</a>
+                </td>
                 <td>::r._user.name:: ::r._user.email:: </td>
                 ::foreach k keys::
                 
