@@ -24,7 +24,7 @@
 		<div class="text-center">
             <a href="https://microagri.org" target="_blank"><img src="/img/microagri.png" /></a>
             <br/>
-			<b>Appel à recensement des micro-fermes en Gironde</b>
+			<b>Recensement des micro-fermes en Gironde</b>
 		</div>		
 			
 		<!-- navbar -->
@@ -45,13 +45,15 @@
 				::end::
 			</ul>
 				
-			<ul class="nav navbar-nav navbar-right">
+			<div class="nav navbar-nav navbar-right" style="margin-top:12px;">
 				::if user!=null::
-				<li>Connecté en tant que <b>::user.name::</b><!--<a href="/user/logout" >Déconnexion</a>--></li>		
+                Connecté en tant que <b>::user.name::</b>
+                    <a href="/user/logout" class="btn btn-default btn-xs">Déconnexion</a>
+                
 				::else::
-				<li><a href="/user/login">Connexion</a></li>		
+				<a href="/user/login">Connexion</a>
 				::end::
-			</ul>				
+            </div>				
 		</div>		
 		
 		<!-- application messages -->

@@ -30,3 +30,9 @@ span.qid{
     /*top: -15px;*/
     left: -40px;
 }
+
+label{
+    margin: 6px 8px !important;
+    font-weight: normal !important;
+}
+    

@@ -34,7 +34,7 @@ class QData{
                 {qs:["B5-1","B5-2"],titre:"Formation et Expérience",desc:""},
                 {qs:["B6-1","B6-2","B6-3","B6-4","B6-5"],titre:"Parcours",desc:""},
                 {qs:["B7"],titre:"Responsabilités sur la ferme",desc:"Tâches principales du responsable sur la ferme."},
-                {qs:["B8-1","B8-2","B8-3"],titre:"Temps de travail",desc:"Temps de travail du responsable."},
+                {qs:["B8-1","B8-2-1","B8-2-2","B8-3"],titre:"Temps de travail",desc:"Temps de travail du responsable."},
                 {qs:["B9-1","B9-2","B9-3","B9-4"],titre:"Couverture Sociale / Statut du responsable",desc:""},
                 {qs:["B10-1","B10-2","B10-4"],titre:"Pluriactivité ",desc:"Agriculteur à titre exclusif, en pluriactivité agricole ou non."},
                 {qs:["B11"],titre:"Revenu"},                
@@ -113,11 +113,11 @@ class QData{
     public static var formulaire1 : Array<Chapitre>= [
         {
             id:"A",
-            nom : "APPEL A RECENSEMENT DES MICROS-FERMES DE GIRONDE (5 mn)",
+            nom : "RECENSEMENT DES MICRO-FERMES DE GIRONDE (5 mn)",
             ordre : [
                 {qs:["A1","A1-1","A1-2","A1-3","A2","A6-1"],titre:"",desc:"Toute personne susceptible d’identifier une ferme comme ayant des caractéristiques de micro-fermes peut répondre à ce questionnaire (5 minutes) :\n citoyens, partenaires du programme MicroAgri et, bien évidemment, les agriculteurs et agricultrices se sentant concernés."},
                 {qs:["A6-2"],titre:"",desc:""},
-                {qs:["A11","A12"],titre:"",desc:""},
+                {qs:["A11","A14"],titre:"",desc:""},
                 
             ],
         },
@@ -129,13 +129,14 @@ class QData{
      public static var formulaire2 : Array<Chapitre>= [
         {
             id:"A",
-            nom : "APPEL A RECENSEMENT DES MICROS-FERMES DE GIRONDE (10 mn)",
+            nom : "RECENSEMENT DES MICRO-FERMES DE GIRONDE (10 mn)",
             ordre : [
                 {qs:["A13","B9-2","A3"],titre:"",desc:"Cette deuxième partie de formulaire est uniquement à destination de l’un ou l’une des responsables de la ferme (personne en charge des décisions sur la ferme)."},
-                {qs:["E1-3"],titre:"",desc:""},
+                {qs:["E1-3","E1-5"],titre:"",desc:""},
                 {qs:["A10-1","A10-3"],titre:"Mode de faire-valoir des terres et des bâtiments",desc:"Exemples pour la catégorie « Autres » : terres utilisées à titre gratuit, illégalement, etc."},
-                {qs:["B8-2"],titre:"Temps de travail agricole",desc:"Temps de travail agricole : production et actes en prolongement de la production (transformation, commercialisation, etc.)"},
-                {qs:["D3-2","D2","D4","D5","D6","D7"],titre:"",desc:""},
+                {qs:["B8-2-1","B8-2-2"],titre:"Temps de travail agricole",desc:"Temps de travail agricole : production et actes en prolongement de la production (transformation, commercialisation, etc.)"},
+                {qs:["D3-2","D2","D4","D5"/*,"D6","D7"*/],titre:"",desc:""},
+                {qs:["D6-1","D6-2","D6-3","D6-4","D6-5","D6-6","D6-7","D6-8","D6-9","D6-10","D6-11","D6-12"],titre:"",desc:""},
                 {qs:["H3-3"],titre:"Merci !",desc:""},
             ],
         },
@@ -231,12 +232,14 @@ class QData{
                 {label:"Production",        value:"production"},
                 {label:"Transformation",    value:"transformation"},
                 {label:"Commercialisation", value:"commercialisation"},
-                {label:"Accueil du public", value:"accueil"},                
+                {label:"Accueil du public", value:"accueil"},    
+                {label:"Agritourisme",value:"agritourisme"},
+                {label:"Ecolieu",value:"ecolieu"},            
             ],true),
         },
         "A6-2" =>{
             label:"autres_activites",
-            q:"Quelles sont les activités agricoles de la ferme ?",
+            q:"Quels sont les ateliers de production de la ferme ?",
             desc:"",                   
             type:QCheckbox([
                 /*{label:"Viticulture",value:"viticulture"},
@@ -262,23 +265,28 @@ class QData{
                 {label:"Culture de fruitiers (dont pommes, châtaignes, noix, etc.)",value:"fruitiers"},
                 {label:"Plantes à épices, aromatiques, médicinales et pharmaceutiques",value:"aromatiques"},
                 {label:"Autres cultures permanentes (dont plantes pour la vannerie, culture pour extraction de sève, etc.)",value:"autres_cult_perm"},
-                {label:"Production de semences et reproduction de plants",value:"semences"},
-                {label:"Aquaponie",value:"aquaponie"},
+                {label:"Production de semences et reproduction de plants",value:"semences"},                
                 {label:"Activités de soutien à la production animale et végétale (y compris pour une autre ferme)",value:"soutien_prod_animale"},
-                {label:"Elevage de bovins",value:"bovins"},
-                {label:"Elevage d’ovins ou caprins",value:"ovins_caprins"},
+                {label:"Élevage de bovins",value:"bovins"},
+                {label:"Élevage d’ovins ou caprins",value:"ovins_caprins"},
                 {label:"Élevage de porcins",value:"porcins"},
                 {label:"Élevage de volailles",value:"volailles"},                
-                {label:"Autres élevages (dont équidés)",value:"autres_elevages"},
+                {label:"Élevage équin",value:"equin"},                                
+                {label:"Autres élevages",value:"autres_elevages"},
+                {label:"Apiculture",value:"apiculture"},                
                 {label:"Sylviculture et autres activités forestières",value:"sylviculture"},
+
                 {label:"Aquaculture en mer ou en eau douce",value:"aquaculture"},
+                {label:"Aquaponie",value:"aquaponie"},
+                {label:"Activités de soutien à la production animale et végétale (y compris pour une autre ferme)",value:"soutien_prod_animale"},
                 {label:"Pêche en mer ou en eau douce",value:"peche"},
                 {label:"Chasse, piégeage",value:"chasse"},
-                {label:"Cueillette et récolte en forêt (dont champignons, baies, marrons, plantes à parfum, aromatiques et médicinales, etc.)",value:"cueillette"},
-                {label:"Ecolieu",value:"ecolieu"},
-                
+                {label:"Cueillette et récolte en forêt (dont champignons, baies, marrons, plantes à parfum, aromatiques et médicinales, etc.)",value:"cueillette"},           
             ],true),
         },
+
+        
+
         "A7-1" =>{
             label:"autres_travailleurs",
             q:"Combien de travailleurs sur la ferme ?",
@@ -344,6 +352,7 @@ class QData{
                 {label:"Uniquement locataire",value:"locataire"},
                 {label:"Mixte, propriété majoritaire",value:"mixte_prop"},
                 {label:"Mixte, location majoritaire",value:"mixte_loca"},
+                {label:"Bail précaire, commodat",value:"precaire"},
                 {label:"Sans terre",value:"aucun"},
                 {label:"Autre",value:"autre"},
             ],false),
@@ -358,6 +367,7 @@ class QData{
                 {label:"Mixte, propriété majoritaire",value:"mixte_prop"},
                 {label:"Mixte, location majoritaire",value:"mixte_loca"},
                 {label:"Aucun bâtiment",value:"aucun"},
+                {label:"Bail précaire, commodat",value:"precaire"},
                 {label:"Autre",value:"autre"},
             ],false),
         },
@@ -370,7 +380,7 @@ class QData{
         "A11" =>{
             label:"carac_microferme",
             q:"Caractéristiques",
-            desc:"Donner ici les caractéristiques qui vous permettent d'identifier la ferme comme étant une micro-ferme (surface, taille du cheptel, mode(s) de commercialisation, certification(s), etc.",                   
+            desc:"En quoi la structure recensée serait une micro-ferme ? (surface, taille du cheptel, mode(s) de commercialisation, certification(s), pratiques etc.)",                   
             type:QText,
         },
         "A12" =>{
@@ -384,7 +394,13 @@ class QData{
             q:"Si votre activité est enregistrée, donnez le numéro de SIRET de la ferme",
             desc:"",                   
             type:QString,
-        },        
+        },
+        "A14" =>{
+            label:"recenseur_responsable",
+            q:"Etes-vous l’un ou l’une des responsables de la ferme recensée ?",
+            desc:"",                   
+            type:QYesNo,
+        },     
         "B1"=>{
             label:"nom_responsable",
             q:"Nom",
@@ -485,10 +501,16 @@ class QData{
             desc:"",
             type:QYesNo,
         },
-        "B8-2"=>{
-            label:"temps",
-            q:"Combien de temps travaillez-vous par an ?",
-            desc:"(En heures)",
+        "B8-2-1"=>{
+            label:"combien_personnes",
+            q:"Combien de personnes travaillent sur la ferme ?",
+            desc:"",
+            type:QInt,
+        },
+        "B8-2-2"=>{
+            label:"equi_temps_plein",
+            q:"Combien cela représente en équivalent temps plein ?",
+            desc:"",
             type:QInt,
         },
         "B8-3"=>{
@@ -590,73 +612,73 @@ class QData{
             type:QText
         },
         "C1-1"=>{
-            label:"eau_actions",
+            label:"eau_actions_cmt",
             q:"Quelles actions avez-vous déjà mis en œuvre ?",
             desc:"",
             type:QText
         },
         "C1-2"=>{
-            label:"eau_projets",
+            label:"eau_projets_cmt",
             q:"Avez-vous d’autres projets pour gérer cette ressource ?",
             desc:"",
             type:QText
         },
         "C2-1"=>{
-            label:"ress_actions",
+            label:"ress_actions_cmt",
             q:"Quelles actions avez-vous déjà mis en œuvre ?",
             desc:"",
             type:QText
         },
         "C2-2"=>{
-            label:"ress_projets",
+            label:"ress_projets_cmt",
             q:"Avez-vous d’autres projets pour gérer cette ressource ?",
             desc:"",
             type:QText
         },
         "C3-1"=>{
-            label:"sol_actions",
+            label:"sol_actions_cmt",
             q:"Quelles actions avez-vous déjà mis en œuvre ?",
             desc:"",
             type:QText
         },
         "C3-2"=>{
-            label:"sol_projets",
+            label:"sol_projets_cmt",
             q:"Avez-vous d’autres projets pour gérer cette ressource ?",
             desc:"",
             type:QText
         },
         "C4-1"=>{
-            label:"air_actions",
+            label:"air_actions_cmt",
             q:"Quelles actions avez-vous déjà mis en œuvre ?",
             desc:"",
             type:QText
         },
         "C4-2"=>{
-            label:"air_projets",
+            label:"air_projets_cmt",
             q:"Avez-vous d’autres projets pour gérer cette ressource ?",
             desc:"",
             type:QText
         },
         "C5-1"=>{
-            label:"biodiv_actions",
+            label:"biodiv_actions_cmt",
             q:"Quelles actions avez-vous déjà mis en œuvre ?",
             desc:"",
             type:QText
         },
         "C5-2"=>{
-            label:"biodiv_projets",
+            label:"biodiv_projets_cmt",
             q:"Avez-vous d’autres projets pour gérer cette ressource ?",
             desc:"",
             type:QText
         },
         "C6-1"=>{
-            label:"paysage_actions",
+            label:"paysage_actions_cmt",
             q:"Quelles actions avez-vous déjà mis en œuvre ?",
             desc:"",
             type:QText
         },
         "C6-2"=>{
-            label:"paysage_projets",
+            label:"paysage_projets_cmt",
             q:"Avez-vous d’autres projets pour gérer cette ressource ?",
             desc:"",
             type:QText
@@ -681,7 +703,7 @@ class QData{
         },
         "D4"=>{
             label:"appro_env_proch",
-            q:"Vous approvisionnez-vous dans un environnement proche pour :",
+            q:"Développez-vous une démarche locale pour :",
             desc:"",
             type:QCheckbox([
                 {label:"Vos intrants",value:"intrants"},
@@ -693,7 +715,7 @@ class QData{
         },
         "D5"=>{
             label:"demarche_autonomie",
-            q:"Etes-vous dans une démarche d’autonomie pour :",
+            q:"Dans le cadre d’une recherche d’autonomie, menez-vous des actions vous permettant de mieux maîtriser :",
             desc:"",
             type:QCheckbox([
                 {label:"Vos intrants",value:"intrants"},
@@ -702,7 +724,7 @@ class QData{
                 {label:"Vos ressources financières",value:"finance"},
             ],false)
         },
-        "D6"=>{
+        /*"D6"=>{
             label:"importance_agroecologie",
             q:"Comment estimez-vous l’importance de la dimension agro-écologique  dans vos pratiques ?",
             desc:"",
@@ -723,7 +745,131 @@ class QData{
                 {label:"Beaucoup",value:"2"},
                 {label:"Très fortement",value:"3"},
             ],false)
+        },*/
+
+        "D6-1"=>{
+            label:"eau_actions",
+            q:"Menez-vous des actions en faveur de l'eau",
+            desc:"",
+            type:QRadio([
+                {label:"Oui, plusieurs",value:"plusieurs"},
+                {label:"Oui, une seule",value:"oui"},
+                {label:"Non",value:"non"},                
+            ])
         },
+        "D6-2"=>{
+            label:"eau_projets",
+            q:"Avez-vous des projets en faveur de l'eau",
+            desc:"",
+            type:QRadio([
+                {label:"Oui, je prévois de futures actions",value:"oui"},
+                {label:"Oui, je souhaite continuer les actions déjà engagées",value:"continuer"},
+                {label:"Non",value:"non"},                
+            ])
+        },
+        "D6-3"=>{
+            label:"energie_actions",
+            q:"Menez-vous des actions en faveur de l'énergie",
+            desc:"",
+            type:QRadio([
+                {label:"Oui, plusieurs",value:"plusieurs"},
+                {label:"Oui, une seule",value:"oui"},
+                {label:"Non",value:"non"},                
+            ])
+        },
+        "D6-4"=>{
+            label:"energie_projets",
+            q:"Avez-vous des projets en faveur de l'énergie",
+            desc:"",
+            type:QRadio([
+                {label:"Oui, je prévois de futures actions",value:"oui"},
+                {label:"Oui, je souhaite continuer les actions déjà engagées",value:"continuer"},
+                {label:"Non",value:"non"},                
+            ])
+        },
+
+        "D6-5"=>{
+            label:"sol_actions",
+            q:"Menez-vous des actions en faveur du sol",
+            desc:"",
+            type:QRadio([
+                {label:"Oui, plusieurs",value:"plusieurs"},
+                {label:"Oui, une seule",value:"oui"},
+                {label:"Non",value:"non"},                
+            ])
+        },
+        "D6-6"=>{
+            label:"sol_projets",
+            q:"Avez-vous des projets en faveur du sol",
+            desc:"",
+            type:QRadio([
+                {label:"Oui, je prévois de futures actions",value:"oui"},
+                {label:"Oui, je souhaite continuer les actions déjà engagées",value:"continuer"},
+                {label:"Non",value:"non"},                
+            ])
+        },
+        "D6-7"=>{
+            label:"air_actions",
+            q:"Menez-vous des actions en faveur de la qualité de l'air",
+            desc:"",
+            type:QRadio([
+                {label:"Oui, plusieurs",value:"plusieurs"},
+                {label:"Oui, une seule",value:"oui"},
+                {label:"Non",value:"non"},                
+            ])
+        },
+        "D6-8"=>{
+            label:"air_projets",
+            q:"Avez-vous des projets en faveur de la qualité de l'air",
+            desc:"",
+            type:QRadio([
+                {label:"Oui, je prévois de futures actions",value:"oui"},
+                {label:"Oui, je souhaite continuer les actions déjà engagées",value:"continuer"},
+                {label:"Non",value:"non"},                
+            ])
+        },
+        "D6-9"=>{
+            label:"biodiversite_actions",
+            q:"Menez-vous des actions en faveur de la biodiversité",
+            desc:"",
+            type:QRadio([
+                {label:"Oui, plusieurs",value:"plusieurs"},
+                {label:"Oui, une seule",value:"oui"},
+                {label:"Non",value:"non"},                
+            ])
+        },
+        "D6-10"=>{
+            label:"biodiversite_projets",
+            q:"Avez-vous des projets en faveur de la biodiversité",
+            desc:"",
+            type:QRadio([
+                {label:"Oui, je prévois de futures actions",value:"oui"},
+                {label:"Oui, je souhaite continuer les actions déjà engagées",value:"continuer"},
+                {label:"Non",value:"non"},                
+            ])
+        },
+        "D6-11"=>{
+            label:"paysage_actions",
+            q:"Menez-vous des actions en faveur du paysage",
+            desc:"",
+            type:QRadio([
+                {label:"Oui, plusieurs",value:"plusieurs"},
+                {label:"Oui, une seule",value:"oui"},
+                {label:"Non",value:"non"},                
+            ])
+        },
+        "D6-12"=>{
+            label:"paysage_projets",
+            q:"Avez-vous des projets en faveur du paysage",
+            desc:"",
+            type:QRadio([
+                {label:"Oui, je prévois de futures actions",value:"oui"},
+                {label:"Oui, je souhaite continuer les actions déjà engagées",value:"continuer"},
+                {label:"Non",value:"non"},                
+            ])
+        },
+
+
         "D1-3"=>{
             label:"origine_intrants",
             q:"Quelle est l’origine de vos intrants ?",
@@ -795,8 +941,8 @@ class QData{
             ],false,[{label:"Précisez si nécéssaire",value:"detail"}])
         },
         "D2"=>{
-            label:"particip_vie_sociale",
-            q:"Comment évaluez-vous votre participation à la vie sociale de votre environnement proche ?",
+            label:"impliq_monde_pro",
+            q:"Etes-vous impliqué dans le monde professionnel, à proximité de la ferme ?",            
             desc:"",
             type:QRadio([
                 {label:"Pas du tout",value:"0"},
@@ -885,22 +1031,22 @@ class QData{
         },*/
         "E1-3"=>{
             label:"surface_par_type",
-            q:"Dimension de l'activité agricole",
-            desc:"Surfaces (utilisation du sol, en hectares)",
+            q:"Surface de l'activité agricole",
+            desc:"Cochez les cases, indiquez la surface correspondante et l'unité de votre choix",
             type:QCheckbox([
                  {label:"A - Terres arables",value:"arables"},
                 {label:"...dont maraîchage",value:"maraich"},
                 {label:".........dont sous serres",value:"serres"},
                 {label:"B - Cultures permanentes",value:"cult_perm"},
                 {label:"...dont verger",value:"verger"},
-                {label:"C - Surface toujours en Herbe",value:"herbe"},
+                {label:"C - Surface Toujours en Herbe",value:"herbe"},
                 {label:"D - Superficies non agricoles (étang,bois,etc.)",value:"non_agri"},
                 {label:"E - Surfaces non mises en culture (bâtiments,chemins,haies)",value:"non_cult"},
                 {label:"Superficie totale de l'exploitation (A+B+C+D+E)",value:"total"},
                 {label:"Autres superficies utilisées pour la production (communaux,parcours,estives,forêts domaniales,etc.)",value:"autre_sup"},
                 ]
                 ,null,
-                [{label:"Surfaces (ha)",value:"ha"}]
+                [{label:"Surface",value:"surface"},{label:"Unité (ha ou m²)",value:"unite"}]
 
             )
         },
@@ -910,6 +1056,21 @@ class QData{
             desc:"(ex. zone de manutention, serres, local de stockage et de vente) en mètres-carré",
             type:QMultiInput([{"label":"Type de bâtiment",value:"type"},{label:"Surface",value:"surface"}])
         },
+        "E1-5" =>{
+            label:"cheptel",
+            q:"Cheptel",
+            desc:"",                   
+            type:QCheckbox([
+                {label:"Élevage de bovins",value:"bovins"},
+                {label:"Élevage d’ovins ou caprins",value:"ovins_caprins"},
+                {label:"Élevage de porcins",value:"porcins"},
+                {label:"Élevage de volailles",value:"volailles"},                
+                {label:"Élevage équin",value:"equin"},                                
+                {label:"Autres élevages",value:"autres_elevages"},            
+            ],false, [{label:"Nbre de têtes",value:"tetes"}]),
+        },
+
+
         "E2-1"=>{
             label:"quantite",
             q:"Pouvez-vous estimer les quantités produites par an ?",
@@ -1136,8 +1297,8 @@ class QData{
         },
          "H3-3"=>{
             label:"form_complet",
-            q:"Merci d’avoir répondu à ce questionnaire de pré-recensement. Seriez-vous favorable à ce que le coordinateur du programme MicroAgri vous recontacte pour compléter un questionnaire plus détaillé ?",
-            desc:"(environ 1h-1h30, soit par téléphone, soit en entretien à la ferme).",
+            q:"Merci d’avoir répondu à ce questionnaire de pré-recensement.<br/>Seriez-vous favorable à ce que le coordinateur du programme MicroAgri vous recontacte pour compléter un questionnaire plus détaillé ?",
+            desc:"",
             type:QYesNo
         },
 

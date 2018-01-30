@@ -33,6 +33,11 @@
                     ::r.completion::%
                     <br/>
                     <a href="/answers?choose=::r.id::" class="btn btn-default btn-xs">Prendre la main</a>
+                    <br/><br/>
+                    <a href="/reponses?delete=::r.id::&token=::token::" class="btn btn-default btn-xs" onclick="return confirm('ATTENTION !\nVoulez vous vraiment supprimer cet élément ?')">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>                        
+                        &nbsp;Effacer                    
+                    </a>
                 </td>
                 <td>::r._user.name:: ::r._user.email:: </td>
                 ::foreach k keys::

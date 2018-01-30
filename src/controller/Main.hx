@@ -26,7 +26,9 @@ class Main extends sugoi.BaseController {
 	}
 	
 	@tpl("home.mtt")
-	function doDefault(){}
+	function doDefault(){
+        throw Redirect("/answers");
+    }
 
 	/**
 	 *  Ancien formulaire de signalement
@@ -251,16 +253,17 @@ class Main extends sugoi.BaseController {
 			u.newsletter = f.getValueOf("newsletter");
 			u.insert();
 			App.current.session.setUser(u);
-			throw Redirect("/");
+            //questionnaire court
+			throw Redirect("/q/1/0/0");
 		}
 
 		view.form = f;
-
-
 	}
 
     @tpl('title.mtt')
     function doTitle(){
+        var r = db.Result.getOrCreate(app.user);
+        view.responsable = r.recenseur_responsable=="OUI";
 
     }
 
@@ -326,7 +329,19 @@ class Main extends sugoi.BaseController {
 
 	@admin @tpl('reponses.mtt')
 	function doReponses(){
+
+        if(checkToken()){
+            var rid = Std.parseInt(app.params.get("delete"));
+            var r = db.Result.manager.get(rid,true);
+            r.delete();
+            throw Ok("/reponses","Réponse effacée");
+
+        }
+
 		var reponses = db.Result.manager.all();
+
+        
+
 		view.reponses = reponses;
 
 		var k = [];

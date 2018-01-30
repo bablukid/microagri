@@ -69,7 +69,7 @@ class Question{
             for ( element in form.getElements() ){
                 if (element != form.submitButton && element.internal == false) {
                     s.add("<div class='row' style='margin-bottom:12px'><div class='col-md-6'>"+element.label+"</div>\n");
-                    s.add("<div class='col-md-6'>"+element.render()+"</div></div>\n");                    
+                    s.add("<div class='col-md-6'>"+element.render()+"</div></div><hr/>\n");                    
                 }               
             }                                 
 
@@ -98,7 +98,7 @@ class Question{
             //id de question
             var html = "<h4><span class='qid'>"+q.qid+"</span>"+q.data.q+"</h4><p>"+q.data.desc+"</p>";
             var v : Dynamic = Reflect.field(r,q.data.label);
-            if(v==null) v = "";
+            if(v==null || v=="null") v = "";
             
             //réponses multiples ( responsables ) 
             if(subAnswerIndex!=null) {
