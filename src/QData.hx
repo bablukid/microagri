@@ -178,7 +178,7 @@ class QData{
         "A2" =>{
             label:"Localisation",
             q:"Quelle est l’adresse de la ferme ?",
-            desc:"",                   
+            desc:"Précisez bien le code postal",                   
             type:QAddress,
         },
          "A3" =>{
@@ -240,7 +240,7 @@ class QData{
         "A6-2" =>{
             label:"autres_activites",
             q:"Quels sont les ateliers de production de la ferme ?",
-            desc:"",                   
+            desc:"Possibilité de cocher plusieurs cases",                   
             type:QCheckbox([
                 /*{label:"Viticulture",value:"viticulture"},
                 {label:"Maraîchage",value:"maraichage"},
@@ -380,7 +380,7 @@ class QData{
         "A11" =>{
             label:"carac_microferme",
             q:"Caractéristiques",
-            desc:"En quoi la structure recensée serait une micro-ferme ? (surface, taille du cheptel, mode(s) de commercialisation, certification(s), pratiques etc.)",                   
+            desc:"En quoi la structure recensée serait-elle une micro-ferme ? (surface, taille du cheptel, mode(s) de commercialisation, certification(s), pratiques etc.)",                   
             type:QText,
         },
         "A12" =>{
@@ -535,7 +535,7 @@ class QData{
             label:"couverture_statut",
             q:"Quel est votre statut social ?",
             desc:"",
-            type:QCheckbox([
+            type:QRadio([
                 {label:"Chef d’exploitation",value:"chef_exploit"},
                 {label:"Conjoint collaborateur",value:"conjoint_collab"},
                 {label:"Conjoint Associé",value:"conjoint_assoc"},
@@ -704,7 +704,7 @@ class QData{
         "D4"=>{
             label:"appro_env_proch",
             q:"Développez-vous une démarche locale pour :",
-            desc:"",
+            desc:"Possibilité de cocher plusieurs cases",
             type:QCheckbox([
                 {label:"Vos intrants",value:"intrants"},
                 {label:"Votre matériel (achat,location)",value:"materiel"},
@@ -716,7 +716,7 @@ class QData{
         "D5"=>{
             label:"demarche_autonomie",
             q:"Dans le cadre d’une recherche d’autonomie, menez-vous des actions vous permettant de mieux maîtriser :",
-            desc:"",
+            desc:"Possibilité de cocher plusieurs cases",
             type:QCheckbox([
                 {label:"Vos intrants",value:"intrants"},
                 {label:"Votre matériel (achat,location)",value:"materiel"},
@@ -761,7 +761,7 @@ class QData{
             label:"eau_projets",
             q:"Avez-vous des projets en faveur de l'eau",
             desc:"",
-            type:QRadio([
+            type:QCheckbox([
                 {label:"Oui, je prévois de futures actions",value:"oui"},
                 {label:"Oui, je souhaite continuer les actions déjà engagées",value:"continuer"},
                 {label:"Non",value:"non"},                
@@ -781,7 +781,7 @@ class QData{
             label:"energie_projets",
             q:"Avez-vous des projets en faveur de l'énergie",
             desc:"",
-            type:QRadio([
+            type:QCheckbox([
                 {label:"Oui, je prévois de futures actions",value:"oui"},
                 {label:"Oui, je souhaite continuer les actions déjà engagées",value:"continuer"},
                 {label:"Non",value:"non"},                
@@ -802,7 +802,7 @@ class QData{
             label:"sol_projets",
             q:"Avez-vous des projets en faveur du sol",
             desc:"",
-            type:QRadio([
+            type:QCheckbox([
                 {label:"Oui, je prévois de futures actions",value:"oui"},
                 {label:"Oui, je souhaite continuer les actions déjà engagées",value:"continuer"},
                 {label:"Non",value:"non"},                
@@ -822,7 +822,7 @@ class QData{
             label:"air_projets",
             q:"Avez-vous des projets en faveur de la qualité de l'air",
             desc:"",
-            type:QRadio([
+            type:QCheckbox([
                 {label:"Oui, je prévois de futures actions",value:"oui"},
                 {label:"Oui, je souhaite continuer les actions déjà engagées",value:"continuer"},
                 {label:"Non",value:"non"},                
@@ -842,7 +842,7 @@ class QData{
             label:"biodiversite_projets",
             q:"Avez-vous des projets en faveur de la biodiversité",
             desc:"",
-            type:QRadio([
+            type:QCheckbox([
                 {label:"Oui, je prévois de futures actions",value:"oui"},
                 {label:"Oui, je souhaite continuer les actions déjà engagées",value:"continuer"},
                 {label:"Non",value:"non"},                
@@ -862,7 +862,7 @@ class QData{
             label:"paysage_projets",
             q:"Avez-vous des projets en faveur du paysage",
             desc:"",
-            type:QRadio([
+            type:QCheckbox([
                 {label:"Oui, je prévois de futures actions",value:"oui"},
                 {label:"Oui, je souhaite continuer les actions déjà engagées",value:"continuer"},
                 {label:"Non",value:"non"},                

@@ -10,6 +10,9 @@
     <div class="row" >
         <div class="col-md-4"></div>
         <div class="col-md-4">
+            <p class="text-center" ::cond results.length==0::>
+                Aucune ferme référencée pour l'instant.
+            </p>
             <ul>
                 ::foreach r results::
                 <li>

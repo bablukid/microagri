@@ -253,6 +253,7 @@ class Main extends sugoi.BaseController {
 			u.newsletter = f.getValueOf("newsletter");
 			u.insert();
 			App.current.session.setUser(u);
+            
             //questionnaire court
 			throw Redirect("/q/1/0/0");
 		}
@@ -274,6 +275,9 @@ class Main extends sugoi.BaseController {
     function doAnswers(){
 
         if(app.params.exists("new")){
+
+            if(app.user==null) throw Redirect("/init");
+
             var x = new db.Result();
             x.user = app.user;
             x.Nom = "Nouvelle ferme";
