@@ -1,0 +1,51 @@
+::use 'design.mtt'::
+<div class="row">
+	<div class="col-md-4">
+		<h2>::questionnaire.name::</h2>
+		
+		<table class="table">
+			<tr>
+				
+                <th>Page</th>
+                <th>Actions</th>
+				<th>Questions</th>
+			</tr>
+			::foreach page questionnaire.getPages()::
+				<tr>
+                    <td>::page.title::</td>
+                    <td>
+                        <a href="/page/edit/::page.id::" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit"></span> Modifier</a>						
+                    </td>
+                    <td>
+
+                            <table class="table">
+                                ::foreach q page.getQuestions()::
+                                <tr>
+                                    <td>::q.ref::</td>
+                                    <td>::q.question::</td>
+                                </tr>
+                                ::end::
+                                
+                                <a href="/page/addQuestion/::page.id::" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span> Ajouter une question existante</a>
+                                <a href="/page/insertQuestion/::page.id::" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span> Ajouter une nouvelle question</a>
+
+                            </table>
+
+
+
+                    </td>
+					
+				</tr>
+			::end::			
+		</table>
+		
+		<a href="/page/insert/::questionnaire.id::" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span> Ajouter une page</a>
+		
+	</div>
+	
+	
+</div>
+
+
+
+::end::

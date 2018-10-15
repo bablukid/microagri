@@ -1,4 +1,5 @@
-import Question;
+import QuestionService;
+import db.Question;
 
 class QData{
 

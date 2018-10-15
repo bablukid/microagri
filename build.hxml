@@ -6,5 +6,5 @@
 -lib thx.csv
 -cp src
 -cp lang/master/tpl
--neko html/index.n
+-neko www/index.n
 -main App

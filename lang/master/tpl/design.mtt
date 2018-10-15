@@ -37,10 +37,9 @@
                 <li><a href="/q/1/0/0">1er Form. Court</a></li>
                 <li><a href="/q/2/0/0">2e Form. Court</a></li>
                 
-                
+                <li><a href="/questionnaire">Questionnaires</a></li>
                 <li><a href="/reponses">Réponses</a></li>
                 <li><a href="/user">Utilisateurs</a></li>
-				<!--<li><a href="/signalements">Signalements</a></li>-->
 				<li><a href="/db">Database</a></li>
 				::end::
 			</ul>

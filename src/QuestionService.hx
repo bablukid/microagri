@@ -1,20 +1,10 @@
 import sugoi.form.ListData;
+import db.Question;
 
-enum QType{
-    QText;      //réponse texte bloc
-    QString;    //réponse text 1 ligne
-    QInt;       //réponse chiffrée
-    QFloat;
-    QAddress;   //
-    QRadio(list:FormData<String>,?other:Bool);   //reponse unique
-    QCheckbox(list:FormData<String>,?other:Bool,?extras:FormData<String>);//reponses multiples + autres + champs en plus
-    QYesNo; //oui ou non
-    QMultiInput(extras:FormData<String>);
-}
 
 typedef Chapitre = { id:String,nom:String,ordre:Array<{qs:Array<String>,?titre:String,?desc:String}> };
 
-class Question{
+class QuestionService{
 
     public var qid : String;
     public var data : {label:String,q:String,desc:String,type:QType};
@@ -27,7 +17,7 @@ class Question{
         for( chap in QData.formulaire3){
             for( o in chap.ordre){
                 for( qid in o.qs){
-                    var q = Question.get(qid);
+                    var q = QuestionService.get(qid);
                     if(q.data.label.indexOf("_cmt")>-1) continue;
                     out.total ++;
                     if( Reflect.getProperty(r,q.data.label)!=null) out.num++;
@@ -45,7 +35,7 @@ class Question{
      */
     public static function get(k){
        
-        var q = new Question();
+        var q = new QuestionService();
         q.qid = k;
         q.data = QData.questions[k];
         if(q.data==null) throw "La question "+k+" n'existe pas.";
@@ -55,7 +45,7 @@ class Question{
     /**
      *  Generate a HTML form for this list of Questions
      */
-    public static function getForm(qs:Array<Question>,?subAnswerIndex:Int=null){
+    public static function getForm(qs:Array<QuestionService>,?subAnswerIndex:Int=null):sugoi.form.Form{
 
         var form = new sugoi.form.Form("q");
         var r = db.Result.getOrCreate(App.current.user);
@@ -222,7 +212,7 @@ class Question{
         //var chap = Question.chapitres[chapIndex];
         for( o in chap.ordre){
             for( qid in o.qs){
-                var q = Question.get(qid);
+                var q = QuestionService.get(qid);
                 if(q.data.label.indexOf("_cmt")>-1) continue;
                 out.total ++;
                 if( Reflect.getProperty(r,q.data.label)!=null) out.num++;

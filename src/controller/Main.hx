@@ -10,7 +10,7 @@ class Main extends sugoi.BaseController {
 	function doQhome() {
 		view.category = 'home';
 		view.chapitres = QData.formulaire3;
-		view.getAnswers = Question.getAnswers;
+		view.getAnswers = QuestionService.getAnswers;
 
 		if(app.user!=null){
 			var r = db.Result.getOrCreate(App.current.user);
@@ -19,7 +19,7 @@ class Main extends sugoi.BaseController {
 			/*var percent = 0;
 			for( c in Question.chapitres ) percent += Question.getAnswers(c).percent;
 			view.percent = Math.round(percent/Question.chapitres.length);  */
-			var compl = Question.getCompletion(r);
+			var compl = QuestionService.getCompletion(r);
 			//trace(compl);
 			view.percent = compl.percent;
 		}	
@@ -106,6 +106,16 @@ class Main extends sugoi.BaseController {
 		sys.db.Admin.handler();
 	}
 
+    @admin
+    function doQuestionnaire(d:haxe.web.Dispatch){
+		d.dispatch(new controller.Questionnaire());
+	}
+
+    @admin
+    function doPage(d:haxe.web.Dispatch){
+		d.dispatch(new controller.Page());
+	}
+
 	function doUser(d:haxe.web.Dispatch){
 		d.dispatch(new controller.User());
 	}
@@ -149,11 +159,11 @@ class Main extends sugoi.BaseController {
 		}		
 
 		//questions list
-		var qs = new Array<Question>();
-		for( qid in qids) qs.push(Question.get(qid) );
+		var qs = new Array<QuestionService>();
+		for( qid in qids) qs.push(QuestionService.get(qid) );
 
 		//build form
-		var f = Question.getForm(qs,subAnswerIndex);
+		var f = QuestionService.getForm(qs,subAnswerIndex);
 		view.form = f;
 
 		if( f.isValid() ){
@@ -190,7 +200,7 @@ class Main extends sugoi.BaseController {
 					var value = f.getValueOf(q.data.label);
 					var original = Std.string(Reflect.getProperty(res,q.data.label));
 					var arr = original==null ? [] : original.split("|");
-					arr[app.session.data.respIndex] = Question.serialize(value,q.data.type);
+					arr[app.session.data.respIndex] = QuestionService.serialize(value,q.data.type);
 					Reflect.setProperty(res,q.data.label,arr.join("|"));
 					//trace(q.data.label+" = "+arr.join("|")+"<br>");
 				}
@@ -202,21 +212,21 @@ class Main extends sugoi.BaseController {
                 //serialize depending on field type
                 for(q in qs){
                     var v = Reflect.getProperty(res,q.data.label);
-                    var v2 = Question.serialize(v,q.data.type);
+                    var v2 = QuestionService.serialize(v,q.data.type);
                     Reflect.setProperty(res,q.data.label,v2);           
                 }
 			}	
 
             res.update();
 
-			var next = Question.next(formId,chapitre,index);
+			var next = QuestionService.next(formId,chapitre,index);
 			
 			if(chapitre==1 && next==null){
 				var numResponsables = 1;				
 				if(res!=null && res.nbre_responsables!=null ) numResponsables = res.nbre_responsables.parseInt();
 				if(app.session.data.respIndex==null) app.session.data.respIndex = 0;
 				if(app.session.data.respIndex+1 < numResponsables){
-					next = Question.next(formId,chapitre,-1);
+					next = QuestionService.next(formId,chapitre,-1);
 					app.session.data.respIndex++;
 				}else{
 					app.session.data.respIndex = 0;
@@ -237,7 +247,7 @@ class Main extends sugoi.BaseController {
 	@tpl("form.mtt")
 	function doInit(){
 		var f = new sugoi.form.Form("user");
-		f.addElement(new sugoi.form.elements.Html("Avant de remplir le formulaire, merci de saisir vos coordonnées :"));
+		f.addElement(new sugoi.form.elements.Html("html","","Avant de remplir le formulaire, merci de saisir vos coordonnées :"));
 		f.addElement(new sugoi.form.elements.StringInput("name","Nom",null,true));
 		f.addElement(new sugoi.form.elements.StringInput("email","Email",null,true));
 		f.addElement(new sugoi.form.elements.StringInput("phone","Téléphone",null,false));
@@ -309,7 +319,7 @@ class Main extends sugoi.BaseController {
 	function doShema(){
 		Sys.print("<pre>");		
         for(qid in QData.questions.keys()){
-            var q = Question.get(qid);
+            var q = QuestionService.get(qid);
             if(q==null || q.data==null) continue;
             Sys.print("public var "+q.data.label);
             /*switch(q.data.type){
@@ -360,13 +370,13 @@ class Main extends sugoi.BaseController {
         });
 
 		for ( key in keys ){
-			k.push( Question.get(key).data.label );
+			k.push( QuestionService.get(key).data.label );
 
 		}
 
 		//completion des questions
 		for( r in reponses){
-			Reflect.setProperty(r,"completion",Question.getCompletion(r).percent );
+			Reflect.setProperty(r,"completion",QuestionService.getCompletion(r).percent );
 		}
 		
 		view.keys = k;

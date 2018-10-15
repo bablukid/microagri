@@ -1,0 +1,34 @@
+::use 'design.mtt'::
+<div class="row">
+	<div class="col-md-4">
+		<h2>Questionnaires</h2>
+		
+		<table class="table table-bordered">
+			<tr>
+				<th>Id</th>
+				<th>Nom</th>
+				<th></th>
+			</tr>
+			::foreach q questionnaires::
+				<tr>
+					<td>::q.id::</td>
+					<td>::q.name::</td>
+					<td>
+                        <a href="/q/::q.id::/0/0" class="btn btn-default btn-sm"> Afficher</a>						
+                        <a href="/questionnaire/view/::q.id::" class="btn btn-default btn-sm"> Gérer</a>						
+						<a href="/questionnaire/edit/::q.id::" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit"></span> Propriétés</a>						
+					</td>
+				</tr>
+			::end::			
+		</table>
+		
+		<a href="/questionnaire/insert/" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span> Créer un questionnaire</a>
+		
+	</div>
+	
+	
+</div>
+
+
+
+::end::
