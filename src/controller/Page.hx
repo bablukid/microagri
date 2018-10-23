@@ -12,34 +12,34 @@ class Page extends sugoi.BaseController
 
 
 	@admin @tpl('form.mtt')
-    public function doEdit(questionnaire:db.Questionnaire){
+    public function doEdit(page:db.Page){
 
-        var f = sugoi.form.Form.fromSpod(questionnaire);
+        var f = sugoi.form.Form.fromSpod(page);
 
         if(f.isValid()){
-            questionnaire.lock();
-            f.toSpod(questionnaire);
-            questionnaire.update();
-            throw Ok("/questionnaire","Questionnaire mis à jour");
+            page.lock();
+            f.toSpod(page);
+            page.update();
+            throw Ok("/questionnaire/view/"+page.chapitre.questionnaire.id,"Page mise à jour");
         }
 
         view.form = f;
     }
 
+    /**
+    Ajouter une page à un chapitre
+    **/
     @admin @tpl('form.mtt')
-    public function doInsert(questionnaire:db.Questionnaire){
+    public function doInsert(chapitre:db.Chapitre){
         var page = new db.Page();
-        page.order = db.Page.manager.count($questionnaire==questionnaire);
+        page.order = db.Page.manager.count($chapitre==chapitre);
         var f = sugoi.form.Form.fromSpod( page );
         if(f.isValid()){
             f.toSpod(page);
-            page.questionnaire = questionnaire;
-            
+            page.chapitre = chapitre;            
             page.insert();
-            throw Ok("/questionnaire/view/"+questionnaire.id,"Nouvelle page créé");
-
+            throw Ok("/questionnaire/view/"+chapitre.questionnaire.id,"Nouvelle page créé");
         }
-
         view.form = f;
     }
 
@@ -55,7 +55,7 @@ class Page extends sugoi.BaseController
            
            var q = db.Question.getByRef(f.getValueOf("ref"));
 
-            throw Ok("/questionnaire/view/"+page.questionnaire.id,"Nouvelle page créé");
+            throw Ok("/questionnaire/view/"+page.chapitre.questionnaire.id,"Nouvelle page créé");
 
         }
 
@@ -105,7 +105,7 @@ class Page extends sugoi.BaseController
            qp.insert();
 
 
-            throw Ok("/questionnaire/view/"+page.questionnaire.id,"Nouvelle question créé");
+            throw Ok("/questionnaire/view/"+page.chapitre.questionnaire.id,"Nouvelle question créé");
 
         }
 

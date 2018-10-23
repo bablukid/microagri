@@ -40,8 +40,12 @@ class Question extends Object{
 
     public static function getByRef(ref:String){
         return manager.select($ref==ref,false);
+    }
 
+    override public function insert(){
 
+        if(db.Question.manager.count($ref==ref)>0) throw "Il y a déjà une question avec cette référence";
 
+        super.insert();
     }
 }

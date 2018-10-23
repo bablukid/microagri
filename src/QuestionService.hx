@@ -6,9 +6,9 @@ typedef Chapitre = { id:String,nom:String,ordre:Array<{qs:Array<String>,?titre:S
 
 class QuestionService{
 
-    public var qid : String;
+    /*public var qid : String;
     public var data : {label:String,q:String,desc:String,type:QType};
-    public function new(){ }
+    public function new(){ }*/
 
     public static function getCompletion(r:db.Result){
         var out = {num:0,total:0,percent:0};
@@ -33,19 +33,19 @@ class QuestionService{
     /**
      *  Get a question from its ID
      */
-    public static function get(k){
+    /*public static function get(k){
        
         var q = new QuestionService();
         q.qid = k;
         q.data = QData.questions[k];
         if(q.data==null) throw "La question "+k+" n'existe pas.";
         return q;
-    }
+    }*/
 
     /**
      *  Generate a HTML form for this list of Questions
      */
-    public static function getForm(qs:Array<QuestionService>,?subAnswerIndex:Int=null):sugoi.form.Form{
+    public static function getForm(questions:Array<db.Question>,?subAnswerIndex:Int=null):sugoi.form.Form{
 
         var form = new sugoi.form.Form("q");
         var r = db.Result.getOrCreate(App.current.user);
@@ -72,68 +72,65 @@ class QuestionService{
             return s.toString();
         }
 
-        for ( i in 0...qs.length){
-            var q = qs[i];
-            if(q==null || q.data==null) continue;
-
+        for (q in questions){  
 
             //Votre transformation se réalise-t-elle u  --> que si transfo coché
-            if(q.qid == "D1-6"){
+            /*if(q.qid == "D1-6"){
                 var r = db.Result.getOrCreate(App.current.user);
                 if( r != null && r.activites != null){
                     if( r.activites.indexOf("transformation")==-1) continue;
                 }
-            }
+            }*/
 
             //id de question
-            var html = "<h4><span class='qid'>"+q.qid+"</span>"+q.data.q+"</h4><p>"+q.data.desc+"</p>";
+            var html = "<h4><span class='qid'>"+q.ref+"</span>"+q.question+"</h4><p>"+q.description+"</p>";
             var v : Dynamic = Reflect.field(r,q.data.label);
             if(v==null || v=="null") v = "";
             
             //réponses multiples ( responsables ) 
-            if(subAnswerIndex!=null) {
+            /*if(subAnswerIndex!=null) {
                 var x : String = Std.string(v).split("|")[subAnswerIndex];
                 if(x == null || x == "null"){
                     x = "";
                 } 
                 v = x;
-            }    
+            }*/    
 
-            var label = q.data.label;            
             var e : sugoi.form.FormElement<Dynamic> = null;
 
-            switch(q.data.type){
-            case QText : e = new sugoi.form.elements.TextArea(label,html,v,true);
+            switch(q.type){
+            case QText : e = new sugoi.form.elements.TextArea(q.ref,html,v,true);
             case QCheckbox(data,other,extraFields) :
                 //v = "[bla,blo]"
                 if(v!=null) v = split(v,"~");
 
                 if(extraFields!=null){
                     //checkboxes avec champs
-                    e = new form.CheckboxesWithField(label,html,data,v,null,null);
+                    e = new form.CheckboxesWithField(q.ref,html,data,v,null,null);
                     untyped e.extraFields = extraFields;
                 }else{
                     if(other){
-                        e = new form.Checkboxes(label,html,data,v,null,null);
+                        e = new form.Checkboxes(q.ref,html,data,v,null,null);
                     }else{
-                        e = new sugoi.form.elements.CheckboxGroup(label,html,data,v,null,null);
+                        e = new sugoi.form.elements.CheckboxGroup(q.ref,html,data,v,null,null);
                     }
                 }
                 
             case QRadio(data) : 
-                e = new sugoi.form.elements.RadioGroup(label,html,data,v,null,null);
+                e = new sugoi.form.elements.RadioGroup(q.ref,html,data,v,null,null);
             case QInt : 
-                e = new sugoi.form.elements.IntInput(label,html,v,true);
+                e = new sugoi.form.elements.IntInput(q.ref,html,v,true);
             case QFloat : 
                 e = new sugoi.form.elements.FloatInput(label,html,v,true);
             
             case QYesNo :
                 var data = [{"label":"Oui",value:"OUI"},{label:"Non",value:"NON"}];
-                e = new sugoi.form.elements.RadioGroup(label,html,data,v,null,null);
+                e = new sugoi.form.elements.RadioGroup(q.ref,html,data,v,null,null);
                 untyped e.vertical = false; 
 
             case QMultiInput(data) : 
-                var lines = [];                
+                var lines = [];   
+                //deja commenté ?  c'est en service ou pas ça ?             
                 /*if(q.qid=="E1-3" && r.autres_activites!=null){
                     //surface par type, autant de lignes que activités dans A6-2
                     var activites = split(r.autres_activites,"~");                    
@@ -152,10 +149,10 @@ class QuestionService{
                 }
 
                 var values :Array<Array<String>> = split(v,"~").map(function(x) return split(x,";") );
-                e = new form.MultiInput(label,html,lines,data,values);
+                e = new form.MultiInput(q.ref,html,lines,data,values);
 
             case QAddress,QString : 
-                e = new sugoi.form.elements.StringInput(label,html,v,true);
+                e = new sugoi.form.elements.StringInput(q.ref,html,v,true);
             }
 
             
@@ -191,16 +188,26 @@ class QuestionService{
         return null;
     }*/
 
-    public static function  next(formulaire:Int,c:Int,i:Int){
-        var chapitres = switch(formulaire){
-            case 1 : QData.formulaire1;
-            case 2 : QData.formulaire2;
-            default : QData.formulaire3;
-        }
-        if(chapitres[c]==null) return null;
-        if(chapitres[c].ordre[i+1]==null) return null;
+    /**
+    Get next Page
+    **/
+    public static function  next(questionnaire:db.Questionnaire,chapitreIndex:Int,pageIndex:Int){
         
-        return {formulaire:formulaire,chapitre:c,index:i+1};
+        var chapitre = questionnaire.getChapitres()[chapitreIndex];
+        if(chapitre.getPages()[pageIndex+1]!=null){
+            //go to next page
+            return { questionnaire:questionnaire, chapitre:chapitreIndex, pageIndex:pageIndex };
+        }else{
+            //go to next chapitre
+            var chapitre = questionnaire.getChapitres()[chapitreIndex+1];
+            if(chapitre!=null){
+                return { questionnaire:questionnaire, chapitre:chapitreIndex+1, pageIndex:pageIndex };
+            }else{
+                //questionnaire terminé
+                return null;
+            }
+        }
+        return null;
     }
 
     public static function getAnswers(chap:Chapitre):{num:Int,total:Int,percent:Int}{

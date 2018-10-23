@@ -3,14 +3,13 @@ import sys.db.Object;
 import sys.db.Types;
 using Lambda;
 
-class Page extends Object{
+class Chapitre extends Object{
     
     public var id : SId;
     public var title : SString<256>;
     public var description : SText;
     public var order : SInt;
-
-    @hideInForms @:relation(chapitreId) public var chapitre : db.Chapitre;
+      @hideInForms @:relation(questionnaireId) public var questionnaire : db.Questionnaire;
 
     public function new(){
 
@@ -18,9 +17,9 @@ class Page extends Object{
         
     }
 
-    public function getQuestions(){
-        var qp = db.QuestionPage.manager.search($page==this,{orderBy:order},false);
-        return qp.map(function(qp) return qp.question).array();
+    public function getPages():Array<db.Page>{
+        return Lambda.array(db.Page.manager.search($chapitre==this,{orderBy:order},false));
+        
     }
 
     public static function getLabels(){
@@ -30,6 +29,8 @@ class Page extends Object{
             "order" => "Ordre"
         ];
     }
+
+
 
 
 }

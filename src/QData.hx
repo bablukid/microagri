@@ -3,10 +3,6 @@ import db.Question;
 
 class QData{
 
-
-
-    
-
     /**
     Formulaire 3 'complet'
     **/

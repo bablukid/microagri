@@ -1,46 +1,56 @@
 ::use 'design.mtt'::
 <div class="row">
-	<div class="col-md-4">
+	<div class="col-md-12">
 		<h2>::questionnaire.name::</h2>
 		
 		<table class="table">
 			<tr>
 				
-                <th>Page</th>
-                <th>Actions</th>
-				<th>Questions</th>
-			</tr>
-			::foreach page questionnaire.getPages()::
+                <th>Chapitre</th>
+               	<th>Pages</th>
+            </tr>
+            <!-- Chapitres -->
+			::foreach chapitre questionnaire.getChapitres()::
 				<tr>
-                    <td>::page.title::</td>
                     <td>
-                        <a href="/page/edit/::page.id::" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit"></span> Modifier</a>						
+                            <a href="/chapitre/edit/::chapitre.id::">::chapitre.title::</a>
                     </td>
                     <td>
-
+                        <!-- Pages -->
                             <table class="table">
-                                ::foreach q page.getQuestions()::
+                                ::foreach page chapitre.getPages()::
                                 <tr>
-                                    <td>::q.ref::</td>
-                                    <td>::q.question::</td>
+                                    <td>
+                                        <b><a href="/page/edit/::page.id::">::page.title::</a></b><br/>
+                                        $$nullSafe(::page.description::)
+                                    </td>
+                                    <td>
+                                        <table class="table table-bordered table-striped table-condensed">
+                                            ::foreach q page.getQuestions()::
+                                            <tr>
+                                                    <td>::q.ref::</td>
+                                                    <td>::q.question::</td>
+                                                </tr>
+                                            ::end::
+                                        </table>
+
+                                        <a href="/page/addQuestion/::page.id::" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span> Ajouter une question existante</a>
+                                        <a href="/page/insertQuestion/::page.id::" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span> Ajouter une nouvelle question</a>
+        
+                                    </td>
                                 </tr>
                                 ::end::
-                                
-                                <a href="/page/addQuestion/::page.id::" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span> Ajouter une question existante</a>
-                                <a href="/page/insertQuestion/::page.id::" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span> Ajouter une nouvelle question</a>
-
                             </table>
 
-
-
+                            <a href="/page/insert/::questionnaire.id::" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span> Ajouter une page</a>
                     </td>
 					
 				</tr>
 			::end::			
 		</table>
-		
-		<a href="/page/insert/::questionnaire.id::" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span> Ajouter une page</a>
-		
+
+        <a href="/chapitre/insert/::questionnaire.id::" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span> Ajouter un Chapitre</a>
+        
 	</div>
 	
 	
