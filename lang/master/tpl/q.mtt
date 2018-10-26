@@ -8,7 +8,7 @@
 <div style="border:#CCC 2px solid;margin:24px;padding:24px;border-radius:8px;">
     <div class="row">
         <div class="col-md-12 text-center" style="font-weight:bold;color:#999;">
-            ::chapitre:: : ::num::/::total::
+            ::chapitre.title:: : ::pageIndex+1::/::chapitre.getPages().length::
         </div>
         
     </div>
@@ -16,9 +16,9 @@
         <div class="col-md-2"></div>
         <div class="col-md-8">
             <div class="text-center">
-                <h3 ::cond titre!=null::>::titre::</h3>
-                <p ::cond desc!=nul::>
-                    ::raw desc::
+                <h3 ::cond page.title!=null::>::page.title::</h3>
+                <p ::cond page.description!=nul::>
+                    ::raw page.description::
                 </p>
                 ::if resp != null::
                     <p style="font-weight:bold;color:green;font-size:110%;">::resp::</p>
@@ -28,10 +28,10 @@
      
             ::raw form::    
             <div class="text-center" ::cond num!=1:: style="margin-top:48px;">
-                <a href="/q/::formId::/::chindex::/::(num-2)::" class="btn-default btn btn-xs">
+                <a href="::previousURL::" class="btn-default btn btn-xs">
                 <span class="glyphicon glyphicon-chevron-left"></span> Question précédente</a>
 
-                <a href="::formulaire.startScreen::" class="btn-default btn btn-xs">
+                <a href="::questionnaire.startScreen::" class="btn-default btn btn-xs">
                     <span class="glyphicon glyphicon-home"></span> Revenir à l'accueil</a>
             </div>
         </div>  

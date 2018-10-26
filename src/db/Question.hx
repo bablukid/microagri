@@ -33,7 +33,7 @@ class Question extends Object{
     public var id : SId;
     public var ref : SString<64>;
     public var question : SString<256>;
-    // public var label : SString<128>;
+    public var label : SString<128>; //short and unique label for this question. easier to remember than "ref"
     public var description : SText;
     public var type : SEnum<QuestionType>;
     public var data : SData<Dynamic>;
@@ -44,7 +44,7 @@ class Question extends Object{
 
     override public function insert(){
 
-        if(db.Question.manager.count($ref==ref)>0) throw "Il y a déjà une question avec cette référence";
+        if(db.Question.manager.count($ref==ref)>0) throw "Il y a déjà une question avec la référence "+ref;
 
         super.insert();
     }

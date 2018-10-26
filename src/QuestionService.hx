@@ -6,27 +6,21 @@ typedef Chapitre = { id:String,nom:String,ordre:Array<{qs:Array<String>,?titre:S
 
 class QuestionService{
 
-    /*public var qid : String;
-    public var data : {label:String,q:String,desc:String,type:QType};
-    public function new(){ }*/
-
-    public static function getCompletion(r:db.Result){
-        var out = {num:0,total:0,percent:0};
-        if(r==null) return out;
+    public static function getCompletion(questionnaire:db.Questionnaire,user:db.User,dataset:Int){
         
-        for( chap in QData.formulaire3){
-            for( o in chap.ordre){
-                for( qid in o.qs){
-                    var q = QuestionService.get(qid);
-                    if(q.data.label.indexOf("_cmt")>-1) continue;
-                    out.total ++;
-                    if( Reflect.getProperty(r,q.data.label)!=null) out.num++;
-                }
-            }
+        var out = {num:0,total:0,percent:0};        
+        
+        for( q in questionnaire.getAllQuestions()){
+            
+            
+            if(q.label.indexOf("_cmt")>-1) continue;
+            out.total++;
+            var answer = db.Answer.get(user,q,dataset);
+            if( answer!=null && answer.answer!=null) out.num++;
+            
         }
         out.percent = Math.round(out.num/out.total*100);
-        return out;
-        
+        return out;        
     } 
 
     
@@ -48,8 +42,7 @@ class QuestionService{
     public static function getForm(questions:Array<db.Question>,?subAnswerIndex:Int=null):sugoi.form.Form{
 
         var form = new sugoi.form.Form("q");
-        var r = db.Result.getOrCreate(App.current.user);
-
+        
         //define a form render method
         form.toString = function(){
             var s:StringBuf = new StringBuf();
@@ -68,7 +61,6 @@ class QuestionService{
             form.submitButton.parentForm = form;            
             s.add( "<div style='margin-top:8px;' class='text-center'>"+ form.submitButton.render() + "</div>");            
             s.add( form.getCloseTag() );
-
             return s.toString();
         }
 
@@ -84,8 +76,10 @@ class QuestionService{
 
             //id de question
             var html = "<h4><span class='qid'>"+q.ref+"</span>"+q.question+"</h4><p>"+q.description+"</p>";
-            var v : Dynamic = Reflect.field(r,q.data.label);
-            if(v==null || v=="null") v = "";
+            var answer = db.Answer.getOrCreate(App.current.user,q);
+            
+            var value :Dynamic = answer.answer;
+            if(value=="null"||value=="") value = null;
             
             //réponses multiples ( responsables ) 
             /*if(subAnswerIndex!=null) {
@@ -99,36 +93,41 @@ class QuestionService{
             var e : sugoi.form.FormElement<Dynamic> = null;
 
             switch(q.type){
-            case QText : e = new sugoi.form.elements.TextArea(q.ref,html,v,true);
-            case QCheckbox(data,other,extraFields) :
-                //v = "[bla,blo]"
-                if(v!=null) v = split(v,"~");
+            case QText : 
+                e = new sugoi.form.elements.TextArea(q.ref,html,value,true);
 
-                if(extraFields!=null){
+            case QCheckbox :
+                var d : {list:FormData<String>,other:Bool,extras:FormData<String>} = q.data;
+                //v = "[bla,blo]"
+                if(value!=null) value = split(value,"~");
+
+                if(d.extras!=null){
                     //checkboxes avec champs
-                    e = new form.CheckboxesWithField(q.ref,html,data,v,null,null);
-                    untyped e.extraFields = extraFields;
+                    e = new form.CheckboxesWithField(q.ref,html,d.list,value,null,null);
+                    untyped e.extraFields = d.extras;
                 }else{
-                    if(other){
-                        e = new form.Checkboxes(q.ref,html,data,v,null,null);
+                    if(d.other){
+                        e = new form.Checkboxes(q.ref,html,d.list,value,null,null);
                     }else{
-                        e = new sugoi.form.elements.CheckboxGroup(q.ref,html,data,v,null,null);
+                        e = new sugoi.form.elements.CheckboxGroup(q.ref,html,d.list,value,null,null);
                     }
                 }
                 
-            case QRadio(data) : 
-                e = new sugoi.form.elements.RadioGroup(q.ref,html,data,v,null,null);
+            case QRadio :
+                var d : {list:FormData<String>,other:Bool} = q.data; 
+                e = new sugoi.form.elements.RadioGroup(q.ref,html,d.list,value,null,null);
             case QInt : 
-                e = new sugoi.form.elements.IntInput(q.ref,html,v,true);
+                e = new sugoi.form.elements.IntInput(q.ref,html,value,true);
             case QFloat : 
-                e = new sugoi.form.elements.FloatInput(label,html,v,true);
+                e = new sugoi.form.elements.FloatInput(q.ref,html,value,true);
             
             case QYesNo :
                 var data = [{"label":"Oui",value:"OUI"},{label:"Non",value:"NON"}];
-                e = new sugoi.form.elements.RadioGroup(q.ref,html,data,v,null,null);
+                e = new sugoi.form.elements.RadioGroup(q.ref,html,data,value,null,null);
                 untyped e.vertical = false; 
 
-            case QMultiInput(data) : 
+            case QMultiInput :
+                var data : {extras:FormData<String>} = q.data; 
                 var lines = [];   
                 //deja commenté ?  c'est en service ou pas ça ?             
                 /*if(q.qid=="E1-3" && r.autres_activites!=null){
@@ -144,15 +143,15 @@ class QuestionService{
                         if(x!=null) lines.push(x.label);
                     }
                     //trace(lines);
-                }else*/ if(q.qid=="E1-4"){
+                }else*/ if(q.ref=="E1-4"){
                     for( i in 1...11) lines.push('Bâtiment $i');
                 }
 
-                var values :Array<Array<String>> = split(v,"~").map(function(x) return split(x,";") );
-                e = new form.MultiInput(q.ref,html,lines,data,values);
+                var values :Array<Array<String>> = split(value,"~").map(function(x) return split(x,";") );
+                e = new form.MultiInput(q.ref,html,lines,data.extras,values);
 
             case QAddress,QString : 
-                e = new sugoi.form.elements.StringInput(q.ref,html,v,true);
+                e = new sugoi.form.elements.StringInput(q.ref,html,value,true);
             }
 
             
@@ -165,16 +164,6 @@ class QuestionService{
 
         return form;
     }
-
-
-    /*public static function getFormulaire(formulaire:Int,?chapitre=0){
-        switch(formulaire){
-            case 1 : return QData.formulaire1[chapitre];
-            case 2 : return QData.formulaire2[chapitre];
-            case 3 : return QData.formulaire3[chapitre];
-            default : return null;
-        }
-    }*/
 
    /* public function getNext():Question{
 
@@ -191,43 +180,55 @@ class QuestionService{
     /**
     Get next Page
     **/
-    public static function  next(questionnaire:db.Questionnaire,chapitreIndex:Int,pageIndex:Int){
+    public static function getNextPageURL(questionnaire:db.Questionnaire,chapitreIndex:Int,pageIndex:Int):String{
         
         var chapitre = questionnaire.getChapitres()[chapitreIndex];
         if(chapitre.getPages()[pageIndex+1]!=null){
             //go to next page
-            return { questionnaire:questionnaire, chapitre:chapitreIndex, pageIndex:pageIndex };
+            // return { questionnaire:questionnaire, chapitreIndex:chapitreIndex, pageIndex:pageIndex };
+            return '/q/${questionnaire.id}/${chapitreIndex}/${pageIndex+1}';
         }else{
             //go to next chapitre
             var chapitre = questionnaire.getChapitres()[chapitreIndex+1];
             if(chapitre!=null){
-                return { questionnaire:questionnaire, chapitre:chapitreIndex+1, pageIndex:pageIndex };
+                return '/q/${questionnaire.id}/${chapitreIndex+1}/0';
             }else{
                 //questionnaire terminé
-                return null;
+                return questionnaire.endScreen;
             }
         }
-        return null;
+        return questionnaire.endScreen;
     }
 
-    public static function getAnswers(chap:Chapitre):{num:Int,total:Int,percent:Int}{
+    public static function getPreviousPageURL(questionnaire:db.Questionnaire,chapitreIndex:Int,pageIndex:Int):String{
         
-        var out = {num:0,total:0,percent:0};
-        if(App.current.user==null) return out;
-        var r = db.Result.getOrCreate(App.current.user);
+        var chapitre = questionnaire.getChapitres()[chapitreIndex];
+        if(pageIndex==0){
+            if(chapitreIndex==0){
+                return questionnaire.startScreen;
+            }else{
+                return '/q/${questionnaire.id}/${chapitreIndex-1}/0';
+            }
+        }else{
+            return '/q/${questionnaire.id}/${chapitreIndex}/${pageIndex-1}';
+        }
+        return questionnaire.startScreen;
+    }
+
+    public static function getChapterCompletion(chapter:db.Chapitre,user:db.User,dataset:Int):{num:Int,total:Int,percent:Int}{
         
-        //var chap = Question.chapitres[chapIndex];
-        for( o in chap.ordre){
-            for( qid in o.qs){
-                var q = QuestionService.get(qid);
-                if(q.data.label.indexOf("_cmt")>-1) continue;
-                out.total ++;
-                if( Reflect.getProperty(r,q.data.label)!=null) out.num++;
+        var out = {num:0,total:0,percent:0};        
+        
+        for( p in chapter.getPages()){
+            for( q in p.getQuestions()){
+                if(q.label.indexOf("_cmt")>-1) continue;
+                out.total++;
+                var answer = db.Answer.get(user,q,dataset);
+                if( answer!=null && answer.answer!=null) out.num++;
             }
         }
         out.percent = Math.round(out.num/out.total*100);
-        return out;
-
+        return out;    
     }
 
     public static function split(str:String,sep:String):Array<String>{
@@ -245,16 +246,16 @@ class QuestionService{
     /**
      *  serialize form element value depending on type
      */
-    public static function serialize(value:Dynamic,type:QType):String{
+    public static function serialize(value:Dynamic,type:QuestionType):String{
 
         switch(type){
-            case QMultiInput(_):
+            case QMultiInput:
             var curr : Array<Array<String>> = value;
             var curr2 : Array<String> = cast Lambda.map(curr,function(a) return join(a,";"));
             var curr2 = join(curr2,"~");
             return curr2;
 
-            case QCheckbox(_):
+            case QCheckbox:
             return join(value,"~");
 
             default: return Std.string(value);

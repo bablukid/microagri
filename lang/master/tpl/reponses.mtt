@@ -13,8 +13,8 @@
                 <th></th>
                 <th></th>
                 <th></th>
-                ::foreach k keys2::
-                <th>::k::</th>
+                ::foreach q allQuestions::
+                <th>::q.ref::</th>
                 ::end::
             </tr>
 
@@ -22,13 +22,17 @@
                 <th>#</th>
                 <th>Complétion</th>
                 <th>Compte</th>
-                ::foreach k keys::
-                <th>::k::</th>
+                ::foreach h headers::
+                <th>::h::</th>
                 ::end::
             </tr>
-        ::foreach r reponses::
+
+        ::foreach k answers.keys()::
             <tr>
-                <td>::r.id::</td>
+                <td>::k::</td>
+
+                ::set r = getFromMap(answers,k)::
+
                 <td>
                     ::r.completion::%
                     <br/>
@@ -39,11 +43,16 @@
                         &nbsp;Effacer                    
                     </a>
                 </td>
-                <td>::r._user.name:: ::r._user.email:: </td>
-                ::foreach k keys::
-                
-                ::set v = Reflect.field(r,k)::
-                <td>::if (v!=null):: ::v:: ::end::</td>
+                <td>
+                  <!--  ::r._user.name:: ::r._user.email:: -->
+                </td>
+                ::foreach a r::
+                    <td>
+                    ::if(a!=null)::
+                        ::set v = a.answer::
+                        ::if (v!=null):: ::v:: ::end::
+                    ::end::
+                    </td>
                 ::end::
             </tr>
         ::end::

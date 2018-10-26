@@ -21,16 +21,18 @@ class Admin extends sugoi.BaseController
 		view.questionnaire = questionnaire;
 	}*/
     function print(str){
-
         Sys.println('<p>$str</p>');
-
     }
+
     @admin
     public function doMigrate(){
 
-        for(form in QData.formulaires){
+        for(i in QData.formulaires.keys()){
+
+            var form = QData.formulaires[i];
 
             var qu = new db.Questionnaire();
+            qu.id = i;
             qu.name = form.nom;
             qu.startScreen = form.startScreen;
             qu.endScreen = form.endScreen;
@@ -40,8 +42,6 @@ class Admin extends sugoi.BaseController
             var chapitreIndex = 0;
 
             for( chapitre in form.chapitres){
-
-                
 
                 var ch = new db.Chapitre();
                 ch.questionnaire = qu;
@@ -67,43 +67,46 @@ class Admin extends sugoi.BaseController
                     for( qid in page.qs){
 
                         print("====== Question : "+qid);
-                        
-                        var q = new db.Question();
-                        var question = QData.questions[qid];
-                        if(question==null) throw 'unknown question $qid';
-                        q.question = question.q;
-                        q.description = question.desc;
-                        q.ref = qid;
-                        q.type = switch(question.type){
-                            case QText      : QText;      
-                            case QString    : QString;
-                            case QInt       : QInt;
-                            case QFloat     : QFloat;
-                            case QAddress   : QAddress;
-                            case QRadio(list,other) : QRadio;
-                            case QCheckbox(list,other,extras) : QCheckbox;
-                            case QYesNo : QYesNo;
-                            case QMultiInput(extras) : QMultiInput;
-                        };
-                        q.data = switch(question.type){
-                            case QText      : null;      
-                            case QString    : null;
-                            case QInt       : null;
-                            case QFloat     : null;
-                            case QAddress   : null;
-                            case QRadio(list,other) : {list:list,other:other};
-                            case QCheckbox(list,other,extras) : {list:list,other:other,extras:extras};
-                            case QYesNo : null;
-                            case QMultiInput(extras) : {extras:extras};
-                        };
-                        q.insert();
+                        var q = db.Question.getByRef(qid);
+                        if(q==null){
+                            q = new db.Question();
+                            var question = QData.questions[qid];
+                            if(question==null) throw 'unknown question $qid';
+                            q.question = question.q;
+                            q.description = question.desc;
+                            q.label = question.label;
+                            q.ref = qid;
+                            q.type = switch(question.type){
+                                case QText      : QText;      
+                                case QString    : QString;
+                                case QInt       : QInt;
+                                case QFloat     : QFloat;
+                                case QAddress   : QAddress;
+                                case QRadio(list,other) : QRadio;
+                                case QCheckbox(list,other,extras) : QCheckbox;
+                                case QYesNo : QYesNo;
+                                case QMultiInput(extras) : QMultiInput;
+                            };
+                            q.data = switch(question.type){
+                                case QText      : null;      
+                                case QString    : null;
+                                case QInt       : null;
+                                case QFloat     : null;
+                                case QAddress   : null;
+                                case QRadio(list,other) : {list:list,other:other};
+                                case QCheckbox(list,other,extras) : {list:list,other:other,extras:extras};
+                                case QYesNo : null;
+                                case QMultiInput(extras) : {extras:extras};
+                            };
+                            
+                            q.insert();                            
+                        }
 
                         var qp = new db.QuestionPage();
                         qp.order = qindex;
                         qp.question = q;
                         qp.page = p;
                         qp.insert();
-
 
                         qindex++;
                     }
@@ -121,6 +124,42 @@ class Admin extends sugoi.BaseController
 
     }
 
-    
+    function doMigrateAnswers(){
+
+        var countByUser = new Map<Int,Int>();
+
+        for( r in db.Result.manager.all()){
+
+            var dataset :Int = if(countByUser[r.user.id]==null){
+                countByUser[r.user.id] = 1;
+                1;
+            }else{
+                countByUser[r.user.id]++;
+                countByUser[r.user.id];
+            } 
+
+            for ( f in Reflect.fields(r)){
+
+                if(f.substr(0,1)=="_") continue;
+                if(f=="userId"||f=="id"||f=="user") continue;
+
+                var question = db.Question.manager.select($label==f);
+                if(question==null) continue;//throw 'no question with label "$f"';
+
+                var a = new db.Answer();
+                a.user = r.user;
+                a.dataset = dataset;
+                a.question = question;
+                a.answer = Reflect.field(r,f);
+                a.insert();
+
+                print('$f (${a.question.ref}) for user ${a.user.id}');
+
+            }
+
+
+        }
+
+    }
 	
 }

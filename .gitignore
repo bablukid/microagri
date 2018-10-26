@@ -2,3 +2,5 @@
 /lang/master/tmp/*.n
 html/index.n
 config.xml
+.haxelib
+www/index.n

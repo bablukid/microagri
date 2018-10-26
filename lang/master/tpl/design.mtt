@@ -9,6 +9,7 @@
 		
 		<!-- JQUERY 
 		<script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		
 		<!-- BOOTSTRAP -->		
 		<!-- Latest compiled and minified CSS -->
@@ -27,33 +28,66 @@
 			<b>Recensement des micro-fermes en Gironde</b>
 		</div>		
 			
-		<!-- navbar -->
-		<div class="collapse navbar-collapse" id="cagette-navbar">
+
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>				
+				</div>
+			
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+
+						::if user!=null && user.isAdmin()::
+						<li><a href="/answers">Mes réponses</a></li>
+						<li ::attr class if(section=="home" )  'active' ::><a href="/qhome">Form. complet</a></li>
+						<li><a href="/q/1/0/0">1er Form. Court</a></li>
+						<li><a href="/q/2/0/0">2e Form. Court</a></li>
+						::end::
+
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" >
+								Admin. <span class="caret"></span>	
+							</a>
+								<ul class="dropdown-menu">
+									<li><a href="/questionnaire">Questionnaires</a></li>
+									<li><a href="/reponses">Réponses</a></li>
+									<li><a href="/user">Utilisateurs</a></li>
+									<li><a href="/db">Base de données</a></li>
+								</ul>
+							</li>
+					</ul>
 				
-			<ul class="nav navbar-nav navbar-left">
-                ::if user!=null && user.isAdmin()::
-                <li><a href="/answers">Mes réponses</a></li>
-                <li ::attr class if(section=="home" )  'active' ::><a href="/qhome">Form. complet</a></li>
-                <li><a href="/q/1/0/0">1er Form. Court</a></li>
-                <li><a href="/q/2/0/0">2e Form. Court</a></li>
-                
-                <li><a href="/questionnaire">Questionnaires</a></li>
-                <li><a href="/reponses">Réponses</a></li>
-                <li><a href="/user">Utilisateurs</a></li>
-				<li><a href="/db">Database</a></li>
-				::end::
-			</ul>
 				
-			<div class="nav navbar-nav navbar-right" style="margin-top:12px;">
-				::if user!=null::
-                Connecté en tant que <b>::user.name::</b>
-                    <a href="/user/logout" class="btn btn-default btn-xs">Déconnexion</a>
-                
-				::else::
-				<a href="/user/login">Connexion</a>
-				::end::
-            </div>				
-		</div>		
+					<ul class="nav navbar-nav navbar-right" style="margin-top:12px;">
+						::if user!=null::
+						Connecté en tant que <b>::user.name::</b>
+							<a href="/user/logout" class="btn btn-default btn-xs">Déconnexion</a>
+						
+						::else::
+						<a href="/user/login">Connexion</a>
+						::end::
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+
+
+
+
+
+
+
+
+		
 		
 		<!-- application messages -->
 		::foreach msg getMessages()::
@@ -110,7 +144,5 @@
 		</tr>
 		::end::
 		</table>
-
-		
 	</body>
 </html>

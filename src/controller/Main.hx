@@ -8,20 +8,18 @@ class Main extends sugoi.BaseController {
 	 */
 	@tpl("qhome.mtt")
 	function doQhome() {
+		var questionnaire = db.Questionnaire.manager.get(3);
 		view.category = 'home';
-		view.chapitres = QData.formulaire3;
-		view.getAnswers = QuestionService.getAnswers;
+		view.chapitres = questionnaire.getChapitres();
+		view.getChapterCompletion = QuestionService.getChapterCompletion;
+		view.alphabet = ["A","B","C","D","E","F","G","H"];
 
 		if(app.user!=null){
-			var r = db.Result.getOrCreate(App.current.user);
-			view.ferme = r.Nom;
-
-			/*var percent = 0;
-			for( c in Question.chapitres ) percent += Question.getAnswers(c).percent;
-			view.percent = Math.round(percent/Question.chapitres.length);  */
-			var compl = QuestionService.getCompletion(r);
-			//trace(compl);
+			var dataset = App.current.session.data.dataset==null ? 1 : App.current.session.data.dataset;
+			var compl = QuestionService.getCompletion(questionnaire,app.user,dataset);			
 			view.percent = compl.percent;
+			view.dataset = dataset;
+			
 		}	
 	}
 	
@@ -68,7 +66,7 @@ class Main extends sugoi.BaseController {
     **/
     @tpl("q.mtt")
     function doQ2(formId:Int,chapitre:Int,index:Int){
-	    if(app.user==null) throw Redirect("/init");
+	    /*if(app.user==null) throw Redirect("/init");
 
 		var res = db.Result.getOrCreate(app.user);
         var formulaire = QData.formulaires[formId];
@@ -180,7 +178,7 @@ class Main extends sugoi.BaseController {
 			}else{
 				throw Redirect( "/q/"+next.formulaire+"/"+next.chapitre+"/"+next.index );
 			}
-		}
+		}*/
     }    
 
 	@tpl("q.mtt")
@@ -193,9 +191,14 @@ class Main extends sugoi.BaseController {
 		var page  = chapitre.getPages()[pageIndex];
 		if(page==null) throw Error("/","Page is null");
 		var questions = page.getQuestions();
-
+		
         view.questionnaire = questionnaire;
 		view.chapitre =  chapitre;
+		view.chapitreIndex = chapitreIndex;
+		view.page = page;
+		view.pageIndex = pageIndex;
+		view.previousURL = QuestionService.getPreviousPageURL(questionnaire,chapitreIndex,pageIndex);
+		
 		//view.num = index+1;
 		//view.total =  formulaire.chapitres[chapitre].ordre.length;
 		
@@ -259,20 +262,31 @@ class Main extends sugoi.BaseController {
 				}
 				
 			}else{*/
-				//save data
-	        	f.toSpod(res);
-
+				
+				
+				//save answers
                 //serialize depending on field type
-                for(q in qs){
-                    var v = Reflect.getProperty(res,q.data.label);
-                    var v2 = QuestionService.serialize(v,q.data.type);
-                    Reflect.setProperty(res,q.data.label,v2);           
+                for(q in questions){
+
+					var answer = f.getValueOf(q.ref);
+                    // var v = Reflect.getProperty(res,q.data.label);
+                    var answer = QuestionService.serialize(answer,q.type);
+                
+					var storedAnswer = db.Answer.getOrCreate(app.user,q);
+					
+					if(storedAnswer.answer!=answer){
+						storedAnswer.lock();
+						storedAnswer.ldate = Date.now();
+						storedAnswer.answer =   answer;
+						storedAnswer.update();
+					} 				
                 }
+
+
 			//}	
+            //res.update();
 
-            res.update();
-
-			var next = QuestionService.next(questionnaire,chapitreIndex,pageIndex);
+			var nextPageURL :String = QuestionService.getNextPageURL(questionnaire,chapitreIndex,pageIndex);
 			
 			/*if(chapitre==1 && next==null){
 				var numResponsables = 1;				
@@ -286,12 +300,12 @@ class Main extends sugoi.BaseController {
 				}				
 			}*/
 
-			if(next==null){
-				throw Ok( questionnaire.endScreen , "Ce formulaire est terminé." );
+			if(nextPageURL.indexOf('/q/') == -1 ){
+				throw Ok( nextPageURL , "Ce formulaire est terminé." );
 			}else{
-				throw Redirect( "/q/"+next.questionnaire.id+"/"+next.chapitreIndex+"/"+next.pageIndex );
+				throw Redirect( nextPageURL );
 			}
-		}*/
+		}
 	}
 
 	/**
@@ -334,55 +348,85 @@ class Main extends sugoi.BaseController {
     @tpl('answers.mtt')
     function doAnswers(){
 
+		var farmNameQuestion = db.Question.getByRef("A1");
+
+		//start a new dataset
         if(app.params.exists("new")){
 
             if(app.user==null) throw Redirect("/init");
 
-            var x = new db.Result();
+            var x = new db.Answer();
             x.user = app.user;
-            x.Nom = "Nouvelle ferme";
+            x.answer = "Nouvelle ferme";
+			x.dataset = db.Answer.manager.count($user==app.user && $question==farmNameQuestion) + 1;
+			x.question = farmNameQuestion;
             x.insert();
-            app.session.data.resultId = x.id;
+            app.session.data.dataset = x.dataset;
             var formulaire = Std.parseInt(app.params.get("new"));
 
             throw Ok("/q/"+formulaire+"/0/0","Vous pouvez maintenant référencer une nouvelle ferme.");
         }
 
+		//choose an existing dataset
         if(app.params.exists("choose")){
+            var dataset =  Std.parseInt(app.params.get("choose"));
+			var q = db.Answer.get(app.user,farmNameQuestion,dataset);
             
-            
-            var rid = Std.parseInt(app.params.get("choose"));
-            var r = db.Result.manager.get(rid,false);
-            if(r==null) throw Error("/","db.Result not found");
-            if(app.user.id!=r.user.id && !app.user.isAdmin()) throw "Access forbidden";
+            if(q==null) throw Error("/",'Answer with dataset $dataset not found');
+            // if(app.user.id!=r.user.id && !app.user.isAdmin()) throw "Access forbidden";
 
-            app.session.data.resultId = r.id;
+            app.session.data.dataset = dataset;
 
-            throw Ok("/q/1/0/0","Vous modifiez maintenant le référencement de la ferme \""+r.Nom+"\".");
+            throw Ok("/q/1/0/0","Vous modifiez maintenant le référencement de la ferme \""+q.answer+"\".");
         }
 
-        view.results = db.Result.manager.search($user == app.user,false);
+		//Display farm name ( question A1 )
+        view.results = db.Answer.manager.search($user == app.user && $question==farmNameQuestion,{orderBy:-dataset},false);
 
     }
 
 	@admin @tpl('reponses.mtt')
 	function doReponses(){
 
-        if(checkToken()){
+        /*if(checkToken()){
             var rid = Std.parseInt(app.params.get("delete"));
             var r = db.Result.manager.get(rid,true);
             r.delete();
             throw Ok("/reponses","Réponse effacée");
+        }*/
 
-        }
+		var allQuestions = db.Question.manager.all(false);
 
-		var reponses = db.Result.manager.all();
+		//headers
+		var headers = [];
+		for( q in allQuestions){
+			headers.push(q.label);
+		}
 
-        
 
-		view.reponses = reponses;
+		//get all results
+		var answers = new Map<String,Array<db.Answer>>();
+		var answersByUserDataset = sys.db.Manager.cnx.request("SELECT userId,dataset FROM db.Answer group by userId,dataset").results();
+		
+		for( userDataset in answersByUserDataset){
+			var l = [];
+			var user = db.User.manager.get(userDataset.userId,false);
+			var dataset = userDataset.dataset;
+			for( q in allQuestions){
+				var a = db.Answer.get(user,q,dataset);
+				l.push( a );
+			}
+			answers[user.id+"-"+dataset] = l;
+		}
 
-		var k = [];
+		view.answers = answers;
+		view.headers = headers;
+		view.allQuestions = allQuestions;
+		view.getFromMap = function (map:Map<String,Array<db.Answer>>,key:String){
+			return map.get(key);
+		};
+
+		/*var k = [];
         var keys =[];
         for( k in QData.questions.keys()) keys.push(k);
 
@@ -396,19 +440,19 @@ class Main extends sugoi.BaseController {
 		for ( key in keys ){
 			k.push( QuestionService.get(key).data.label );
 
-		}
+		}*/
 
 		//completion des questions
-		for( r in reponses){
+		/*for( r in reponses){
 			Reflect.setProperty(r,"completion",QuestionService.getCompletion(r).percent );
-		}
+		}*/
 		
-		view.keys = k;
+		/*view.keys = k;
 		view.keys2 = keys;
-		view.Reflect = Reflect;
+		view.Reflect = Reflect;*/
 
 		if(App.current.params.get("csv")=="1"){
-			printCsvData(Lambda.array(reponses),k,"Reponses.csv");
+			printCsvData(Lambda.array(answers),headers,"Reponses.csv");
 		}
 	}
 

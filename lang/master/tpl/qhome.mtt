@@ -13,7 +13,7 @@
     <div class="col-md-3">
         <b ::cond ferme!=null::>::ferme::</b>
 
-        ::set chap1 =  getAnswers(chapitres[0])::
+        ::set chap1 =  getChapterCompletion(chapitres[0],user,dataset)::
         
     </div>
     <div class="col-md-3 text-right">Barre de progression :</div>
@@ -32,9 +32,10 @@
     ::foreach c chapitres::
     <div class="col-md-4">
         <div class="panel panel-default" style="height:240px;">
-            <div class="panel-img" style="background:url('/img/bg::c.id::.jpg') no-repeat center;background-size: cover;"></div>
+            ::set letter = alphabet[repeat.c.index]::
+            <div class="panel-img" style="background:url('/img/bg::letter::.jpg') no-repeat center;background-size: cover;"></div>
             <div class="panel-heading">
-                ::c.nom::                
+                ::c.title::                
             </div>
 
             ::if (chap1.num<chap1.total*0.7 && repeat.c.index!=0) ::
@@ -44,7 +45,7 @@
             ::else::
 
             <div class="panel-body">
-                ::set x = getAnswers(c)::
+                ::set x = getChapterCompletion(c,user,dataset)::
 
                 ::if (x.num==x.total && x.num>0)::
                 <div class="alert alert-success text-center" ><span class="glyphicon glyphicon-ok"></span> Terminé 

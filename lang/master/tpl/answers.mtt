@@ -16,7 +16,7 @@
             <ul>
                 ::foreach r results::
                 <li>
-                    <a href="/answers?choose=::r.id::">::r.Nom::</a>
+                    <a href="/answers?choose=::r.dataset::">::r.answer::</a>
                 </li>
                 ::end::
             </ul>

@@ -19,6 +19,19 @@ class Questionnaire extends Object{
         return Lambda.array(db.Chapitre.manager.search($questionnaire == this, false));
     }
 
+    public function getAllQuestions(){
+        var questions = [];
+        for(ch in getChapitres()){
+            for( p in ch.getPages()){
+                for(q in p.getQuestions()){
+                    questions.push(q);
+                }
+            }
+        }
+        return questions;
+
+    }
+
     public static function getLabels(){
         return [
             "name"=>"Titre"
