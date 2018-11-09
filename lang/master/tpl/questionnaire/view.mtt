@@ -28,9 +28,29 @@
                                         <table class="table table-bordered table-striped table-condensed">
                                             ::foreach q page.getQuestions()::
                                             <tr>
-                                                    <td>::q.ref::</td>
-                                                    <td>::q.question::</td>
-                                                </tr>
+                                                <td>::q.ref::
+                                                    
+                                                </td>
+                                                <td>::q.question::</td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <a href="?q=::q.id::&move=up&page=::page.id::" class="btn btn-default btn-sm" title="Monter">
+                                                            <span class="glyphicon glyphicon-chevron-up"></span>
+                                                        </a>
+                                                        <a href="?q=::q.id::&move=down&page=::page.id::" class="btn btn-default btn-sm" title="Descendre">
+                                                            <span class="glyphicon glyphicon-chevron-down"></span>
+                                                        </a>
+                                                        <a href="/page/editQuestion/::q.id::/::page.id::" class="btn btn-default btn-sm" title="Modifier la question">
+                                                            <span class="glyphicon glyphicon-edit"></span>
+                                                        </a>
+                                                        <a href="/page/removeQuestion/::q.id::/::page.id::" class="btn btn-default btn-sm" title="Retirer la question de cette page"
+                                                        onclick="return confirm('ATTENTION !\nVoulez vous vraiment retirer cette question ?')">
+                                                            <span class="glyphicon glyphicon-remove"></span>
+                                                        </a>
+                                                    </div>
+                                                    
+                                                </td>
+                                            </tr>
                                             ::end::
                                         </table>
 
@@ -42,7 +62,7 @@
                                 ::end::
                             </table>
 
-                            <a href="/page/insert/::questionnaire.id::" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span> Ajouter une page</a>
+                            <a href="/page/insert/::chapitre.id::" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-plus"></span> Ajouter une page</a>
                     </td>
 					
 				</tr>

@@ -43,7 +43,9 @@ class Page extends sugoi.BaseController
         view.form = f;
     }
 
-
+    /**
+    Add a question to a page
+    **/
     @admin @tpl('form.mtt')
     public function doAddQuestion(page:db.Page){
         
@@ -52,10 +54,16 @@ class Page extends sugoi.BaseController
 
 
         if(f.isValid()){
-           
-           var q = db.Question.getByRef(f.getValueOf("ref"));
+           var ref = f.getValueOf("ref");
+           var q = db.Question.getByRef(ref);
+           if(q==null) throw "il n'existe pas de question avec la référence "+ref;
+           var qp = new db.QuestionPage();
+           qp.question = q;
+           qp.page = page;
+           qp.order = db.QuestionPage.manager.count($page==page)+1;
+           qp.insert();
 
-            throw Ok("/questionnaire/view/"+page.chapitre.questionnaire.id,"Nouvelle page créé");
+            throw Ok("/questionnaire/view/"+page.chapitre.questionnaire.id,"Nouvelle question ajoutée");
 
         }
 
@@ -102,6 +110,7 @@ class Page extends sugoi.BaseController
            var qp = new db.QuestionPage();
            qp.question = q;
            qp.page = page;
+           qp.order = db.QuestionPage.manager.count($page==page)+1;
            qp.insert();
 
 
@@ -112,7 +121,56 @@ class Page extends sugoi.BaseController
         view.form = f;
     }
 
+    @admin @tpl('form.mtt')
+    public function doEditQuestion(q:db.Question,page:db.Page){
+        view.title = "Modifier une question";
+        
+        var f = new sugoi.form.Form("modq");
+        f.addElement( new sugoi.form.elements.StringInput("ref","ID de la question", q.ref ,true) );
+        var data = [
+            /*QText;      //réponse texte bloc
+    QString;    //réponse text 1 ligne
+    QInt;       //réponse chiffrée
+    QFloat;
+    QAddress;   
+    QRadio;     //reponse unique
+    QCheckbox;  //reponses multiples + autres + champs en plus
+    QYesNo;     //oui ou non
+    QMultiInput;*/
+            {label:"Ligne de texte", value:"QString"},
+            {label:"Bloc de texte" , value:"QText"},
+        ];
+        f.addElement(new sugoi.form.elements.StringSelect("type",       "Type de question",data,Std.string(q.type),true));
+        f.addElement(new sugoi.form.elements.StringInput("question",    "Question",q.question,true));
+        f.addElement(new sugoi.form.elements.StringInput("description", "Description",q.description,true));
+        f.addElement(new sugoi.form.elements.Checkbox("required", "Réponse obligatoire",q.required,true));
+
+        if(f.isValid()){ 
+          
+           q.lock();
+           q.ref = f.getValueOf("ref");
+           q.question = f.getValueOf("question");
+           q.description = f.getValueOf("description");
+           q.required = f.getValueOf("required");
+           q.type = Type.createEnum(db.Question.QuestionType,f.getValueOf("type"));
+           q.update();
+
+          throw Ok("/questionnaire/view/"+page.chapitre.questionnaire.id,"Question modifiée");
+
+        }
+
+        view.form = f;
+    }
+
     
+    
+    public function doRemoveQuestion(q:db.Question,page:db.Page){
+    
+        var qp = db.QuestionPage.manager.select($question==q && $page==page);
+        qp.delete();
+        throw Ok("/questionnaire/view/"+page.chapitre.questionnaire.id,"Question retirée");
+
+    }
 
     
 	

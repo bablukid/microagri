@@ -22,14 +22,22 @@ class Answer extends Object{
         ldate = Date.now();
     }
 
-    public static function get(user:db.User,question:db.Question,dataset:Int){
+    public static function get(user:db.User,question:db.Question,?_dataset:Int){
+        var dataset : Int = _dataset==null ? App.current.session.data.dataset : _dataset;
+        
+        //allow an admin to edit the dataset of a user
+        if(App.current.session.data.forceUserId!=null) user = db.User.manager.get(App.current.session.data.forceUserId,false);
+
         return manager.select($user==user && $dataset==dataset && $question==question,false);
     }
 
     public static function getOrCreate(user:db.User,question:db.Question){
         var a : db.Answer = null;
         var dataset : Int = App.current.session.data.dataset==null ? 1 : App.current.session.data.dataset;
-        
+
+        //allow an admin to edit the dataset of a user
+        if(App.current.session.data.forceUserId!=null) user = db.User.manager.get(App.current.session.data.forceUserId,false);
+
         a = manager.select($user==user && $dataset==dataset && $question==question,true);
         
         if(App.current.user.id != user.id && !App.current.user.isAdmin() ){
@@ -45,6 +53,18 @@ class Answer extends Object{
             a.insert();
         }
         return a;
+    }
+
+    public static function getAnswerOf(ref:String,user:db.User){
+
+        //allow an admin to edit the dataset of a user
+        if(App.current.session.data.forceUserId!=null) user = db.User.manager.get(App.current.session.data.forceUserId,false);
+
+        var q = db.Question.getByRef(ref);
+        if(q==null) throw "no question with ref "+ref;
+        var a = db.Answer.get(user,q);
+        if(a==null) throw "no answer for question "+ref+" and user "+user.id;
+        return a.answer;
     }
 
 }

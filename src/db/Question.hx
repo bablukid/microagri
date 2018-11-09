@@ -37,6 +37,7 @@ class Question extends Object{
     public var description : SText;
     public var type : SEnum<QuestionType>;
     public var data : SData<Dynamic>;
+    public var required : SBool;
 
     public static function getByRef(ref:String){
         return manager.select($ref==ref,false);

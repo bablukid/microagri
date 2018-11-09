@@ -5,11 +5,11 @@
         <p>
             <a href="?csv=1" class="btn btn-default">Export CSV</a>
         </p>
-    
-        
+            
         <table class="table table-bordered table-condensed table-striped">
 
             <tr>
+                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -20,6 +20,7 @@
 
             <tr>
                 <th>#</th>
+                <th>Date</th>
                 <th>Complétion</th>
                 <th>Compte</th>
                 ::foreach h headers::
@@ -32,19 +33,27 @@
                 <td>::k::</td>
 
                 ::set r = getFromMap(answers,k)::
-
                 <td>
-                    ::r.completion::%
+                    ::if (r[0]!=null)::
+                        ::raw r[0].cdate.toString().split(" ").join("<br/>")::
+                    ::end::
+                </td>
+                <td>
+                    ::getCompletion(r)::%
+                    ::if (r[0]!=null)::
                     <br/>
-                    <a href="/answers?choose=::r.id::" class="btn btn-default btn-xs">Prendre la main</a>
+                    <a href="/reponses?choose=1&dataset=::r[0].dataset::&user=::r[0].userId::" class="btn btn-default btn-xs">Prendre la main</a>
                     <br/><br/>
-                    <a href="/reponses?delete=::r.id::&token=::token::" class="btn btn-default btn-xs" onclick="return confirm('ATTENTION !\nVoulez vous vraiment supprimer cet élément ?')">
+                    <a href="/reponses?delete=1&dataset=::r[0].dataset::&user=::r[0].userId::&token=::token::" class="btn btn-default btn-xs" onclick="return confirm('ATTENTION !\nVoulez vous vraiment supprimer cet élément ?')">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>                        
                         &nbsp;Effacer                    
                     </a>
+                    ::end::
                 </td>
                 <td>
-                  <!--  ::r._user.name:: ::r._user.email:: -->
+                    ::if (r[0]!=null)::
+                        ::r[0]._user.name::<br/>::r[0]._user.email:: 
+                    ::end::
                 </td>
                 ::foreach a r::
                     <td>

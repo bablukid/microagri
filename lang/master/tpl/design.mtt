@@ -50,19 +50,20 @@
 						<li ::attr class if(section=="home" )  'active' ::><a href="/qhome">Form. complet</a></li>
 						<li><a href="/q/1/0/0">1er Form. Court</a></li>
 						<li><a href="/q/2/0/0">2e Form. Court</a></li>
-						::end::
+						
 
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" >
 								Admin. <span class="caret"></span>	
 							</a>
-								<ul class="dropdown-menu">
-									<li><a href="/questionnaire">Questionnaires</a></li>
-									<li><a href="/reponses">Réponses</a></li>
-									<li><a href="/user">Utilisateurs</a></li>
-									<li><a href="/db">Base de données</a></li>
-								</ul>
-							</li>
+							<ul class="dropdown-menu">
+								<li><a href="/questionnaire">Questionnaires</a></li>
+								<li><a href="/reponses">Réponses</a></li>
+								<li><a href="/user">Utilisateurs</a></li>
+								<li><a href="/db">Base de données</a></li>
+							</ul>
+						</li>
+						::end::	
 					</ul>
 				
 				

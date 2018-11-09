@@ -61,126 +61,7 @@ class Main extends sugoi.BaseController {
 		d.dispatch(new controller.User());
 	}
 
-    /**
-        OLD
-    **/
-    @tpl("q.mtt")
-    function doQ2(formId:Int,chapitre:Int,index:Int){
-	    /*if(app.user==null) throw Redirect("/init");
-
-		var res = db.Result.getOrCreate(app.user);
-        var formulaire = QData.formulaires[formId];
-
-		//get the questions ids
-		var group  = formulaire.chapitres[chapitre].ordre[index];
-		var qids = group.qs;
-		view.titre = group.titre;
-		view.desc = group.desc;
-		view.chindex = chapitre;
-        view.formulaire = formulaire;
-        view.formId = formId;
-		view.chapitre =  formulaire.chapitres[chapitre].nom;
-		view.num = index+1;
-		view.total =  formulaire.chapitres[chapitre].ordre.length;
-		
-		var subAnswerIndex = null;
-		if(chapitre==1){
-			//nbre de responsables		
-			var numResponsables = 1;
-			if(res!=null && res.nbre_responsables!=null ) numResponsables = res.nbre_responsables.parseInt();
-			if(app.session.data.respIndex==null) app.session.data.respIndex = 0;
-
-			if(res.nom_responsable!=null && res.prenom_responsable!=null && res.prenom_responsable.split("|")[app.session.data.respIndex]!=null ){
-				view.resp = "Responsable n°"+(app.session.data.respIndex+1)+" : "+res.prenom_responsable.split("|")[app.session.data.respIndex]+" "+res.nom_responsable.split("|")[app.session.data.respIndex];
-			}else{
-				view.resp = "Responsable n°"+(app.session.data.respIndex+1);
-			}	
-			subAnswerIndex = app.session.data.respIndex;
-		}		
-
-		//questions list
-		var qs = new Array<QuestionService>();
-		for( qid in qids) qs.push(QuestionService.get(qid) );
-
-		//build form
-		var f = QuestionService.getForm(qs,subAnswerIndex);
-		view.form = f;
-
-		if( f.isValid() ){
-
-			//hook on questions
-			for( q in qs){
-				switch(q.qid){
-					case "A2" : 
-						//check 33
-						var str :String = f.getValueOf(q.data.label);
-						if ( str!=null && str.indexOf("33") == -1 ) 
-							throw Error("/q/"+formId+"/"+chapitre+"/"+index,"Ce recensement concerne uniquement les fermes de Gironde, le code postal doit commencer par 33.") ;
-					case "A5-1"	:
-						//nbre de responsables
-						var num :Int = f.getValueOf(q.data.label);				
-						if(num>6) throw Error(formulaire.startScreen,"Vous ne pouvez pas définir plus de 6 responsables");
-					default:
-				}
-			}
-
-            // téléphone ou email obligatoire
-            if(formId==1 && chapitre==0 && index==0){
-                var email = f.getValueOf("email");
-                var telephone = f.getValueOf("telephone");
-               if(telephone==null && email==null) throw Error("/q/1/0/0","Merci de nous communiquer au moins un email ou un numéro de téléphone.");
-            }
-
-			//nbre de responsables	
-			if(formId==3 && chapitre==1 ){
-				var numResponsables = 1;				
-				if(res!=null && res.nbre_responsables!=null ) numResponsables = res.nbre_responsables.parseInt();
-				if(app.session.data.respIndex==null) app.session.data.respIndex = 0;
-				for( q in qs){
-					var value = f.getValueOf(q.data.label);
-					var original = Std.string(Reflect.getProperty(res,q.data.label));
-					var arr = original==null ? [] : original.split("|");
-					arr[app.session.data.respIndex] = QuestionService.serialize(value,q.data.type);
-					Reflect.setProperty(res,q.data.label,arr.join("|"));
-					//trace(q.data.label+" = "+arr.join("|")+"<br>");
-				}
-				
-			}else{
-				//save data
-	        	f.toSpod(res);
-
-                //serialize depending on field type
-                for(q in qs){
-                    var v = Reflect.getProperty(res,q.data.label);
-                    var v2 = QuestionService.serialize(v,q.data.type);
-                    Reflect.setProperty(res,q.data.label,v2);           
-                }
-			}	
-
-            res.update();
-
-			var next = QuestionService.next(formId,chapitre,index);
-			
-			if(chapitre==1 && next==null){
-				var numResponsables = 1;				
-				if(res!=null && res.nbre_responsables!=null ) numResponsables = res.nbre_responsables.parseInt();
-				if(app.session.data.respIndex==null) app.session.data.respIndex = 0;
-				if(app.session.data.respIndex+1 < numResponsables){
-					next = QuestionService.next(formId,chapitre,-1);
-					app.session.data.respIndex++;
-				}else{
-					app.session.data.respIndex = 0;
-				}				
-			}
-
-			if(next==null){
-				throw Ok( formulaire.endScreen , "Ce formulaire est terminé." );
-			}else{
-				throw Redirect( "/q/"+next.formulaire+"/"+next.chapitre+"/"+next.index );
-			}
-		}*/
-    }    
-
+   
 	@tpl("q.mtt")
 	function doQ(questionnaire:db.Questionnaire,chapitreIndex:Int,pageIndex:Int){
 
@@ -198,93 +79,39 @@ class Main extends sugoi.BaseController {
 		view.page = page;
 		view.pageIndex = pageIndex;
 		view.previousURL = QuestionService.getPreviousPageURL(questionnaire,chapitreIndex,pageIndex);
-		
-		//view.num = index+1;
-		//view.total =  formulaire.chapitres[chapitre].ordre.length;
-		
-		var subAnswerIndex = null;
-		/*if(chapitre.id==1){
-			//nbre de responsables		
-			var numResponsables = 1;
-			if(res!=null && res.nbre_responsables!=null ) numResponsables = res.nbre_responsables.parseInt();
-			if(app.session.data.respIndex==null) app.session.data.respIndex = 0;
-
-			if(res.nom_responsable!=null && res.prenom_responsable!=null && res.prenom_responsable.split("|")[app.session.data.respIndex]!=null ){
-				view.resp = "Responsable n°"+(app.session.data.respIndex+1)+" : "+res.prenom_responsable.split("|")[app.session.data.respIndex]+" "+res.nom_responsable.split("|")[app.session.data.respIndex];
-			}else{
-				view.resp = "Responsable n°"+(app.session.data.respIndex+1);
-			}	
-			subAnswerIndex = app.session.data.respIndex;
-		}*/		
-
+				
+		Hooks.beforeForm(chapitre);
 
 		//build form
-		var f = QuestionService.getForm(questions,subAnswerIndex);
+		var f = QuestionService.getForm(questions);
 		view.form = f;
 
 		if( f.isValid() ){
 
-			//hook on questions
-			/*for( q in qs){
-				switch(q.qid){
-					case "A2" : 
-						//check 33
-						var str :String = f.getValueOf(q.data.label);
-						if ( str!=null && str.indexOf("33") == -1 ) 
-							throw Error("/q/"+formId+"/"+chapitre+"/"+index,"Ce recensement concerne uniquement les fermes de Gironde, le code postal doit commencer par 33.") ;
-					case "A5-1"	:
-						//nbre de responsables
-						var num :Int = f.getValueOf(q.data.label);				
-						if(num>6) throw Error(formulaire.startScreen,"Vous ne pouvez pas définir plus de 6 responsables");
-					default:
-				}
-			}*/
+			//hook on form submit
+			try{
+				Hooks.onFormSubmit(chapitre, f, questions);
+			}catch(e:String){
+				throw Error('/q/${questionnaire.id}/$chapitreIndex/$pageIndex',e);
+			}
 
-            // téléphone ou email obligatoire
-            /*if(formId==1 && chapitre==0 && index==0){
-                var email = f.getValueOf("email");
-                var telephone = f.getValueOf("telephone");
-               if(telephone==null && email==null) throw Error("/q/1/0/0","Merci de nous communiquer au moins un email ou un numéro de téléphone.");
-            }*/
-
-			//nbre de responsables	
-			/*if(formId==3 && chapitre==1 ){
-				var numResponsables = 1;				
-				if(res!=null && res.nbre_responsables!=null ) numResponsables = res.nbre_responsables.parseInt();
-				if(app.session.data.respIndex==null) app.session.data.respIndex = 0;
-				for( q in qs){
-					var value = f.getValueOf(q.data.label);
-					var original = Std.string(Reflect.getProperty(res,q.data.label));
-					var arr = original==null ? [] : original.split("|");
-					arr[app.session.data.respIndex] = QuestionService.serialize(value,q.data.type);
-					Reflect.setProperty(res,q.data.label,arr.join("|"));
-					//trace(q.data.label+" = "+arr.join("|")+"<br>");
-				}
+          		
+			//save answers
+			//serialize depending on field type
+			for(q in questions){
+				var answer = f.getValueOf(q.ref);
+				// var v = Reflect.getProperty(res,q.data.label);
+				var answer = QuestionService.serialize(answer,q.type);
+				var storedAnswer = db.Answer.getOrCreate(app.user,q);
 				
-			}else{*/
-				
-				
-				//save answers
-                //serialize depending on field type
-                for(q in questions){
-
-					var answer = f.getValueOf(q.ref);
-                    // var v = Reflect.getProperty(res,q.data.label);
-                    var answer = QuestionService.serialize(answer,q.type);
-                
-					var storedAnswer = db.Answer.getOrCreate(app.user,q);
-					
-					if(storedAnswer.answer!=answer){
-						storedAnswer.lock();
-						storedAnswer.ldate = Date.now();
-						storedAnswer.answer =   answer;
-						storedAnswer.update();
-					} 				
-                }
-
-
-			//}	
-            //res.update();
+				if(storedAnswer.answer!=answer){
+					storedAnswer.lock();
+					storedAnswer.ldate = Date.now();
+					storedAnswer.answer =   answer;
+					storedAnswer.update();
+				} 				
+			}
+		
 
 			var nextPageURL :String = QuestionService.getNextPageURL(questionnaire,chapitreIndex,pageIndex);
 			
@@ -358,7 +185,7 @@ class Main extends sugoi.BaseController {
             var x = new db.Answer();
             x.user = app.user;
             x.answer = "Nouvelle ferme";
-			x.dataset = db.Answer.manager.count($user==app.user && $question==farmNameQuestion) + 1;
+			x.dataset = sys.db.Manager.cnx.request('select max(dataset) from Answer where userId=${app.user.id} and questionId=${farmNameQuestion.id}').getIntResult(0) + 1;
 			x.question = farmNameQuestion;
             x.insert();
             app.session.data.dataset = x.dataset;
@@ -369,6 +196,7 @@ class Main extends sugoi.BaseController {
 
 		//choose an existing dataset
         if(app.params.exists("choose")){
+			app.session.data.forceUserId = null;
             var dataset =  Std.parseInt(app.params.get("choose"));
 			var q = db.Answer.get(app.user,farmNameQuestion,dataset);
             
@@ -376,6 +204,7 @@ class Main extends sugoi.BaseController {
             // if(app.user.id!=r.user.id && !app.user.isAdmin()) throw "Access forbidden";
 
             app.session.data.dataset = dataset;
+			
 
             throw Ok("/q/1/0/0","Vous modifiez maintenant le référencement de la ferme \""+q.answer+"\".");
         }
@@ -388,12 +217,30 @@ class Main extends sugoi.BaseController {
 	@admin @tpl('reponses.mtt')
 	function doReponses(){
 
-        /*if(checkToken()){
-            var rid = Std.parseInt(app.params.get("delete"));
-            var r = db.Result.manager.get(rid,true);
-            r.delete();
-            throw Ok("/reponses","Réponse effacée");
-        }*/
+		app.session.data.forceUserId = null;
+		app.session.data.dataset = null;
+
+		//delete answers
+        if(checkToken() && app.params.get("delete")=="1"){
+            var dataset = Std.parseInt(app.params.get("dataset"));
+			var user = Std.parseInt(app.params.get("user"));
+			var user = db.User.manager.get(user,false);
+            db.Answer.manager.delete($user==user && $dataset==dataset);
+            
+            throw Ok("/reponses","Réponses effacées");
+        }
+
+		//take controle over an answer set
+		if(app.params.get("choose")=="1" && app.user.isAdmin()){
+
+			var dataset = Std.parseInt(app.params.get("dataset"));
+			var user = Std.parseInt(app.params.get("user"));
+			var user = db.User.manager.get(user,false);
+			
+			app.session.data.forceUserId = user.id;
+			app.session.data.dataset = dataset;
+			throw Ok("/q/3/0/0","Vous modifiez maintenant la réponse "+dataset+ " de "+user.name);
+		}
 
 		var allQuestions = db.Question.manager.all(false);
 
@@ -402,6 +249,8 @@ class Main extends sugoi.BaseController {
 		for( q in allQuestions){
 			headers.push(q.label);
 		}
+
+		
 
 
 		//get all results
@@ -426,37 +275,26 @@ class Main extends sugoi.BaseController {
 			return map.get(key);
 		};
 
-		/*var k = [];
-        var keys =[];
-        for( k in QData.questions.keys()) keys.push(k);
+		view.getCompletion = function(_answers:Array<db.Answer>):Int{
 
-        keys.sort(function(x,y){
-            if(x==y) return 0;
-            if(x>y){
-                return 1;
-            }else return -1;
-        });
+			var totalAnswers = 0;
+			for(a  in _answers) if(a!=null) totalAnswers++;
 
-		for ( key in keys ){
-			k.push( QuestionService.get(key).data.label );
+			//return totalAnswers+" / "+allQuestions.length;
+			return Math.round((totalAnswers / allQuestions.length)*100);
+		};
 
-		}*/
-
-		//completion des questions
-		/*for( r in reponses){
-			Reflect.setProperty(r,"completion",QuestionService.getCompletion(r).percent );
-		}*/
-		
-		/*view.keys = k;
-		view.keys2 = keys;
-		view.Reflect = Reflect;*/
 
 		if(App.current.params.get("csv")=="1"){
-			printCsvData(Lambda.array(answers),headers,"Reponses.csv");
+			var csvData = new Array<Array<String>>();
+			for( a in answers){
+				csvData.push( Lambda.array( Lambda.map(a,function(x) return x==null?"":x.answer) ) );
+			}
+			sugoi.tools.Csv.printCsvDataFromStringArray(csvData,headers,"Reponses.csv");
 		}
 	}
 
-	@admin @tpl('signalements.mtt')
+	/*@admin @tpl('signalements.mtt')
 	function doSignalements(){
 		var reponses = db.Identifier.manager.all();
 		view.reponses = reponses;
@@ -467,7 +305,7 @@ class Main extends sugoi.BaseController {
 		if(App.current.params.get("csv")=="1"){
 			printCsvDataFromObjects(Lambda.array(reponses),h,"Signalements.csv");
 		}
-	}
+	}*/
 
 	@admin @tpl('form.mtt')
 	function doLink(i:db.Identifier){
@@ -499,7 +337,7 @@ class Main extends sugoi.BaseController {
 	}
 
 
-	function printCsvDataFromObjects(data:Array<Dynamic>,headers:Array<String>,fileName:String) {
+	/*function printCsvDataFromObjects(data:Array<Dynamic>,headers:Array<String>,fileName:String) {
 		
 		App.current.setTemplate(null);
 		sugoi.Web.setHeader("Content-type", "text/csv");
@@ -516,9 +354,9 @@ class Main extends sugoi.BaseController {
 			Sys.println(row.join(","));
 		}
 		return true;		
-	}
+	}*/
 
-	function printCsvData(data:Array<Dynamic>,headers:Array<String>,fileName:String) {
+	/*function printCsvData(data:Array<Dynamic>,headers:Array<String>,fileName:String) {
 		
 		App.current.setTemplate(null);
 		sugoi.Web.setHeader("Content-type", "text/csv");
@@ -535,7 +373,7 @@ class Main extends sugoi.BaseController {
 			Sys.println(row.join(","));
 		}
 		return true;		
-	}
+	}*/
 	
 
 	function doInstall() {

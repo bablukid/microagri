@@ -64,17 +64,11 @@ class QuestionService{
             return s.toString();
         }
 
+        Hooks.beforeFormBuild(questions);
+
         for (q in questions){  
 
-            //Votre transformation se réalise-t-elle u  --> que si transfo coché
-            /*if(q.qid == "D1-6"){
-                var r = db.Result.getOrCreate(App.current.user);
-                if( r != null && r.activites != null){
-                    if( r.activites.indexOf("transformation")==-1) continue;
-                }
-            }*/
-
-            //id de question
+           //id de question
             var html = "<h4><span class='qid'>"+q.ref+"</span>"+q.question+"</h4><p>"+q.description+"</p>";
             var answer = db.Answer.getOrCreate(App.current.user,q);
             
@@ -82,13 +76,13 @@ class QuestionService{
             if(value=="null"||value=="") value = null;
             
             //réponses multiples ( responsables ) 
-            /*if(subAnswerIndex!=null) {
-                var x : String = Std.string(v).split("|")[subAnswerIndex];
+            if(App.current.session.data!=null && App.current.session.data.respIndex!=null && Std.string(value).indexOf("|")>-1) {
+                var x : String = Std.string(value).split("|")[App.current.session.data.respIndex];
                 if(x == null || x == "null"){
                     x = "";
                 } 
-                v = x;
-            }*/    
+                value = x;
+            }
 
             var e : sugoi.form.FormElement<Dynamic> = null;
 
@@ -151,12 +145,12 @@ class QuestionService{
                 e = new form.MultiInput(q.ref,html,lines,data.extras,values);
 
             case QAddress,QString : 
-                e = new sugoi.form.elements.StringInput(q.ref,html,value,true);
+                e = new sugoi.form.elements.StringInput(q.ref,html,value,q.required);
             }
 
             
             /*if(q.data.label.indexOf("cmt")>-1 || q.data.label.indexOf("autre")>-1)*/
-            e.required = false;
+            e.required = q.required;
 
             form.addElement(e);
             

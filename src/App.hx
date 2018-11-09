@@ -2,12 +2,13 @@ class App extends sugoi.BaseApp {
 
 	public static var current : App = null;
 	public static var config = sugoi.BaseApp.config;
-	
+	public static var t : sugoi.i18n.GetText;
 	
 	
 	public static function main() {
 
 		sugoi.BaseApp.main();
+		
 	}
 	
 	
