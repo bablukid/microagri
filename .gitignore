@@ -1,6 +1,6 @@
 /lang/fr/tmp/*.n
 /lang/master/tmp/*.n
-html/index.n
+html/*.n
 config.xml
 .haxelib
-www/index.n
+www/*.n

@@ -70,6 +70,8 @@
 					<ul class="nav navbar-nav navbar-right" style="margin-top:12px;">
 						::if user!=null::
 						Connecté en tant que <b>::user.name::</b>
+
+							<span ::cond farmName!=null::>( ::farmName:: )</span>
 							<a href="/user/logout" class="btn btn-default btn-xs">Déconnexion</a>
 						
 						::else::
@@ -81,15 +83,6 @@
 		</nav>
 
 
-
-
-
-
-
-
-
-		
-		
 		<!-- application messages -->
 		::foreach msg getMessages()::
 		<div class="row">

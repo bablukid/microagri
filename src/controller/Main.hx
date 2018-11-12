@@ -79,6 +79,7 @@ class Main extends sugoi.BaseController {
 		view.page = page;
 		view.pageIndex = pageIndex;
 		view.previousURL = QuestionService.getPreviousPageURL(questionnaire,chapitreIndex,pageIndex);
+		view.farmName = getCurrentFarm();
 				
 		Hooks.beforeForm(chapitre);
 
@@ -165,6 +166,15 @@ class Main extends sugoi.BaseController {
 		view.form = f;
 	}
 
+	function getCurrentFarm(){
+		try{
+			return db.Answer.getAnswerOf("A1",app.user);
+		}catch(e:Dynamic){
+			return null;
+		}
+
+	}
+
     @tpl('title.mtt')
     function doTitle(){
         var r = db.Result.getOrCreate(app.user);
@@ -217,20 +227,16 @@ class Main extends sugoi.BaseController {
 	@admin @tpl('reponses.mtt')
 	function doReponses(){
 
-		app.session.data.forceUserId = null;
-		app.session.data.dataset = null;
-
 		//delete answers
         if(checkToken() && app.params.get("delete")=="1"){
             var dataset = Std.parseInt(app.params.get("dataset"));
 			var user = Std.parseInt(app.params.get("user"));
 			var user = db.User.manager.get(user,false);
-            db.Answer.manager.delete($user==user && $dataset==dataset);
-            
+            db.Answer.manager.delete($user==user && $dataset==dataset);            
             throw Ok("/reponses","Réponses effacées");
         }
 
-		//take controle over an answer set
+		//take control over an answer set
 		if(app.params.get("choose")=="1" && app.user.isAdmin()){
 
 			var dataset = Std.parseInt(app.params.get("dataset"));
@@ -250,19 +256,16 @@ class Main extends sugoi.BaseController {
 			headers.push(q.label);
 		}
 
-		
-
-
 		//get all results
 		var answers = new Map<String,Array<db.Answer>>();
-		var answersByUserDataset = sys.db.Manager.cnx.request("SELECT userId,dataset FROM db.Answer group by userId,dataset").results();
+		var answersByUserDataset = sys.db.Manager.cnx.request("SELECT userId,dataset FROM Answer group by userId,dataset").results();
 		
 		for( userDataset in answersByUserDataset){
 			var l = [];
 			var user = db.User.manager.get(userDataset.userId,false);
 			var dataset = userDataset.dataset;
 			for( q in allQuestions){
-				var a = db.Answer.get(user,q,dataset);
+				var a = db.Answer.get(user,q,dataset,false);
 				l.push( a );
 			}
 			answers[user.id+"-"+dataset] = l;

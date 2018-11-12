@@ -22,11 +22,13 @@ class Answer extends Object{
         ldate = Date.now();
     }
 
-    public static function get(user:db.User,question:db.Question,?_dataset:Int){
+    public static function get(user:db.User,question:db.Question,?_dataset:Int,?allowUserIdForce=true){
         var dataset : Int = _dataset==null ? App.current.session.data.dataset : _dataset;
         
-        //allow an admin to edit the dataset of a user
-        if(App.current.session.data.forceUserId!=null) user = db.User.manager.get(App.current.session.data.forceUserId,false);
+        if(allowUserIdForce){
+            //allow an admin to edit the dataset of a user
+           if(App.current.session.data.forceUserId!=null) user = db.User.manager.get(App.current.session.data.forceUserId,false);
+        }        
 
         return manager.select($user==user && $dataset==dataset && $question==question,false);
     }

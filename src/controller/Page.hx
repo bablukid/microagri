@@ -1,6 +1,7 @@
 package controller ;
 import sugoi.form.Form;
 import sugoi.form.elements.*;
+import db.Question;
 
 class Page extends sugoi.BaseController
 {
@@ -139,11 +140,17 @@ class Page extends sugoi.BaseController
     QMultiInput;*/
             {label:"Ligne de texte", value:"QString"},
             {label:"Bloc de texte" , value:"QText"},
+            
         ];
-        f.addElement(new sugoi.form.elements.StringSelect("type",       "Type de question",data,Std.string(q.type),true));
+
+        //can edit only string or text questions
+        if(q.type==QString || q.type==QText){
+            f.addElement(new sugoi.form.elements.StringSelect("type", "Type de question",data,Std.string(q.type),true));
+        }
+        
         f.addElement(new sugoi.form.elements.StringInput("question",    "Question",q.question,true));
-        f.addElement(new sugoi.form.elements.StringInput("description", "Description",q.description,true));
-        f.addElement(new sugoi.form.elements.Checkbox("required", "Réponse obligatoire",q.required,true));
+        f.addElement(new sugoi.form.elements.StringInput("description", "Description",q.description,false));
+        f.addElement(new sugoi.form.elements.Checkbox("required", "Réponse obligatoire",q.required,false));
 
         if(f.isValid()){ 
           
@@ -152,7 +159,7 @@ class Page extends sugoi.BaseController
            q.question = f.getValueOf("question");
            q.description = f.getValueOf("description");
            q.required = f.getValueOf("required");
-           q.type = Type.createEnum(db.Question.QuestionType,f.getValueOf("type"));
+           if(f.getElement("type")!=null) q.type = Type.createEnum(db.Question.QuestionType,f.getValueOf("type"));
            q.update();
 
           throw Ok("/questionnaire/view/"+page.chapitre.questionnaire.id,"Question modifiée");
