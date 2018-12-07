@@ -289,9 +289,24 @@ class Main extends sugoi.BaseController {
 
 
 		if(App.current.params.get("csv")=="1"){
+			
 			var csvData = new Array<Array<String>>();
-			for( a in answers){
-				csvData.push( Lambda.array( Lambda.map(a,function(x) return x==null?"":x.answer) ) );
+
+			//add Id + completion + date
+			headers.unshift("date");
+			headers.unshift("completion");
+			headers.unshift("ID");
+
+			for( k in answers.keys() ){
+				var a = answers.get(k);
+
+				var row = Lambda.array( Lambda.map(a,function(x) return x==null?"":x.answer) );
+
+				row.unshift(a[0].cdate.toString());
+				row.unshift(view.getCompletion(a));
+				row.unshift(k);
+
+				csvData.push( row );
 			}
 			sugoi.tools.Csv.printCsvDataFromStringArray(csvData,headers,"Reponses.csv");
 		}
