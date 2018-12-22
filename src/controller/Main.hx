@@ -302,7 +302,8 @@ class Main extends sugoi.BaseController {
 
 				var row = Lambda.array( Lambda.map(a,function(x) return x==null?"":x.answer) );
 
-				row.unshift(a[0].cdate.toString());
+				
+				if(a[0]!=null) row.unshift(a[0].cdate.toString());
 				row.unshift(view.getCompletion(a));
 				row.unshift(k);
 
