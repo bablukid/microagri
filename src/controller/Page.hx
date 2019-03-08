@@ -71,29 +71,19 @@ class Page extends sugoi.BaseController
         view.form = f;
     }
 
-
+    /**
+        Create a new question
+    **/
     @admin @tpl('form.mtt')
     public function doInsertQuestion(page:db.Page){
         view.title = "Saisir une nouvelle question";
         
         var f = new sugoi.form.Form("addq");
-        f.addElement(new sugoi.form.elements.StringInput("ref","ID de la question","",true));
-        var data = [
-            /*QText;      //réponse texte bloc
-    QString;    //réponse text 1 ligne
-    QInt;       //réponse chiffrée
-    QFloat;
-    QAddress;   
-    QRadio;     //reponse unique
-    QCheckbox;  //reponses multiples + autres + champs en plus
-    QYesNo;     //oui ou non
-    QMultiInput;*/
-            {label:"Ligne de texte", value:"QString"},
-            {label:"Bloc de texte" , value:"QText"},
-        ];
-        f.addElement(new sugoi.form.elements.StringSelect("type",       "Type de question",data,"QString",true));
+        f.addElement(new sugoi.form.elements.StringInput("ref",         "ID de la question","",true));
+        f.addElement(new sugoi.form.elements.StringInput("label",       "identifiant court","",true));
+        f.addElement(new sugoi.form.elements.StringSelect("type",       "Type de question",db.Question.getTypes(),"QString",true));
         f.addElement(new sugoi.form.elements.StringInput("question",    "Question","",true));
-        f.addElement(new sugoi.form.elements.StringInput("description", "Description","",true));
+        f.addElement(new sugoi.form.elements.StringInput("description", "Description","",false));
 
 
         if(f.isValid()){
@@ -103,6 +93,7 @@ class Page extends sugoi.BaseController
 
            var q = new db.Question();
            q.ref = f.getValueOf("ref");
+           q.label = f.getValueOf("label");
            q.question = f.getValueOf("question");
            q.description = f.getValueOf("description");
            q.type = Type.createEnum(db.Question.QuestionType,f.getValueOf("type"));
@@ -128,42 +119,43 @@ class Page extends sugoi.BaseController
         
         var f = new sugoi.form.Form("modq");
         f.addElement( new sugoi.form.elements.StringInput("ref","ID de la question", q.ref ,true) );
-        var data = [
-            /*QText;      //réponse texte bloc
-    QString;    //réponse text 1 ligne
-    QInt;       //réponse chiffrée
-    QFloat;
-    QAddress;   
-    QRadio;     //reponse unique
-    QCheckbox;  //reponses multiples + autres + champs en plus
-    QYesNo;     //oui ou non
-    QMultiInput;*/
-            {label:"Ligne de texte", value:"QString"},
-            {label:"Bloc de texte" , value:"QText"},
-            
-        ];
+        f.addElement(new sugoi.form.elements.StringInput("label","identifiant court",q.label,true));
+       
 
         //can edit only string or text questions
-        if(q.type==QString || q.type==QText){
-            f.addElement(new sugoi.form.elements.StringSelect("type", "Type de question",data,Std.string(q.type),true));
-        }
+        /*if(q.type==QString || q.type==QText){
+            f.addElement(new sugoi.form.elements.StringSelect("type", "Type de question",db.Question.getTypes(),Std.string(q.type),true));
+        }*/
         
         f.addElement(new sugoi.form.elements.StringInput("question",    "Question",q.question,true));
         f.addElement(new sugoi.form.elements.StringInput("description", "Description",q.description,false));
         f.addElement(new sugoi.form.elements.Checkbox("required", "Réponse obligatoire",q.required,false));
 
+        if(q.type==QCheckbox){
+            f.addElement(new sugoi.form.elements.Html("html","Question de type 'Case à cocher'. Saisissez les libellés et les valeurs séparés par un \":\""));
+            f.addElement(new sugoi.form.elements.TextArea("data",    "Réponses possibles",QuestionService.getQuestionDataAsText(q),true));
+            var other = q.data==null ? false : q.data.other; 
+            f.addElement(new sugoi.form.elements.Checkbox("other",    "Champs 'autres'",other,false));
+        }
+        if(q.type==QRadio){
+            f.addElement(new sugoi.form.elements.Html("html","Question de type 'Liste à choix unique'. Saisissez les libellés et les valeurs séparés par un \":\""));
+            f.addElement(new sugoi.form.elements.TextArea("data",    "Réponses possibles",QuestionService.getQuestionDataAsText(q),true));
+            var other = q.data==null ? false : q.data.other; 
+            f.addElement(new sugoi.form.elements.Checkbox("other",    "Champs 'autres'",other,false));
+        }
+
         if(f.isValid()){ 
           
-           q.lock();
-           q.ref = f.getValueOf("ref");
-           q.question = f.getValueOf("question");
-           q.description = f.getValueOf("description");
-           q.required = f.getValueOf("required");
-           if(f.getElement("type")!=null) q.type = Type.createEnum(db.Question.QuestionType,f.getValueOf("type"));
-           q.update();
+            q.lock();
+            q.ref = f.getValueOf("ref");
+            q.label = f.getValueOf("label");
+            q.question = f.getValueOf("question");
+            q.description = f.getValueOf("description");
+            q.required = f.getValueOf("required");
+            QuestionService.setQuestionDataAsText(f,q);
+            q.update();
 
-          throw Ok("/questionnaire/view/"+page.chapitre.questionnaire.id,"Question modifiée");
-
+            throw Ok("/questionnaire/view/"+page.chapitre.questionnaire.id,"Question modifiée");
         }
 
         view.form = f;

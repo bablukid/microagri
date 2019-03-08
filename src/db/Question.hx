@@ -49,4 +49,26 @@ class Question extends Object{
 
         super.insert();
     }
+
+    /**
+        Return type choices for forms 
+    **/
+    public static function getTypes(){
+        return [
+            /*QText;      //réponse texte bloc
+    QString;    //réponse text 1 ligne
+    QInt;       //réponse chiffrée
+    QFloat;
+    QAddress;   
+    QRadio;     //reponse unique
+    QCheckbox;  //reponses multiples + autres + champs en plus
+    QYesNo;     //oui ou non
+    QMultiInput;*/
+            {label:"Ligne de texte"         , value:"QString"},
+            {label:"Bloc de texte"          , value:"QText"},
+            {label:"Liste à choix unique"   , value:"QRadio"},
+            {label:"Cases à cocher"         , value:"QCheckbox"},
+            
+        ];
+    }
 }

@@ -108,8 +108,13 @@ class QuestionService{
                 }
                 
             case QRadio :
-                var d : {list:FormData<String>,other:Bool} = q.data; 
-                e = new sugoi.form.elements.RadioGroup(q.ref,html,d.list,value,null,null);
+                if(q.data!=null){
+                    var d : {list:FormData<String>,other:Bool} = q.data; 
+                    e = new sugoi.form.elements.RadioGroup(q.ref,html,d.list,value,null,null);
+                }else{
+                    e = new sugoi.form.elements.RadioGroup(q.ref,html,null,value,null,null);
+                }
+                
             case QInt : 
                 e = new sugoi.form.elements.IntInput(q.ref,html,value,true);
             case QFloat : 
@@ -255,6 +260,76 @@ class QuestionService{
             default: return Std.string(value);
         }
 
+    }
+
+    /**
+        To edit question content 
+    **/
+    public static function getQuestionDataAsText(q:db.Question):String{
+        return switch(q.type){
+            case QCheckbox,QRadio:
+                var out = "";
+                if(q.data!=null){
+                    var d : {list:FormData<String>,other:Bool} = q.data; 
+                    out = d.list.map(function(x) return x.label+":"+x.value).join("\n");
+
+                    //extra input field
+                    if(q.type==QCheckbox && q.data.extras!=null){
+                        out += "\nEXTRAS\n";
+                        out += q.data.extras.map(function(x) return x.label+":"+x.value).join("\n");
+                    }
+                }
+                out;
+            default : "";
+        };
+    }
+
+    public static function setQuestionDataAsText(form:sugoi.form.Form,q:db.Question){
+        switch(q.type){
+            case QCheckbox,QRadio:
+                if(q.data==null) q.data = {list:new FormData<String>(),other:false}; 
+
+                q.data.other = form.getValueOf("other");
+
+                //clean
+                var hasExtras = false;
+                var data = [];
+                var extras = [];
+                var raw :Array<String> = form.getValueOf("data").split("\n");
+                for( d in raw){
+                    d = StringTools.replace(d,"\t","");
+                    d = StringTools.replace(d,"\r","");
+                    if(d=="EXTRAS") hasExtras=true;
+                    if(d.indexOf(":")>0){
+                        if(hasExtras){
+                            extras.push(d);
+                        }else{
+                            data.push(d);
+                        }
+                    } 
+                }
+
+                q.data.list = data.map(function(str){
+                    var x = str.split(":");
+                    var label = StringTools.trim(x[0]);
+                    var value = StringTools.trim(x[1]);
+                    if(label==null || label=="") throw "Valeur incorrecte";
+                    if(value==null || value=="") throw "Valeur incorrecte";
+                    return {label:label,value:value};
+                });
+
+                q.data.extras = extras.map(function(str){
+                    var x = str.split(":");
+                    var label = StringTools.trim(x[0]);
+                    var value = StringTools.trim(x[1]);
+                    if(label==null || label=="") throw "Valeur incorrecte";
+                    if(value==null || value=="") throw "Valeur incorrecte";
+                    return {label:label,value:value};
+                });
+
+            default : 
+                //
+        };
     }
 
 }

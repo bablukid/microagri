@@ -5,36 +5,31 @@
         <h2>
             Merci de votre contribution !
         </h2>
-        
     </div>
     <div class="row" >
         <div class="col-md-4"></div>
         <div class="col-md-4 text-center">
+            ::if responsable::
             <p>
-                Si vous n’êtes pas le ou la responsable de la ferme, 
-                merci de votre contribution au programme MicroAgri.<br/>
+                <b>Vous avez déclaré être l’un(e) des responsables de la ferme.</b><br/>
+                Voici quelques questions supplémentaires (15-20 minutes)<br/>
+                afin de mieux connaître votre ferme. 
+            </p>
+            <p>
+                <a href="/q/2/0/0" class="btn btn-primary">Accéder à la suite</a>
+            </p>
+            ::else::
+            <p>
+                Merci de votre contribution au programme MicroAgri.<br/>
                 Nous recontacterons la ferme identifiée. <br/>
                 Il vous est possible de renseigner une nouvelle ferme en cliquant ci-dessous :
             </p>
             <p>
                 <a href="/answers?new=1" class="btn btn-primary">Entrer une nouvelle ferme</a>
             </p>
-           
-            ::if responsable::
-           <hr/>
-          
-            <p>
-                <b>Vous avez déclaré être l’un(e) des responsables de la ferme.</b><br/>
-                Voici 15 questions supplémentaires (10 minutes)<br/>
-                afin de mieux connaître votre ferme 
-            </p>
-            <p>
-                <a href="/q/2/0/0" class="btn btn-primary">Accéder à la suite</a>
-            </p>
             ::end::
         </div>  
     </div>
 </div>
-
 
 ::end::

@@ -20,11 +20,11 @@
                             <table class="table">
                                 ::foreach page chapitre.getPages()::
                                 <tr>
-                                    <td>
+                                    <td class="col-md-4">
                                         <b><a href="/page/edit/::page.id::">::page.title::</a></b><br/>
-                                        $$nullSafe(::page.description::)
+                                        $$nullSafe(::raw page.description::)
                                     </td>
-                                    <td>
+                                    <td class="col-md-8">
                                         <table class="table table-bordered table-striped table-condensed">
                                             ::foreach q page.getQuestions()::
                                             <tr>
