@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/php/_Boot/HxClosure.php",
-"sourceRoot":"",
-"sources":["/home/bubar/haxe/versions/4.0.0-rc.1/std/php/Boot.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAu5BE,AAAA,AAAA,gBAAc;;AACd,AAAA,AAAA,cAAY;;AAEZ,GAAI,CAAA,AAAA,QAAA;;AACH,sBAAM;;;AAEI;AAAA,GAAA,CAAA,CAAO;;AAA+B,QAAA;;AAAtC,AAAA,OAAyB,AAAa,QAAQ;;AAA9C,AAAA,OAAsD,AAAA,CAAiB,SAAQ;;;AAA1F,AAAA,AAAA,kBAAW;;;;;;;;AAQX;;AAAA,OAAO,AAAA,qBAA4B,AAAA,iBAAU,AAAA;;;;;;;;;;;AA2B7C;;AAAA,OAAO,AAAA,qBAA4B,AAAA,AAAA,mBAAY,WAAU;;;;;;;;;;AAPlD;;AAAA,GAAC,CAAA,YAAA,AAAA,eAAU,AAAA;;AAAkB,OAAA,AAAA,AAAA,gBAAQ,AAAA;;;AAArC,OAAA;;;;;;;;;;;AAdoC,MAAoC;;AAC/E,GAAI,CAAA,AAAA,WAAS;;AACZ,AAAA,SAAQ,AAAA;;;AAET,GAAI,CAAA,CAAO;;AACU,OAAA;;AAApB,OAAO,AAAa,OAAO,AAAA;;;AAE5B,OAAO,CAAiB,QAAO,AAAA;;;;;"
-}

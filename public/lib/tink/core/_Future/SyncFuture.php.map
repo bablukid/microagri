@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/tink/core/_Future/SyncFuture.php",
-"sourceRoot":"",
-"sources":["/home/bubar/haxe/haxe_libraries/tink_core/1.21.0/haxelib/src/tink/core/Future.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;AAsOI,AAAA,AAAA,eAAa;;;;;;AAiBb;;AAAA,OAAO;;;;;;;;AAXP;;AACE,KAAQ,AAAA,AAAA,AAAA,AAAA,AAAA,kBAAU;;AADpB,OAAO,iBAEL,0BAAc;;AAAA,OAAO,AAAA,AAAA,AAAA,AAAA,AAAA,AAAA,kBAAe;;;;;;;AAYtC;;AAAA,OAAO;;;;;;;;AAT2C;;AAClD,AAAA,AAAA,uBAAA,KAAU,AAAA,AAAA,AAAA,AAAA,AAAA,AAAA;;AACV,OAAO;;;;;;;;AAVP;;AAAA,OAAO,eAAe,AAAA,AAAA,AAAA,AAAA,AAAA,kBAAU;;;;;"
-}

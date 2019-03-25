@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/tink/core/_Pair/Pair_Impl_.php",
-"sourceRoot":"",
-"sources":["/home/bubar/haxe/haxe_libraries/tink_core/1.21.0/haxelib/src/tink/core/Pair.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;AAOE;;AAAA,SAA4C,UAAU,IAAG;AAAzD,OAAA,AAAA;;;;;;;;AAE0B;;AAAA,OAAO,AAAA;;;;;;;;AACP;;AAAA,OAAO,AAAA;;;;;;;;AAM/B;;AAAA,OAAO,AAAA,WAAQ;;;;;;AAGf;;AAAA,OAAO;;;;;;;;AANP;;AAAA,OAAO,AAAA,WAAQ;;;;;;;;;"
-}

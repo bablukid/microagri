@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/php/_NativeIndexedArray/NativeIndexedArrayIterator.php",
-"sourceRoot":"",
-"sources":["/home/bubar/haxe/versions/4.0.0-rc.1/std/php/NativeIndexedArray.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAyDmB,AAAA,AAFX,iBAEW;;AAIjB,AAAA,AAAA,gBAAS,AAAA,MAAa;;AACtB,AAAA,AAAA,cAAY;;;;;;AAIZ;;AAAA,OAAO,AAAA,AAAA,iBAAU,AAAA;;;;;;AAIV;;AAAA,OAAA,AAAA,AAAA,AAAA,YAAK,AAAA,AAAA;;;;;"
-}

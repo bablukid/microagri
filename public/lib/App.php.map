@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/App.php",
-"sourceRoot":"",
-"sources":["/home/bubar/projects/microagriPHP/src/App.hx","/home/bubar/haxe/haxe_libraries/jstack/2.3.11/haxelib/src/jstack/Tools.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;;AAImC;;;;;;;;;AAsBoB;;AAO1C,QAAA,AAAA,AAAA,AAAA,kBAAe;;AACf,SAAA,AAAA,AAAA,eAAa,AAAA,AAAA,AAAA,kBAAe;;AAC5B,SAAA,AAAA,AAAA,AAAA,kBAAe;;AAH1B,SAAW;AACA;AACA;AACA;AACA,AAAA,AAAA,AAAA,kBAAe;;;AAI1B,OAAO,AAAA,AAAA,CAAA,4BAAqC;;;;;;;;AAvBzC;;AAAA,OAAA,AAAA,AAAA;;;;;;AC0HmC;;AAAA,AAAA,AAAA;;ADhItC,AAAA,AAAA;;;;;;;;AATF;;;;;;;;;;;;;AAwEE;;AAAA,OAAO;;;;;;;;;;;;;;AArEmB,AAAA;;;;;;"
-}

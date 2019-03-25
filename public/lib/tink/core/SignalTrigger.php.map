@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/tink/core/SignalTrigger.php",
-"sourceRoot":"",
-"sources":["/home/bubar/haxe/haxe_libraries/tink_core/1.21.0/haxelib/src/tink/core/Signal.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;;AA2LiB,AAAA,AADjB,kBACiB,AAAA;;;;;;AAyBb;;AAAA,OAAO;;;;;;;;AAHP;;AAAA,AAAA,AAAA,0BAAA,AAAA;;;;;;;;AATA;;AAAA,OAAO,AAAA,AAAA,AAAA;;;;;;;;AAGP;;AAAA,OAAO,AAAA,AAAA,wBAAA,AAAA,iBAAa;;;;;;;;;;AATpB;;AAAA,AAAA,AAAA,2BAAA,AAAA,iBAAgB;;;;;"
-}

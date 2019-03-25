@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/sugoi/db/Error.php",
-"sourceRoot":"",
-"sources":["/home/bubar/projects/sugoi/src/sugoi/db/Error.hx","/home/bubar/projects/spod/src/sys/db/RecordMacros.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAGA;;;;;;ACo5CkB;;AAAA,OAAO,ADp5CzB;;;;;;AAMiB;;AAAA,OAAA,AAAA,AAAA,AAAA,mCAAA,OAAA,QAAA,OAAA;;;;;;;;AAAA;AAAA,OAAA,AAAA,AAAA,AAAA,mCAAA,OAAA,QAAA,OAAA;;;;;;;;;;;;;;AANjB,YAAA;;;;;AAAA,qBAAA,sBAAA,iBAAA;;;;;;;;"
-}

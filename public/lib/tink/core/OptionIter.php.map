@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/tink/core/OptionIter.php",
-"sourceRoot":"",
-"sources":["/home/bubar/haxe/haxe_libraries/tink_core/1.21.0/haxelib/src/tink/core/Option.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;AAoGc,AAAA,AAFd,eAEc;;AAGV,GAAO,CAAA,AAAA,AAAA,cACA;;AAAK,KADL,AAAA;;AACS,AAAA,AAAA,eAAQ;;;AACb,AAAA,AAAA,eAAQ;;;;;;;AAInB;;AAAA,OAAO,AAAA;;;;;;AAEqB;;AAC5B,AAAA,AAAA,eAAQ;;AAER,OAAO,AAAA;;;;;"
-}

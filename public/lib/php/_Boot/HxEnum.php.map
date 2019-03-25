@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/php/_Boot/HxEnum.php",
-"sourceRoot":"",
-"sources":["/home/bubar/haxe/versions/4.0.0-rc.1/std/php/Boot.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AA4oBqE;;AACnE,AAAA,AAAA,aAAW;;AACX,AAAA,AAAA,eAAa;;AACJ;AAAA,GAAC,CAAA,AAAA,eAAa;;AAAO,SAAA;;AAArB,AAAA,OAAqB,AAAA;;AAArB,AAAA,OAAyC;;;AAAlD,AAAA,AAAA,gBAAS;;;;;;;;AAc4B;;AACrC,UAAa,AAAA;;AACb,GAAI,CAAA,AAAA,AAAA,MAAa,AAAA,iBAAU;;AAC1B,WAAc,AAAA,UAAiB,iBAAgB;;AAAA,OAAO,AAAA,AAAA,gBAAe;AAAO,AAAA;;AAC5E,AAAA,WAAA,mBAAU,AAAA,AAAC,OAAK,AAAA,QAAgB,KAAI,qBAAY;;;AAEjD,OAAO;;;;;;;;AAbP;;AAAA,OAAO,AAAA,AAAA;;;;;"
-}

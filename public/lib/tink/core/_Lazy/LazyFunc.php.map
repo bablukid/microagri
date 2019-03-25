@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/tink/core/_Lazy/LazyFunc.php",
-"sourceRoot":"",
-"sources":["/home/bubar/haxe/haxe_libraries/tink_core/1.21.0/haxelib/src/tink/core/Lazy.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;AAgDyB,AAAA,AAAA,WAAS;;;;;;;;AAgBhC;;AAAA,UAAA;;AACE,OAAO,aAAa,iCAAY;;AAAS,SAAA,AAAA,AAAA;;AAAF,OAAA,AAAA,AAAA,AAAA,AAAA,AAAA,GAAE;;;;;;;AAfrB;;AAEpB,GAAI,CAAA,AAAA,AAAA,aAAK;;AAEP,AAAA,AAAA,gBAAS,AAAA,CAAA,AAAA;;AACT,AAAA,AAAA,WAAI;;;AAGN,OAAO,AAAA;;;;;;;;AAGT;;AAAA,UAAA;;AACE,OAAO,aAAa,iCAAY;;AAAS,OAAA,AAAA,AAAA;;AAAT,OAAO,AAAA,GAAE;;;;;;"
-}

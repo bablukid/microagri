@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/tink/core/_Callback/SimpleLink.php",
-"sourceRoot":"",
-"sources":["/home/bubar/haxe/haxe_libraries/tink_core/1.21.0/haxelib/src/tink/core/Callback.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;;AA4FI,AAAA,AAAA,WAAS;;;;;;AAGT;;AAAA,GAAI,CAAA,AAAA,AAAA,aAAK;;AACP,AAAA,CAAA,AAAA;;AACA,AAAA,AAAA,WAAI;;;;;;"
-}

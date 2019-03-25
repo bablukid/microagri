@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/db/QuestionPage.php",
-"sourceRoot":"",
-"sources":["/home/bubar/projects/microagriPHP/src/db/QuestionPage.hx","/home/bubar/projects/spod/src/sys/db/RecordMacros.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAKA;;;;;;ACk5CkB;;AAAA,OAAO,ADl5CzB;;;;;;AAGuB;;AAAA,OAAA,AAAA,AAAA,AAAA,mCAAA,OAAA,QAAA,UAAA;;;;;;AADI;;AAAA,OAAA,AAAA,AAAA,AAAA,uCAAA,OAAA,YAAA,cAAA;;;;;;;;AACJ;;AAAA,OAAA,AAAA,AAAA,AAAA,mCAAA,OAAA,QAAA,UAAA;;;;;;;;AADI;;AAAA,OAAA,AAAA,AAAA,AAAA,uCAAA,OAAA,YAAA,cAAA;;;;;;;;;;;;;;AAF3B,YAAA;;;;;AAAA,qBAAA,sBAAA,iBAAA;;;;;;;;;;"
-}

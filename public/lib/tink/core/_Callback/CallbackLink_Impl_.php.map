@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/tink/core/_Callback/CallbackLink_Impl_.php",
-"sourceRoot":"",
-"sources":["/home/bubar/haxe/haxe_libraries/tink_core/1.21.0/haxelib/src/tink/core/Callback.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;AA4DE;;AAAA,SACS,eAAe;AADxB,OAAA,AAAA;;;;;;;;AAIE;;AAAA,GAAI,CAAA,AAAA,WAAQ;;AAAM,AAAA,AAAA;;;;;;;;;AAIlB;;AAAA,GAAA,CAAA,AAAA,AAAA,WAAA;AAAA,AAAA,AAAA,AAAA;;;;;;;;;AAWA;;AAAO,SAAA,eAAiB;AAAjB,OAAA,AAAA;;;;;;;;AAMP;;AAAO,SAAA,eAAa,+BAAY;;AAAA,MAAA;AAAA,MAAA,CAAA,AAAA,MAAA,AAAW;;AAAN,MAAL,CAAW,gBAAX;;AAAA,EAAA;;AAAsB,GAAA,CAAA,AAAA,AAAA,QAAA;AAAA,AAAA,AAAA,AAAA;;;;;AAA/C,OAAA,AAAA;;;;;;;;;AAHP;;AAAA,OAAO,aAAa,IAAG;;;;;;AAZF;;;;;;;;AAMrB;;AAAA,OAAO,6BAAa;;AAAA,AAAA,AAAA;;;;;;;;;AAHb;;AAAA,GAAI,CAAA,AAAA,WAAQ;;AAAM,OAAA,uBAAA;;;AAAU,OAAA,yBAAA;;;;;;"
-}

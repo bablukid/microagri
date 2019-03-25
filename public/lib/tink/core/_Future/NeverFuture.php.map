@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/tink/core/_Future/NeverFuture.php",
-"sourceRoot":"",
-"sources":["/home/bubar/haxe/haxe_libraries/tink_core/1.21.0/haxelib/src/tink/core/Future.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;AA8NoC;;AAAA,OAAO,AAAK,AAAA;;;;;;;;AAHO;;AAAA,OAAO,AAAK,AAAA;;;;;;AAE9B;;AAAA,OAAO,AAAK,AAAA;;;;;;;;AADW;;AAAA,OAAO;;;;;;;;AAFxB;;AAAA,OAAO,AAAK,AAAA;;;;;;;;;;;;;;AAFQ;;;;;;"
-}

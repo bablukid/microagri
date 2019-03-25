@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/tink/core/_Outcome/OutcomeMapper_Impl_.php",
-"sourceRoot":"",
-"sources":["/home/bubar/haxe/haxe_libraries/tink_core/1.21.0/haxelib/src/tink/core/Outcome.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;AAqJE;;AAAA,SAA8D,mBAAK;AAAnE,OAAA,AAAA;;;;;;;;;AAEE;;AAAA,OAAO,AAAA,AAAA,UAAO;;;;;;;;AAYd;;AAAA,OAAO,AAAA,AAAA,0BAAkB,yBAChB;;AAAA,gBAAO,CAAA,AAAA,AAAA;AACP;;AAAQ,KADD,AAAA;;AAEH,MAAA,AAAA,GAAE;AAAF,gBAAA,CAAA,AAAA,AAAA;AACA;;AAAQ,MADR,AAAA;;AACY,OAAA,AAAA,AAAA,iBAAQ;AACpB;;AAAQ,MAFR,AAAA;;AAEY,OAAA,AAAA,AAAA,iBAAQ,AAAA,AAAA,cAAM;;AAE9B;;AAAQ,MAND,AAAA;;AAMK,OAAA,AAAA,AAAA,iBAAQ,AAAA,AAAA,aAAK;;;;;;;;;;AAhBlC;;AAAA,OAAO,AAAA,AAAA,0BAAkB,yBAChB;;AAAA,gBAAO,CAAA,AAAA,AAAA;AACP;;AAAQ,KADD,AAAA;;AACK,OAAA,AAAA,GAAE;AACd;;AAAQ,MAFD,AAAA;;AAEK,OAAA,AAAA,AAAA,iBAAQ;;;;;;;"
-}

@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/haxe/ds/StringMap.php",
-"sourceRoot":"",
-"sources":["/home/bubar/haxe/versions/4.0.0-rc.1/std/php/_std/haxe/ds/StringMap.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;AAiCS,SAAA;;AAAP,AAAA,AAAA,cAAO,AAAA;;;;;;;;;;AAgBP;;AAAA,GAAI,CAAA,AAAA,iBAAwB,MAAK,AAAA;;AAChC,AAAA,MAAa,AAAA,AAAA,AAAA,AAAA,YAAK;;AAClB,OAAO;;;AAEP,OAAO;;;;;;"
-}

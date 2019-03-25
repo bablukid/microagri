@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/tink/core/_Promise/Next_Impl_.php",
-"sourceRoot":"",
-"sources":["/home/bubar/haxe/haxe_libraries/tink_core/1.21.0/haxelib/src/tink/core/Promise.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;AAgTI;;AAAA,OAAO,8BAAa;;AAAA,OAAO,AAAA,AAAA,oBAAA,AAAA,GAAE,KAAQ;;;;;;;;;AATrC;;AAAA,OAAO,yBAAa;;AAAA,OAAA,AAAA,eAAA,AAAA,AAAA,cAAO,AAAA,GAAE;;;;;;;;;AAM7B;;AAAA,OAAO,yBAAa;;AAAA,OAAA,AAAA,eAAA,AAAA,AAAA,cAAA,AAAA,AAAA,iBAAO,AAAA,GAAE;;;;;;;;;AAH7B;;AAAA,OAAO,yBAAa;;AAAA,OAAA,AAAA,AAAA,AAAO,AAAA,GAAE,SAAT,uBAAA;AAAA,OAAA,AAAA,AAAA;;;;;;"
-}

@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/sugoi/i18n/Locale.php",
-"sourceRoot":"",
-"sources":["/home/bubar/projects/sugoi/src/sugoi/i18n/Locale.hx","?"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAwEE;;AAAA,OAAO,AAAA,AAAA,iBAAe,iBAAM;;;;;;;;;ACxE/B,MDiBE;;AAmCE,QAAW;;AACX;;AACC,AAAA,QAAO,AAAA,AAAA,eAAqB,AAAA,AAAA,CAAA,AAAA,QAAA,AAAA,AAAA,AAAA,AAAA,SAAA,+BAAA,MAAqB,OAAM,CAAA,AAAA,AAAA,iBAAS,iBAAT;;;;;;AAGvD,AAAA,AAAA,AAAA,AAAA,oCAA+B,AAAA,qCAAkC,AAAA,AAAA,aAAW;;;AAE7E,AAAA,AAAA,iBAAQ;;AACR,GAAG,CAAA,AAAA,UAAM;;AAAM,AAAA,AAAA,AAAA,uBAAa;;;AAG7B,OAAO,AAAA;;;;;;;;;;;;;;AAjDkB;;;;;;"
-}

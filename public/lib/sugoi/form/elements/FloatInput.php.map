@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/sugoi/form/elements/FloatInput.php",
-"sourceRoot":"",
-"sources":["/home/bubar/projects/sugoi/src/sugoi/form/elements/FloatInput.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;AAMmD;;AACjD,GAAA,CAAA,AAAA,cAAA;AAAA,AAAA,YADiD;;AACjD,oBAAM,OAAM,QAAO,QAAO;;;;;;;;AAG6B;;AAEvD,KAAQ;;AACR,KAAQ,AAAA,AAAA,iBAAe;;AAEvB,GAAI,CAAA,AAAA,CAAA,OAAG,SAAQ,AAAA;;AACd,OAAO;;;AAEP,OAAO;;;;;;"
-}

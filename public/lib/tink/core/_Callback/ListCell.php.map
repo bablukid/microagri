@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/tink/core/_Callback/ListCell.php",
-"sourceRoot":"",
-"sources":["/home/bubar/haxe/haxe_libraries/tink_core/1.21.0/haxelib/src/tink/core/Callback.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;AA+HI,GAAI,CAAA,AAAA,QAAM;;AAAM,sBAAO;;;AACvB,AAAA,AAAA,YAAU;;AACV,AAAA,AAAA,cAAY;;;;;;AAaZ;;AAAO,MAAA,AAAA;;AACL,GADK,CAAA,AAAA,QAAA;;AAEA,KAFA;AAEL;AAAQ,AAAA,AAAA;;AAAS,AAAA,AAAA,WAAS;;;;;;;;AARN;;AACtB,AAAA,AAAA,cAAO;;AACP,AAAA,AAAA,YAAK;;;;;;;;AALL;;AAAA,GAAI,CAAA,AAAA,AAAA,cAAM;;AACR,AAAA,AAAA,uBAAA,AAAA,WAAU;;;;;;"
-}

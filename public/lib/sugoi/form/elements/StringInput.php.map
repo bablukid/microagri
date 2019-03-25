@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/sugoi/form/elements/StringInput.php",
-"sourceRoot":"",
-"sources":["/home/bubar/projects/sugoi/src/sugoi/form/elements/Input.hx","/home/bubar/projects/sugoi/src/sugoi/form/elements/StringInput.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;AA0BiD,kBAAU,oBAAiB,oBAAiC;;ACtB7G,oBAAA,OAAA,QAAA,QAAA,WAAA,aAAA;;;;;;;;AAG0D;;AAExD,GAAI,CAAA,AAAA,SAAO;;AACV,AAAA,OAAM,AAAA,KAAiB;;;AAExB,GAAI,CAAA,AAAA,CAAA,SAAO,OAAM,CAAA,SAAK;;AACrB,OAAO;;;AAEP,OAAO;;;;;;"
-}

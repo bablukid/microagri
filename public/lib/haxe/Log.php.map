@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/haxe/Log.php",
-"sourceRoot":"",
-"sources":["/home/bubar/haxe/versions/4.0.0-rc.1/std/haxe/Log.hx","?"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAgC+E;;AAC7E,OAAU,AAAA,AAAA,aAAW;;AACrB,GAAI,CAAA,AAAA,WAAS;;AACZ,OAAO;;;AACR,QAAW,AAAA,CAAA,AAAA,4BAAiB,OAAM,AAAA;;AAClC,GAAI,CAAA,AAAA,CAAA,WAAS,SAAQ,CAAA,AAAA,yBAAsB;;AAAO,MAAA;AAAA,OAAU,AAAA;AAAV,MAAA,CAAA,AAAA,MAAA,AAAU;;AAAL,MAAL,CAAU,UAAV;;AAAA,EAAA;;AAA+B,AAAA,QAAA,gBAAO,AAAA,QAAO,AAAA,AAAA,aAAW;;;;AAC1G,OAAO,AAAA,CAAA,iBAAK,QAAK;;;;;;;;;;;;;;AAqBlB,uBC3DF,MD2DgF;;AAC7E,OAAU,AAAA,AAAA,kBAAa,IAAE;;AAOzB,AAAA,KAAA,CAAA,AAAA,AAAA,aAAY,AAAA,iBAAZ;;;;;;;"
-}

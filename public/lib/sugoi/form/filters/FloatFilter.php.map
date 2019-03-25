@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/sugoi/form/filters/FloatFilter.php",
-"sourceRoot":"",
-"sources":["/home/bubar/projects/sugoi/src/sugoi/form/filters/FloatFilter.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;AAUE;;;;;;;;AAIA;;AAAA,OAAO;;;;;;;;AAGqC;;AAE5C,GAAI,CAAA,AAAA,CAAA,OAAK,SAAQ,CAAA,OAAG;;AAAI,OAAO;;;AAC/B,AAAA,KAAI,AAAA,KAAiB;;AACrB,AAAA,KAAI,AAAA,AAAA,sBAAoB,IAAG,KAAK;;AAChC,KAAQ,AAAA,AAAA,iBAAe;;AACvB,GAAI,CAAA,AAAA,OAAW;;AAAK,AAAA,KAAI;;;AACxB,OAAO;;;;;"
-}

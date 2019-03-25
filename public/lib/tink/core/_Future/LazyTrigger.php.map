@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/tink/core/_Future/LazyTrigger.php",
-"sourceRoot":"",
-"sources":["/home/bubar/haxe/haxe_libraries/tink_core/1.21.0/haxelib/src/tink/core/Future.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;AA2YI,AAAA,AAAA,YAAU;;AACV;;;;;;AAG+B;;AAC/B,GAAI,CAAA,AAAA,AAAA,cAAM;;AACR,MAAS,AAAA;;AACT,AAAA,AAAA,YAAU;;AACV,AAAA,AAAA,uBAAA,KAAU,yBAAA;;;AAEZ,OAAO;;;;;;;;AAUT;;AAAA,UAAA;;AAEI,GAAI,CAAA,AAAA,AAAA,cAAM;;AAAM,OAAA,AAAA,gBAAc;;;AACzB,OAAA,AAAA,AAAA,oBAAa,oCAChB;;AAAA,AAAA,AAAA,gBAAO,+BAAa;;AAAA,AAAA,AAAA,AAAA,GAAE,YAAU;;AAC/B;;;;;;;;;AAE6B;;AAClC,AAAA,AAAA;;AACA,OAAO,AAAA,eAAa;;;;;;;;AAhBtB;;AAAA,UAAA;;AAEI,GAAI,CAAA,AAAA,AAAA,cAAM;;AAAM,OAAA,AAAA,YAAU;;;AACrB,OAAA,AAAA,AAAA,oBAAa,oCAChB;;AAAA,AAAA,AAAA,gBAAO,+BAAa;;AAAG,OAAA,AAAA,GAAE;;AAAL,AAAA,IAAG;;AACtB;;;;;;"
-}

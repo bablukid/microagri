@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/haxe/ds/_List/ListIterator.php",
-"sourceRoot":"",
-"sources":["/home/bubar/haxe/versions/4.0.0-rc.1/std/haxe/ds/List.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;;AAoRE,AAAA,AAAA,cAAY;;;;;;AAIZ;;AAAA,OAAO,AAAA,AAAA,gBAAQ;;;;;;AAGgB;;AAC/B,OAAU,AAAA,AAAA;;AACV,AAAA,AAAA,cAAO,AAAA,AAAA;;AACP,OAAO;;;;;"
-}

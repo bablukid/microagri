@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/haxe/io/BytesBuffer.php",
-"sourceRoot":"",
-"sources":["/home/bubar/haxe/versions/4.0.0-rc.1/std/php/_std/haxe/io/BytesBuffer.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;AAgCE,AAAA,AAAA,WAAI;;;;;;;;;AA+C8B;;AACI,SAAA,AAAA,OAAA,AAAA;;AAAtC,UAA4B,UAAU,QAAQ,AAAA,AAAA,cAAA,AAAA;;AAC9C,AAAA,AAAA,WAAI;;AACJ,OAAO;;;;;"
-}

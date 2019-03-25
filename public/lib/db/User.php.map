@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/db/User.php",
-"sourceRoot":"",
-"sources":["/home/bubar/projects/microagriPHP/src/db/User.hx","/home/bubar/projects/spod/src/sys/db/RecordMacros.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AA6BE;;AACA,AAAA,AAAA,eAAa,AAAA,AAAA;;AACb,AAAA,AAAA,gBAAc,AAAK;;AACnB,AAAA,AAAA,cAAO;;AACP,AAAA,AAAA,oBAAa;;;;;;ACs3CG;;AAAA,OAAO,AD94CzB;;;;;;AAgCyB;;AACvB,KAAQ;;AACR,AAAA,AAAA,WAAS,AAAA,AAAA,YAAU,AAAA,UAAO,AAAA,QAAA,GAAA;;AAC1B,OAAO;;;;;;AANA;;AAAA,GAAA,CAAA,AAAA,CAAA,AAAA,AAAA,AAAA,gBAAA,CAAA,KAAA,mBAAW,AAAA,mCAAX;;AAAqB,OAAA,AAAA,AAAA,cAAI;;;AAAzB,OAAA;;;;;;;;;;;;;;;AA7BT,YAAA;;;;;AAAA,qBAAA,sBAAA,iBAAA;;"
-}

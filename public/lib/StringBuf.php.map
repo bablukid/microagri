@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"public/lib/StringBuf.php",
-"sourceRoot":"",
-"sources":["/home/bubar/haxe/versions/4.0.0-rc.1/std/php/_std/StringBuf.hx"],
-"names":[],
-"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AA+BE,AAAA,AAAA,WAAI;;;;;;;;;;;;;;AAQJ;;AAAA,GAAI,CAAA,AAAA,OAAK;;AACR,AAAA,AAAA,WAAI,AAAA,CAAc,AAAA,WAAI;AAChB,GAAI,CAAA,AAAA,QAAe;;AACzB,AAAA,AAAA,WAAI,AAAA,CAAc,AAAA,WAAG,CAAC,AAAC,KAAc,SAAS;AACxC,GAAI,CAAA,AAAA,UAAiB;;AAC3B,AAAA,AAAA,WAAI,AAAA,CAAc,AAAA,WAAG,AAAK;;;AAE1B,OAAA;;AAAA,AAAA,AAAA,UAAA,CAAA,AAAA,oBAAK,AAAA,AAAA,aAAA;;;;;;"
-}

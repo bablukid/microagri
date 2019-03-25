@@ -1,6 +1,8 @@
-/lang/fr/tmp/*.n
-/lang/master/tmp/*.n
-html/*.n
+/lang/fr/tmp/*.php
+/lang/master/tmp/*.php
 config.xml
 .haxelib
-www/*.n
+public/*.php
+public/lib
+vendor
+
