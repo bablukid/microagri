@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"public/lib/tink/core/_Signal/Suspendable.php",
+"sourceRoot":"",
+"sources":["/home/bubar/haxe/haxe_libraries/tink_core/1.21.0/haxelib/src/tink/core/Signal.hx"],
+"names":[],
+"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AA+J0C,AAAA,AANlC,gBAMkC;;AALT,AAAA,AADzB,iBACyB;;AAc7B,AAAA,AAAA,kBAAgB;;;;;;;;AAGS;;AAA3B,UAAA;;AACE,GAAI,CAAA,AAAA;;AAAQ,OAAO;;;AACnB,GAAI,CAAA,AAAA,AAAA,AAAA,AAAA,AAAA,qCAAuB;;AACzB,AAAA,AAAA,iBAAe,AAAA,CAAA,AAAA,iBAAS,yBAAA,AAAA;;;AAGxB,KAAA,AAAA,AAAA,wBAAA,AAAA,AAAA,0BAAe;AAAf,SAAA,eACE,4BACE;;AAAA,GAAI,CAAA,AAAA,AAAA,AAAA,AAAA,AAAA,uCAAuB;;AACzB,AAAA,CAAA,AAAA;;AACA,AAAA,AAAA,mBAAU;;;;AAJhB,OAAA,aAAA,IAAA,AAAA;;;;;;AAfF;;AAAA,GAAI,CAAA,CAAC,AAAA;;AACH,AAAA,AAAA,gBAAS;;AACT,AAAA,AAAA,iBAAU;;;;;;"
+}

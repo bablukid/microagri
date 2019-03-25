@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"public/lib/tink/core/_Lazy/Lazy_Impl_.php",
+"sourceRoot":"",
+"sources":["/home/bubar/haxe/haxe_libraries/tink_core/1.21.0/haxelib/src/tink/core/Lazy.hx"],
+"names":[],
+"mappings":";;;;;;;;;;;;;;;;AAcI;;AAAA,OAAO,AAAA,AAAA,gBAAa;;;;;;;;AATpB;;AAAA,OAAO,AAAA,AAAA;;;;;;;;;AAMP;;AAAA,OAAO,AAAA,AAAA,YAAS;;;;;;;;AAMhB;;AAAA,OAAO,cAAc;;;;;;;;AATrB;;AAAA,OAAO,aAAa;;;;;"
+}

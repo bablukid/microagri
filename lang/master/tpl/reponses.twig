@@ -1,0 +1,87 @@
+﻿{% extends "design.twig" %}
+{% block content %}
+
+<div class="col-md-12">
+	<div class="article">
+        <h1>Réponses</h1>
+        <p>
+            <a href="?csv=1" class="btn btn-default">Export CSV</a>
+        </p>
+            
+        <table class="table table-bordered table-condensed table-striped">
+
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                {% for q in allQuestions %}
+                <th>{{q.ref}}</th>
+                {% endfor %}
+            </tr>
+
+            <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Complétion</th>
+                <th>Compte</th>
+                {% for h in headers %}
+                <th>{{h}}</th>
+                {% endfor %}
+            </tr>
+
+
+        
+          
+        
+        
+        {% for k,r in answers %}
+            <tr>
+                <td>{{k}}</td>
+
+                
+                <td>
+                    {% if (r[0]!=null) %}
+                        {{r[0].cdate.toString().split(" ").join("<br/>")|raw}}
+                    {% endif %}
+                </td>
+                <td>
+                    {{getCompletion(r)}} %
+                    {% if (r[0]!=null) %}
+                    <br/>
+                    <a href="/reponses?choose=1&dataset={{r[0].dataset}}&user={{r[0].userId}}" class="btn btn-default btn-xs">
+                        Prendre la main
+                    </a>
+                    <br/><br/>
+                    <a href="/reponses?delete=1&dataset={{r[0].dataset}}&user={{r[0].userId}}&token={{token}}" class="btn btn-default btn-xs" onclick="return confirm('ATTENTION !\nVoulez vous vraiment supprimer cet élément ?')">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>                        
+                        &nbsp;Effacer                    
+                    </a>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if (r[0]!=null) %}
+                        {{r[0]._user.name}}
+                        <br/>
+                        {{r[0]._user.email}}
+                    {% endif %}
+                </td>
+                {% for a in r|tophparray %}
+                    <td>
+                    {% if(a!=null) %}
+                        {% set v = a.answer %}
+                        {% if (v!=null) %} 
+                        {{v}}
+                        {% endif %}
+                    {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+
+        </table>
+
+	</div>
+</div>
+
+{% endblock %}

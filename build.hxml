@@ -1,10 +1,15 @@
--lib sugoi:git:https://github.com/bablukid/sugoi#master
--lib templo
--lib record-macros:git:https://github.com/HaxeFoundation/record-macros#master
--lib dbadmin:git:https://github.com/ncannasse/dbadmin.git#master
+-lib sugoi
+-lib record-macros
 -lib smtpmailer
--lib thx.csv
+-lib hxtwig
+-lib jstack
+-lib hx3compat
+-lib hxspout
+
 -cp src
 -cp lang/master/tpl
--neko www/index.n
+
 -main App
+-D php7
+-D JSTACK_FORCE
+-php public

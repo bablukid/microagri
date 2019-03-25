@@ -18,7 +18,7 @@ class User extends sugoi.BaseController
 		view.users = db.User.manager.all();
 	}
 
-    @admin @tpl('form.mtt')
+    @admin @tpl('form.twig')
 	public function doEdit(user:db.User) {
 		
 		var form = sugoi.form.Form.fromSpod(user);
@@ -40,7 +40,7 @@ class User extends sugoi.BaseController
 		view.title = "Modifier " + user.name;
 	}
 	
-	@admin @tpl('form.mtt')
+	@admin @tpl('form.twig')
 	public function doInsert() {
 		var user = new db.User();
 		var form = sugoi.form.Form.fromSpod(user);
@@ -65,7 +65,7 @@ class User extends sugoi.BaseController
     /**
     Login form
     **/
-	@tpl("form.mtt")
+	@tpl("form.twig")
 	function doLogin() {
         var f = new Form("login");
         f.addElement(new StringInput("email","Email",null,true));
@@ -103,7 +103,7 @@ class User extends sugoi.BaseController
 	/**
 	 * Ask for password renewal by mail when password is forgotten
 	 */
-	@tpl("form.mtt")
+	@tpl("form.twig")
 	function doForgottenPassword(?key:String,?u:db.User){
 		var step = 1;
 		var url = "/user/forgottenPassword";

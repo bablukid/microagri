@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"public/lib/db/Result.php",
+"sourceRoot":"",
+"sources":["/home/bubar/projects/microagriPHP/src/db/Result.hx","/home/bubar/projects/spod/src/sys/db/RecordMacros.hx"],
+"names":[],
+"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAiJoD;;AAC5C,KAAoB;;AACpB,GAAG,CAAA,AAAA,mBAAA,AAAA,AAAA,AAAA,+CAAmC;;AAClC,AAAA,KAAI,AAAA,AAAA,AAAA,AAAA,AAAA,gCAAsB,AAAA,0CAAA,AAAA,AAAtB,kBAAsB,AAAA,AAAA,AAAA,AAAA,AAAA,4BAAA,kBAAK;;;AAE/B,AAAA,KAAI,AAAA,AAAA,AAAA,4BAAY,AAAA,mBAAA,AAAA,AAAA,AAAA,4CAAkC;;AAClD,GAAG,CAAA,AAAA,CAAA,AAAA,AAAA,AAAA,uBAAa,AAAA,cAAW,CAAC,AAAA,AAAA,AAAA,AAAA;;AAA6B,AAAA,KAAI;;;;AAGjE,GAAG,CAAA,AAAA,OAAG;;AACF,AAAA,KAAI;;AACJ,AAAA,AAAA,aAAS;;AACT,AAAA,AAAA;;;AAEJ,OAAO;;;;;;;;AA3Jf;;;;;;ACm5CkB;;AAAA,OAAO,ADn5CzB;;;;;;AAGuB;;AAAA,OAAA,AAAA,AAAA,AAAA,mCAAA,OAAA,QAAA,UAAA;;;;;;;;AAAA;AAAA,OAAA,AAAA,AAAA,AAAA,mCAAA,OAAA,QAAA,UAAA;;;;;;;;;;;;;;AAHvB,YAAA;;;;;AAAA,qBAAA,sBAAA,iBAAA;;;;;;;;"
+}

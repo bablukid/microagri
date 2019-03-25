@@ -12,7 +12,7 @@ class Page extends sugoi.BaseController
 	}
 
 
-	@admin @tpl('form.mtt')
+	@admin @tpl('form.twig')
     public function doEdit(page:db.Page){
 
         var f = sugoi.form.Form.fromSpod(page);
@@ -30,7 +30,7 @@ class Page extends sugoi.BaseController
     /**
     Ajouter une page à un chapitre
     **/
-    @admin @tpl('form.mtt')
+    @admin @tpl('form.twig')
     public function doInsert(chapitre:db.Chapitre){
         var page = new db.Page();
         page.order = db.Page.manager.count($chapitre==chapitre);
@@ -47,7 +47,7 @@ class Page extends sugoi.BaseController
     /**
     Add a question to a page
     **/
-    @admin @tpl('form.mtt')
+    @admin @tpl('form.twig')
     public function doAddQuestion(page:db.Page){
         
         var f = new sugoi.form.Form("addq");
@@ -74,7 +74,7 @@ class Page extends sugoi.BaseController
     /**
         Create a new question
     **/
-    @admin @tpl('form.mtt')
+    @admin @tpl('form.twig')
     public function doInsertQuestion(page:db.Page){
         view.title = "Saisir une nouvelle question";
         
@@ -113,7 +113,7 @@ class Page extends sugoi.BaseController
         view.form = f;
     }
 
-    @admin @tpl('form.mtt')
+    @admin @tpl('form.twig')
     public function doEditQuestion(q:db.Question,page:db.Page){
         view.title = "Modifier une question";
         

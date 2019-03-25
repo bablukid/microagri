@@ -13,7 +13,7 @@ class Chapitre extends sugoi.BaseController
     /**
     Modifier un chapitre
     **/
-	@admin @tpl('form.mtt')
+	@admin @tpl('form.twig')
     public function doEdit(chapitre:db.Chapitre){
 
         var f = sugoi.form.Form.fromSpod(chapitre);
@@ -31,7 +31,7 @@ class Chapitre extends sugoi.BaseController
     /**
     Ajouter un chapitre à un questionnaire
     **/
-    @admin @tpl('form.mtt')
+    @admin @tpl('form.twig')
     public function doInsert(questionnaire:db.Questionnaire){
         var chapitre = new db.Chapitre();
         chapitre.order = db.Chapitre.manager.count($questionnaire==questionnaire);

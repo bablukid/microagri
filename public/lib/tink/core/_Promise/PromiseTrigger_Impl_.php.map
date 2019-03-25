@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"public/lib/tink/core/_Promise/PromiseTrigger_Impl_.php",
+"sourceRoot":"",
+"sources":["/home/bubar/haxe/haxe_libraries/tink_core/1.21.0/haxelib/src/tink/core/Promise.hx"],
+"names":[],
+"mappings":";;;;;;;;;;;;;;;;;AA0UE;;AAAA,SAAoC;AAApC,OAAA,AAAA;;;;;;;;AAGmD;;AAAA,OAAO,AAAA;;;;;;;;;AADnB;;AAAA,OAAO,AAAA,AAAA,gBAAa,AAAA,AAAA,iBAAQ;;;;;;;;;AAD/B;;AAAA,OAAO,AAAA,AAAA,gBAAa,AAAA,AAAA,iBAAQ;;;;;"
+}

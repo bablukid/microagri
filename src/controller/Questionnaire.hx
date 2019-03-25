@@ -30,7 +30,7 @@ class Questionnaire extends sugoi.BaseController
 		view.questionnaire = questionnaire;
 	}
 
-    @admin @tpl('form.mtt')
+    @admin @tpl('form.twig')
     public function doEdit(questionnaire:db.Questionnaire){
 
         var f = sugoi.form.Form.fromSpod(questionnaire);
@@ -45,7 +45,7 @@ class Questionnaire extends sugoi.BaseController
         view.form = f;
     }
 
-    @admin @tpl('form.mtt')
+    @admin @tpl('form.twig')
     public function doInsert(){
         var questionnaire = new db.Questionnaire();
         var f = sugoi.form.Form.fromSpod( questionnaire );

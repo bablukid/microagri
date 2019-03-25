@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"public/lib/php/_Boot/HxAnon.php",
+"sourceRoot":"",
+"sources":["/home/bubar/haxe/versions/4.0.0-rc.1/std/php/Boot.hx"],
+"names":[],
+"mappings":";;;;;;;;;;;;;;;;;;AAq3B2C;;AAA1C,UAAA;;AACC;;AACA,GAAI,CAAA,AAAA,YAAU;;AACb,SAAe;;AAA8C,OAAA;;AAAhB,AAAgB,OAA7D,QAAA;;;;;;;;;;;AAUyD;;AAChC,OAAA;;AAA1B,UAAa,AAAa,OAAM;;AAChC;;AACA,OAAO,AAAA,QAAO,AAAA,GAAa;;;;;;;;AAP3B;;AAAA,OAAO;;;;;"
+}

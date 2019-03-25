@@ -22,8 +22,7 @@ class Main extends sugoi.BaseController {
 			
 		}	
 	}
-	
-	@tpl("home.mtt")
+		
 	function doDefault(){
         throw Redirect("/answers");
     }
@@ -34,7 +33,7 @@ class Main extends sugoi.BaseController {
 	@admin
 	function doDb(d:haxe.web.Dispatch) {
 		d.parts = []; //disable haxe.web.Dispatch
-		sys.db.Admin.handler();
+		sys.db.admin.Admin.handler();
 	}
 
     @admin
@@ -62,7 +61,7 @@ class Main extends sugoi.BaseController {
 	}
 
    
-	@tpl("q.mtt")
+	@tpl("q.twig")
 	function doQ(questionnaire:db.Questionnaire,chapitreIndex:Int,pageIndex:Int){
 
 		if(app.user==null) throw Redirect("/init");
@@ -85,7 +84,9 @@ class Main extends sugoi.BaseController {
 
 		//build form
 		var f = QuestionService.getForm(questions);
-		view.form = f;
+		view.form = f.toString();
+
+		
 
 		if( f.isValid() ){
 
@@ -139,10 +140,10 @@ class Main extends sugoi.BaseController {
 	/**
 	create a user
 	**/
-	@tpl("form.mtt")
+	@tpl("form.twig")
 	function doInit(){
 		var f = new sugoi.form.Form("user");
-		f.addElement(new sugoi.form.elements.Html("html","","Avant de remplir le formulaire, merci de saisir vos coordonnées :"));
+		view.text = "Avant de remplir le formulaire, merci de saisir vos coordonnées :";
 		f.addElement(new sugoi.form.elements.StringInput("name","Nom",null,true));
 		f.addElement(new sugoi.form.elements.StringInput("email","Email",null,true));
 		f.addElement(new sugoi.form.elements.StringInput("phone","Téléphone",null,false));
@@ -182,7 +183,7 @@ class Main extends sugoi.BaseController {
 
     }
 
-    @tpl('answers.mtt')
+    @tpl('answers.twig')
     function doAnswers(){
 
 		var farmNameQuestion = db.Question.getByRef("A1");
@@ -224,7 +225,7 @@ class Main extends sugoi.BaseController {
 
     }
 
-	@admin @tpl('reponses.mtt')
+	@admin @tpl('reponses.twig')
 	function doReponses(){
 
 		//delete answers
@@ -309,7 +310,17 @@ class Main extends sugoi.BaseController {
 
 				csvData.push( row );
 			}
-			sugoi.tools.Csv.printCsvDataFromStringArray(csvData,headers,"Reponses.csv");
+			//sugoi.tools.Csv.printCsvDataFromStringArray(csvData,headers,"Reponses.csv");
+
+			//CSV
+			var writer = box.spout.writer.WriterFactory.create(box.spout.common.Type.CSV);
+			writer.openToBrowser("reponses.csv"); 
+			writer.addRow(php.Lib.toPhpArray(headers));
+			for( d in csvData){
+				writer.addRow(php.Lib.toPhpArray(d));
+			}
+			writer.close();
+
 		}
 	}
 
@@ -326,7 +337,7 @@ class Main extends sugoi.BaseController {
 		}
 	}*/
 
-	@admin @tpl('form.mtt')
+	@admin @tpl('form.twig')
 	function doLink(i:db.Identifier){
 
 		var f = new sugoi.form.Form("link");

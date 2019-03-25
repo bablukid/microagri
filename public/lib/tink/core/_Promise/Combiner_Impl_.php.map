@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"public/lib/tink/core/_Promise/Combiner_Impl_.php",
+"sourceRoot":"",
+"sources":["/home/bubar/haxe/haxe_libraries/tink_core/1.21.0/haxelib/src/tink/core/Promise.hx"],
+"names":[],
+"mappings":";;;;;;;;;;;;;;;;;;AA8TI;;AAAA,OAAO,+BAAkB;;AAAA,OAAA,AAAA,eAAA,AAAA,AAAA,cAAO,AAAA,GAAE,KAAI;;;;;;;;;AAMtC;;AAAA,OAAO,+BAAkB;;AAAA,OAAA,AAAA,eAAA,AAAA,AAAA,cAAA,AAAA,AAAA,iBAAO,AAAA,GAAE,KAAI;;;;;;;;;AAHtC;;AAAA,OAAO,+BAAkB;;AAAA,OAAA,AAAA,AAAA,AAAO,AAAA,GAAE,KAAI,UAAb,uBAAA;AAAA,OAAA,AAAA,AAAA;;;;;;"
+}

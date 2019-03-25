@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"public/lib/tink/core/_Callback/LinkPair.php",
+"sourceRoot":"",
+"sources":["/home/bubar/haxe/haxe_libraries/tink_core/1.21.0/haxelib/src/tink/core/Callback.hx"],
+"names":[],
+"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAyGuB,AAAA,AAJf,mBAIe;;AAEnB,AAAA,AAAA,WAAS;;AACT,AAAA,AAAA,WAAS;;;;;;AAIT;;AAAA,GAAI,CAAA,CAAC,AAAA;;AACH,AAAA,AAAA,mBAAY;AACZ;AAAA,SAAA,AAAA;AAAA,GAAA,CAAA,AAAA,AAAA,WAAA;AAAA,AAAA,AAAA,AAAA;;;AACA;AAAA,SAAA,AAAA;AAAA,GAAA,CAAA,AAAA,AAAA,WAAA;AAAA,AAAA,AAAA,AAAA;;;;AACA,AAAA,AAAA,WAAI;;AACJ,AAAA,AAAA,WAAI;;;;;;"
+}

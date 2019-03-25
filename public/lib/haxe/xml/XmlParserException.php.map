@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"public/lib/haxe/xml/XmlParserException.php",
+"sourceRoot":"",
+"sources":["/home/bubar/haxe/versions/4.0.0-rc.1/std/haxe/xml/Parser.hx"],
+"names":[],
+"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AA6EE,AAAA,AAAA,aAAW;;AACX,AAAA,AAAA,iBAAe;;AACf,AAAA,AAAA,kBAAgB;;AAChB,AAAA,AAAA,oBAAa;;AACb,AAAA,AAAA,wBAAiB;AAEjB;AAAA,MAAU;AAAV,OAAc;AAAd,MAAA,CAAA,AAAA,MAAc;AAAd,KAAA,AAAA;;AAEC,KAAQ,AAAA,AAAA,yBAAA,MAAe;;AACvB,GAAI,CAAA,AAAA,OAAK;;AACR,AAAA,AAAA;;AACA,AAAA,AAAA,wBAAiB;AAEjB,GAAI,CAAA,AAAA,OAAK;;AAAW,AAAA,AAAA;;;;;;;;;AAOtB;;AAAA,OAAO,AAAA,AAAA,AAAA,AAAA,AAAA,CAAA,AAAA,AAAA,oBAAkB,AAAA,AAAA,gBAAc,mBAAS,QAAO,AAAA,0BAAU,eAAc,AAAA,6BAAa,YAAW,AAAA;;;;;;;;;"
+}

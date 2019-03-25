@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"public/lib/haxe/Timer.php",
+"sourceRoot":"",
+"sources":["/home/bubar/haxe/versions/4.0.0-rc.1/std/haxe/Timer.hx"],
+"names":[],
+"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAuIiE;;AAC/D,KAAQ,UAAe;;AACvB,AAAA,AAAA,UAAQ,4BAAW;;AAClB,AAAA,AAAA;;AACA,AAAA;;;AAED,OAAO;;;;;;;;;;;;;;;;;;;;;AAlFR,UAAA;;AAWE,MAAS,AAAA,WAAU;;AACnB,AAAA,AAAA,eAAQ,AAAA,AAAA,cAAa,kCAAW;;AACf,AAAA,AAAA,AAAA,2BAAiB;;AACjC,AAAA,AAAA;;;AAED,AAAA,AAAA,AAAA,oBAAY;;;;;;;;;;;;;;;;;;;;;;;;;;;;AA6BZ;;AAAA,GAAI,CAAA,AAAA,AAAA,iBAAS;;AACZ,AAAA,AAAA,AAAA;;AACA,AAAA,AAAA,eAAQ;;;;;;"
+}

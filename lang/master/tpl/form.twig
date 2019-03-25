@@ -1,0 +1,19 @@
+﻿{% extends "design.twig" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="article">
+            <h3>{{title}}</h3>
+            <br/>
+            <br/>
+            <p>{{text|raw}}</p>
+            
+            {{form.render()|raw}}
+            
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+{% endblock %}

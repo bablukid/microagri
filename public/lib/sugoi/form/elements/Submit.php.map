@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"public/lib/sugoi/form/elements/Submit.php",
+"sourceRoot":"",
+"sources":["/home/bubar/projects/sugoi/src/sugoi/form/elements/Submit.hx"],
+"names":[],
+"mappings":";;;;;;;;;;;;;;;;;;;;AASE;;AACA,AAAA,AAAA,cAAY;;AACZ,AAAA,AAAA,eAAa;;;;;;AAoBb;;AAAA,OAAO,AAAA,AAAA,wDAAuD,AAAA,AAAA,2BAAgB;;;;;;AAd9E;;AAAA,OAAO;;;;;;AAIR;;AACC,GAAI,CAAA,AAAA;;AAA4B,AAAA,AAAA,kBAAW;;;AAE3C,KAAQ,AAAA,AAAA,AAAA,AAAA,AAAA,AAAA,AAAA,AAAA,AAAA,AAAA,AAAA,AAAA,AAAA,AAAA,qCAAoC,AAAA,AAAA,+BAAc,iBAAgB,AAAA,wBAAQ,SAAQ,AAAA,6BAAa,cAAY,AAAA,AAAA,mCAAkB,OAAK,AAAA,uBAAO,cAAY,AAAA,AAAA,mCAAkB,OAAK,AAAA,uBAAO;;AAC3L,OAAO;;;;;"
+}

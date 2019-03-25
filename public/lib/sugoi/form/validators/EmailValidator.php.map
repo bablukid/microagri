@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"public/lib/sugoi/form/validators/EmailValidator.php",
+"sourceRoot":"",
+"sources":["/home/bubar/projects/sugoi/src/sugoi/form/validators/EmailValidator.hx"],
+"names":[],
+"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;AAiCC;;AACC,OAAU;;AACV,OAAO,AAAA,AAAA,cAAY;;;;;;;;AAzBnB;;AAIA,AAAA,AAAA,uBAAuB,CAAA,AAAA,AAAA,AAAA,AAAA,8BACjB,OAAO,2BACF;;;;;;;;AAMZ;;AACC,AAAA,gBAAc;;AAEd,SAAY,AAAA,AAAA,AAAA,mCAAiB,AAAA,AAAA,aAAW;;AACxC,GAAI,CAAA,CAAC;;AACJ,AAAA,AAAA,AAAA,mBAAW,AAAA;;;AAEZ,OAAO;;;;;;;;;;;;;;AAvBuB,UAAA,mHAAA;;;;;;"
+}

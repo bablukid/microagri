@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"public/lib/sys/io/File.php",
+"sourceRoot":"",
+"sources":["/home/bubar/haxe/versions/4.0.0-rc.1/std/php/_std/sys/io/File.hx"],
+"names":[],
+"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;AAiCE;;AAAO,KAAuB,AAAA,kBAAkB;AAAzC,OAAA,AAAA,OAAA;AAAA,OAAA,UAAA,MAAA,AAAA,AAAA,cAAA;;;;;;;;;;;;;AAJP;;AAAA,OAAO,AAAA,kBAAkB;;;;;;;;;;;;;;;;;;;AAqBmC,MAC5D;;AAAA,GAAA,CAAA,AAAA,YAAA;AAAA,AAAA,UAD4D;;AAC5D,OAAe,eAAe,AAAA,MAAM,OAAM,CAAA,UAAS,OAAO;;;;;"
+}

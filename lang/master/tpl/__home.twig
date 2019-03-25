@@ -1,0 +1,52 @@
+{% extends "design.twig" %}
+
+{% block content %}
+
+<div class="row" style="margin-top:22px;">
+    <div class="col-md-6">
+        <p>
+            <b>Public concerné :</b><br/>
+        Sont appelées à répondre <b>toutes les petites structures de production agricole, en Gironde,</b> 
+        sous un statut agricole ou non, et qui se sentent comme faisant partie d’une forme d’agriculture que l’on pourrait qualifier de très petite ferme ou micro-ferme. 
+        Vous êtes aussi invités à diffuser cette enquête autour de vous, aux acteurs qui vous semblent pertinents.            
+        </p>            
+    </div>
+    <div class="col-md-6">
+        <p>  
+            <b>Objectif :</b><br/>
+            Mieux connaître les micro-fermes dans leur nombre et leur diversité (pas uniquement dans le maraîchage)
+        </p>
+        <p>
+            <em style="font-size:0.9em;">
+                    L'ensemble des données collectées sont confidentielles et uniquement utilisées par le projet de recherche-action MicroAgri
+            </em>
+        </p>
+    </div>
+</div>
+
+<hr/>
+
+<div class="row">
+    <div class="col-md-6">
+            <div class="panel panel-default" >
+                <div class="panel-img" style="background:url('/img/carte.jpg') no-repeat center;background-size: cover;height:300px;"></div>
+                <div class="panel-body text-center">
+                        <a href="/identifier" class="btn btn-primary btn-lg">
+                            <span class="glyphicon glyphicon-chevron-right"></span> Identifier une micro-ferme
+                        </a>
+                </div>
+            </div>
+    </div>
+    
+    <div class="col-md-6" >
+            <div class="panel panel-default" >
+                <div class="panel-img" style="background:url('/img/ferme.jpg') no-repeat center;background-size: cover;height:300px;"></div>
+                <div class="panel-body text-center">
+                    <a href="/qhome" class="btn btn-primary btn-lg">
+                        <span class="glyphicon glyphicon-chevron-right"></span> Vous êtes une micro-ferme
+                    </a>
+                </div>
+            </div>
+    </div>
+</div>
+{% endblock %}

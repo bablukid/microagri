@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"public/lib/haxe/EntryPoint.php",
+"sourceRoot":"",
+"sources":["/home/bubar/haxe/versions/4.0.0-rc.1/std/haxe/EntryPoint.hx"],
+"names":[],
+"mappings":";;;;;;;;;;;;;;;;;;;;;AAkDqD;;;;;AAwCZ;;AAEvC,MAAO,CAAA;;AAGE,SAAA,AAAA;AAAA,GAAA,CAAA,AAAA,AAAA,iBAAA;AAAA,AAAA,AAAA;;;AAAR,KAAQ,AAAA,YAAA,AAAA;;AAKR,GAAI,CAAA,AAAA,OAAK;;AAAO;;;AAChB,AAAA;;;AAED,QAA2B,AAAA,AAAA;;AAC3B,GAAI,CAAA,AAAA,CAAC,AAAA,AAAA,yBAAwB,CAAA,AAAA,6BAAe;;AAC3C,OAAO;;;AACR,OAAO;;;;;;;;AA4BP;;AAAA,MAAO,CAAA;;AACN,YAAe,AAAA,AAAA;;AACf,GAAI,CAAA,AAAA,YAAW;;AACd;;;AACG,OAAA,AAAA,YAAW;;;;;;;;;;;;;;;AA1FI;;;;;;"
+}

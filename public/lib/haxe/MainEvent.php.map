@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"public/lib/haxe/MainEvent.php",
+"sourceRoot":"",
+"sources":["/home/bubar/haxe/versions/4.0.0-rc.1/std/haxe/MainLoop.hx"],
+"names":[],
+"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAWgC,AAAA,AARhC,oBAQgC;;AAK9B,AAAA,AAAA,WAAS;;AACT,AAAA,AAAA,kBAAgB;;AAChB,AAAA,AAAA,iBAAU;;;;;;;;;;;AAQV;;AAAA,AAAA,AAAA,iBAAU,CAAA,AAAA,OAAK,OAAO,KAAK,AAAA,AAAA,AAAA,UAAA,QAAqB;;;;;;;;AAa1B;;AACtB,GAAI,CAAA,AAAA,AAAA,aAAK;;AAAO;;;AAChB,AAAA,AAAA,WAAI;;AACJ,AAAA,AAAA,iBAAU;;AACV,GAAI,CAAA,AAAA,AAAA,gBAAQ;;AACK,AAAA,AAAA,qBAAmB,AAAA;;;AAEnC,AAAA,AAAA,AAAA,oBAAY,AAAA;;;AACb,GAAI,CAAA,AAAA,AAAA,gBAAQ;;AACX,AAAA,AAAA,AAAA,oBAAY,AAAA;;;;;;"
+}

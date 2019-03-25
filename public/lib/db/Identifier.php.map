@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"public/lib/db/Identifier.php",
+"sourceRoot":"",
+"sources":["/home/bubar/projects/microagriPHP/src/db/Identifier.hx","/home/bubar/projects/spod/src/sys/db/RecordMacros.hx"],
+"names":[],
+"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAqBoD;;AAC5C,KAAQ,AAAA,AAAA,AAAA,AAAA,AAAA,oCAAsB,AAAA,8CAAA,AAAA,AAAtB,kBAAsB,AAAA,AAAA,AAAA,AAAA,AAAA,4BAAA,kBAAK;;AACnC,GAAG,CAAA,AAAA,OAAG;;AACF,AAAA,KAAI;;AACJ,AAAA,AAAA,aAAS;;AACT,AAAA,AAAA;;;AAEJ,OAAO;;;;;;;;AAxBf;;;;;;ACm5CkB;;AAAA,OAAO,ADn5CzB;;;;;;AAIyB;;AAAA,OAAA,AAAA,AAAA,AAAA,qCAAA,OAAA,UAAA,YAAA;;;;;;AADF;;AAAA,OAAA,AAAA,AAAA,AAAA,mCAAA,OAAA,QAAA,UAAA;;;;;;;;AACE;;AAAA,OAAA,AAAA,AAAA,AAAA,qCAAA,OAAA,UAAA,YAAA;;;;;;;;AADF;;AAAA,OAAA,AAAA,AAAA,AAAA,mCAAA,OAAA,QAAA,UAAA;;;;;;;;;;;;;;AAHvB,YAAA;;;;;AAAA,qBAAA,sBAAA,iBAAA;;;;;;;;;;"
+}

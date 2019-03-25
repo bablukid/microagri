@@ -1,3 +1,5 @@
+
+
 class App extends sugoi.BaseApp {
 
 	public static var current : App = null;
@@ -14,7 +16,7 @@ class App extends sugoi.BaseApp {
 	
 	public static function log(t:Dynamic) {
 		if(App.config.DEBUG) {
-			sugoi.Web.logMessage(Std.string(t)); //write in Apache error log
+			//sugoi.Web.logMessage(Std.string(t)); //write in Apache error log
 			#if weblog
 			Weblog.log(t); //write en Weblog console (https://lib.haxe.org/p/weblog/)
 			#end
@@ -62,14 +64,15 @@ class App extends sugoi.BaseApp {
 	 * @param	ctx
 	 */
 	public function processTemplate(tpl:String, ctx:Dynamic):String {
-		Reflect.setField(ctx, 'HOST', App.config.HOST);
+		/*Reflect.setField(ctx, 'HOST', App.config.HOST);
 		
 		var tpl = loadTemplate(tpl);
 		var html = tpl.execute(ctx);	
 		#if php
 		if ( html.substr(0, 4) == "null") html = html.substr(4);
 		#end
-		return html;
+		return html;*/
+		return '';
 	}
 	
 	
