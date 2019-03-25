@@ -297,6 +297,13 @@ class Main extends sugoi.BaseController {
 			headers.unshift("completion");
 			headers.unshift("ID");
 
+			//add question refs 
+			var refs = ["","",""];
+			for( q in allQuestions){
+				refs.push(q.ref);
+			}
+			csvData.push(refs);
+
 			for( k in answers.keys() ){
 				var a = answers.get(k);
 

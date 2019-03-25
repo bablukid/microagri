@@ -12,7 +12,7 @@ class Answer extends Object{
     @:relation(userId) public var user : db.User;
     @:relation(questionId) public var question : db.Question;
 
-    public var answer : SNull<SString<128>>;
+    public var answer : SNull<SString<1024>>;
     public var cdate : SDateTime;
     public var ldate : SDateTime;
 

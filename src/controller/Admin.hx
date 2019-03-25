@@ -161,5 +161,47 @@ class Admin extends sugoi.BaseController
         }
 
     }
+
+    function doCheckAnswers(){
+
+        var countByUser = new Map<Int,Int>();
+
+        for( r in db.Result.manager.all()){
+
+            var dataset :Int = if(countByUser[r.user.id]==null){
+                countByUser[r.user.id] = 1;
+                1;
+            }else{
+                countByUser[r.user.id]++;
+                countByUser[r.user.id];
+            } 
+
+            for ( f in Reflect.fields(r)){
+
+                if(f.substr(0,1)=="_") continue;
+                if(f=="userId"||f=="id"||f=="user") continue;
+
+                var question = db.Question.manager.select($label==f);
+                if(question==null) continue;//throw 'no question with label "$f"';
+
+                var a = db.Answer.manager.select($user==r.user && $dataset==dataset && $question==question,true);
+                if(a==null || a.question==null) continue;
+                print('$f (${a.question.ref}) for user ${a.user.id}');
+                if(a.answer != Reflect.field(r,f)){
+                    Sys.println("<div style='color:red;'>"+a.answer+" <b>!= </b>"+Reflect.field(r,f) +"</div>");
+                    a.answer = Reflect.field(r,f);
+                    a.update();
+                }
+
+ 
+
+                
+
+            }
+
+
+        }
+
+    }
 	
 }
