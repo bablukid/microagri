@@ -126,7 +126,7 @@ class Admin extends sugoi.BaseController
 
     function doMigrateAnswers(){
 
-        var countByUser = new Map<Int,Int>();
+        /*var countByUser = new Map<Int,Int>();
 
         for( r in db.Result.manager.all()){
 
@@ -158,11 +158,11 @@ class Admin extends sugoi.BaseController
             }
 
 
-        }
+        }*/
 
     }
 
-    function doCheckAnswers(){
+    /*function doCheckAnswers(){
 
         var countByUser = new Map<Int,Int>();
 
@@ -202,6 +202,6 @@ class Admin extends sugoi.BaseController
 
         }
 
-    }
+    }*/
 	
 }

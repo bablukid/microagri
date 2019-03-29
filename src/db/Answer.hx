@@ -65,8 +65,8 @@ class Answer extends Object{
         var q = db.Question.getByRef(ref);
         if(q==null) throw "no question with ref "+ref;
         var a = db.Answer.get(user,q);
-        if(a==null) throw "no answer for question "+ref+" and user "+user.id;
-        return a.answer;
+        //if(a==null) throw "no answer for question "+ref+" and user "+user.id;
+        return a==null ? null : a.answer;
     }
 
 }

@@ -92,28 +92,40 @@ class QuestionService{
 
             case QCheckbox :
                 var d : {list:FormData<String>,other:Bool,extras:FormData<String>} = q.data;
-                //v = "[bla,blo]"
+                  //v = "[bla,blo]"
                 if(value!=null) value = split(value,"~");
 
-                if(d.extras!=null){
-                    //checkboxes avec champs
+                if(d.extras!=null && d.extras.length>0){
+                    //checkboxes with extra fields
                     e = new form.CheckboxesWithField(q.ref,html,d.list,value,null,null);
                     untyped e.extraFields = d.extras;
                 }else{
+                                        
                     if(d.other){
+                        //customized checkboxes
                         e = new form.Checkboxes(q.ref,html,d.list,value,null,null);
                     }else{
+                        //regular checkboxes
                         e = new sugoi.form.elements.CheckboxGroup(q.ref,html,d.list,value,null,null);
                     }
                 }
                 
             case QRadio :
-                if(q.data!=null){
-                    var d : {list:FormData<String>,other:Bool} = q.data; 
-                    e = new sugoi.form.elements.RadioGroup(q.ref,html,d.list,value,null,null);
+                //if(q.data!=null){
+                
+                var d : {list:FormData<String>,other:Bool} = q.data; 
+                if(d.other){
+                    //customized radiogroup
+                    e = new form.RadioGroup(q.ref,html,d.list,value,null,null);
                 }else{
-                    e = new sugoi.form.elements.RadioGroup(q.ref,html,null,value,null,null);
+                    //regular radiogroup
+                    e = new sugoi.form.elements.RadioGroup(q.ref,html,d.list,value,null,null);
                 }
+                
+
+                /*}else{
+                    e = new sugoi.form.elements.RadioGroup(q.ref,html,null,value,null,null);
+                }*/
                 
             case QInt : 
                 e = new sugoi.form.elements.IntInput(q.ref,html,value,true);

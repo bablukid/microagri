@@ -96,7 +96,6 @@ class Main extends sugoi.BaseController {
 				throw Error('/q/${questionnaire.id}/$chapitreIndex/$pageIndex',e);
 			}
 
-          		
 			//save answers
 			//serialize depending on field type
 			for(q in questions){
@@ -177,8 +176,8 @@ class Main extends sugoi.BaseController {
 
     @tpl('title.mtt')
     function doTitle(){
-        var r = db.Result.getOrCreate(app.user);
-        view.responsable = r.recenseur_responsable=="OUI";
+        var r = db.Answer.getAnswerOf("A14",app.user);
+        view.responsable = (r == "OUI");
 
     }
 
@@ -333,7 +332,7 @@ class Main extends sugoi.BaseController {
 		}
 	}*/
 
-	@admin @tpl('form.mtt')
+	/*@admin @tpl('form.mtt')
 	function doLink(i:db.Identifier){
 
 		var f = new sugoi.form.Form("link");
@@ -360,7 +359,7 @@ class Main extends sugoi.BaseController {
 		view.text = "Relier le signalement <b>#"+i.id+"-"+i.nom+"</b> à un recensement";
 		view.form = f;
 
-	}
+	}*/
 
 
 	/*function printCsvDataFromObjects(data:Array<Dynamic>,headers:Array<String>,fileName:String) {

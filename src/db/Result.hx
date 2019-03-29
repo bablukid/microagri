@@ -2,7 +2,8 @@ package db;
 import sys.db.Object;
 import sys.db.Types;
 
-class Result extends Object{
+//@deprecated
+class ____Result extends Object{
 
     public var id : SId;
     @:relation(userId) public var user : db.User;

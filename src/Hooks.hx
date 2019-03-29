@@ -8,6 +8,7 @@ class Hooks{
 
         //différents responsables dans le chapitre 1 : afficher quel responsable on édite dans l'entête de la page
         if(chapitre.order==1 && chapitre.questionnaire.id==3){
+            
 			//on retrouve le nbre de responsables déclarés
 			var numResponsables = 1;
             var n = db.Answer.getAnswerOf("A5-1",app.user).parseInt();
